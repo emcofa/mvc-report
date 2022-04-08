@@ -8,13 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DeckJson
 {
-
     /**
      * @Route("/card/api/deck")
      */
     public function deck(): Response
     {
-
         $card = new \App\Card\Deck();
         $data = [
             'title' => 'Playing cards',

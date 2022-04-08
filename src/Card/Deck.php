@@ -85,7 +85,8 @@ class Deck
     {
         if ($this->numCards - count($this->allCards) < 0) {
             return 0;
-        } else
+        } else {
             return count($this->allCards);
+        }
     }
 }

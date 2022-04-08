@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CardDeck extends AbstractController
 {
-
         /**
      * @Route("/card/deck", name="deck")
      */
@@ -53,7 +52,6 @@ class CardDeck extends AbstractController
     public function cardDeckDraw(
         SessionInterface $session
     ): Response {
-
         $card = $session->get("deck") ?? new \App\Card\Deck();
 
         $data = [
@@ -91,4 +89,3 @@ class CardDeck extends AbstractController
         return $this->render('card/draw-number.html.twig', $data);
     }
 }
-

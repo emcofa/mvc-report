@@ -25,7 +25,9 @@ class CardHand
     public function deal(&$allCards, $players, $numCards)
     {
         $hand = array();
-        if ($players * $numCards > $this->numCards) return $hand;
+        if ($players * $numCards > $this->numCards) {
+            return $hand;
+        }
         $temp = array_slice($allCards, 0, $players * $numCards);
         $hand = array_chunk($temp, $numCards);
         return $hand;
@@ -51,7 +53,8 @@ class CardHand
     {
         if ($this->numCards - count($this->allCards) < 0) {
             return 0;
-        } else
+        } else {
             return count($this->allCards);
+        }
     }
 }
