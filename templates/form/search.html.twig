@@ -1,0 +1,22 @@
+{% include 'base.html.twig' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+        <form>
+            <p>
+                <label>Search:
+                    <input type="search" name="search" value="{{ search }}">
+                </label>
+            </p>
+        </form>
+    </div>
+
+    {% include 'footer.twig' %}
+</body>
+
+{% endblock %}

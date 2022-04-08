@@ -1,0 +1,25 @@
+{% include "base.html.twig" %}
+
+{# {% block title %}Dice{% endblock %} #}
+
+{% block content %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container2">
+        <h2>{{ title }}</h2>
+
+        <div class="deck">
+            <div class="column">
+                {% for card in card_deck %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg") }}" width="100" height="140" alt="{{card}}">
+                {% endfor %}
+                <img class="cards" src="{{ asset("img/cards/" ~ joker ~ ".svg") }}" width="100" height="140" alt="{{joker}}">
+                <img class="cards" src="{{ asset("img/cards/" ~ joker ~ ".svg") }}" width="100" height="140" alt="{{joker}}">
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.twig' %}
+</body>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% include "base.html.twig" %}
+
+{# {% block title %}Dice{% endblock %} #}
+
+{% block content %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container2">
+        <h2>{{ title }}</h2>
+        <h3>Kort kvar: {{count}}</h3>
+        {% for array in game %}
+        <p>Spelare {{counter}}</p>
+        {% for card in array %}
+        <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg") }}" width="100" height="140" alt="{{card}}">
+        {% endfor %}
+        {% set counter = counter + 1 %}
+        {% endfor %}
+    </div>
+
+    {% include 'footer.twig' %}
+</body>
+
+{% endblock %}

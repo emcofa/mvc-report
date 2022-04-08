@@ -1,0 +1,46 @@
+{# templates/lucky_number.html.twig #}
+
+{% include 'base.html.twig' %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+        <div class="card-info-wrapper" </div>
+            <div class="column-links">
+                <img src="{{ asset("img/cards/cards.png" ) }}" width="320" height="350" alt="cards">
+            </div>
+            <div class="column-links">
+                <h2>Kortspel</h2>
+                <ul class="ul-card">
+                    <li>
+                        <a href="{{ path("deck") }}">Visa hela kortleken</a>
+                    </li>
+                    <li>
+                        <a href="{{ path("card-deck-shuffle") }}">Blanda kortleken </a>
+                    </li>
+                    <li>
+                        <a href="{{ path("draw") }}">Dra ett kort</a>
+                    </li>
+                    <li>
+                        <a href="{{ path("draw") }}/2">Dra flera kort (default 2 stycken)</a>
+                    </li>
+                    <li>
+                        <a href="card/deck/deal/2/5">Spela spel (default 2 spelare, 5 kort)</a>
+                    </li>
+                    <li>
+                        <a href="{{ path("deck2") }}">Spelkort med jokrar</a>
+                    </li>
+                    
+                </ul>
+                <h2>JSON</h2>
+                <ul class="ul-card">
+                    <li><a href="card/api/deck">Visa hela korleken</a></li>
+                    <li><a href="card/api/deck/shuffle">Blanda kortleken</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'footer.twig' %}
+</body>

@@ -1,0 +1,44 @@
+.deck {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    margin-bottom: 20px;
+    /* background: url(../img/cards.png) no-repeat; */
+}
+
+.single-card {
+    display: inline-block;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    margin-bottom: 20px;
+    /* background: url(../img/cards.png) no-repeat; */
+}
+
+.cards {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* background: url(../img/cards.png) no-repeat; */
+}
+
+.ul-card {
+    list-style-type: circle;
+}
+
+
+ul a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+ul a:hover {
+    text-decoration: none;
+    opacity: 0.7;
+    transition: 0.7 ease;
+    font-size: 18px;
+}
+
+.card-info-wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
