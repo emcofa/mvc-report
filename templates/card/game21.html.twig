@@ -1,0 +1,52 @@
+{% include "base.html.twig" %}
+
+{# {% block title %}Dice{% endblock %} #}
+
+{% block content %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container3">
+        <h2>{{ title }}</h2>
+        <h3>Beskrivning</h3>
+        <p>21 är ett kortspel vars engelska motsvarighet kallas Black Jack.Spelet går ut på att med två eller flera kort
+            försöka uppnå värdet 21 eller komma så nära som möjligt utan att överskrida 21. Nummerkorten är värda det
+            som kortet har som värde, det vill säga knekt är värd 11 poäng, dam 12 osv. Ess kan både vara värt 14 och 1.
+        <p>En av deltagarna utses till bankir. Spelet börjar med att bankiren lägger en insats i banken, det vill säga
+            potten som det spelas om, och därefter ger varje spelare utom sig själv ett kort. Spelarna spelar sedan mot
+            bankiren en i taget. Den spelare som är i tur tittar på sitt kort och satsar ett valfritt belopp, som dock
+            inte får vara större än vad som finns i banken, och får därefter ytterligare ett kort.
+            Om summan av korten är 21 vinner spelaren från banken ett belopp lika stort som insatsen. Är summan större
+            än 21 har spelaren ”spruckit” eller ”blivit tjock” och förlorar sin insats till banken. Om summan är under
+            21 kan spelaren antingen förklara sig nöjd eller begära ytterligare kort för att komma närmare 21, men då
+            också riskera att spricka.</p>
+        <p>Om spelaren förklarat sig nöjd, ska bankiren straffa spelaren, det vill säga spela ut egna kort från leken,
+            ett i taget med framsidan uppåt. Spricker bankiren, vinner spelaren lika mycket som sin insats. När bankiren
+            förklarat sig nöjd, visar spelaren sina kort. Den som har högst vinner. Har båda lika är det bankiren som
+            vinner, likaså om bankiren fått 21.
+            Eftersom oddsen väger över till bankens fördel, är det brukligt att deltagarna turas om med att vara bankir.
+        </p><a href="https://sv.wikipedia.org/wiki/Tjugoett_(kortspel)">Källa</a>
+        <h3>
+            Pseudokod
+        </h3>
+        <img src="{{ asset("img/pseudo1.png" ) }}" width="600" height="700" alt="pseudo">
+        <img src="{{ asset("img/pseudo2.png" ) }}" width="600" height="800" alt="pseudo">
+        <h3>
+            Flödesschema
+        </h3>
+        <img src="{{ asset("img/flowchart.png" ) }}" width="600" height="800" alt="pseudo">
+        <h3>
+            De klasser jag kan tänkas implementera i spelet är följande:
+        </h3>
+        <ul class="ul-card">
+            <li>Deck - skapa kortleken och blanda den</li>
+            <li>Players - skapa spelare och dealer</li>
+            <li>CardHand - Få värde på hand, kolla om någon vunnit</li>
+        </ul>
+
+    </div>
+
+    {% include 'footer.twig' %}
+</body>
+
+{% endblock %}

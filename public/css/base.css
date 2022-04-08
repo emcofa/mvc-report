@@ -218,6 +218,17 @@ footer {
     font-family: 'Roboto', sans-serif;
 }
 
+.container3 {
+    background-color: #ffffff;
+    padding: 3em;
+    max-width: 50%;
+    border: 1px solid black;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
 .footer-column {
     display: grid;
     grid-template-columns: auto auto;

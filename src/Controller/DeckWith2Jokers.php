@@ -5,8 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DeckWith2Jokers extends CardDeck
@@ -20,7 +18,7 @@ class DeckWith2Jokers extends CardDeck
         $data = [
             'title' => 'Spelkort med jokrar',
             'card_deck' => $card->deck(),
-            'joker' => 'j',
+            'add_joker_to_deck' => 'j',
         ];
 
         return $this->render('card/deck2.html.twig', $data);
