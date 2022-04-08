@@ -1,0 +1,56 @@
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    line-height: 84px;
+    font-size: 24px;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav .logo {
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 84px;
+}
+
+.nav-items li {
+    list-style: none;
+    margin-right: 100px;
+}
+
+.nav-items li a:hover {
+    opacity: 0.7;
+    transition: 0.3s ease;
+    font-size: 2rem;
+}
+
+.nav-items li:nth-last-of-type(2) {
+    margin: 2px;
+}
+
+.nav-items li:nth-last-of-type(3) {
+    margin: 2px;
+}
+
+.nav-items li:nth-last-of-type(1) {
+    margin: 2px;
+}
+
+.nav-items li:nth-last-of-type(4) {
+    margin: 2px;
+}
+
+.nav-items li a {
+    font-family: 'Oswald', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 72px;
+    text-decoration: none;
+    color: black;
+}
