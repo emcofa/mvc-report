@@ -48,15 +48,14 @@ class Game extends AbstractController
         SessionInterface $session
     ): Response {
         session_start();
-        
+
         $card = $session->get("deck") ?? new \App\Card\Deck();
 
         if (isset($_GET['action'])) {
-
             switch ($_GET['action']) {
 
-                case 'new';
-                    new Game21;
+                case 'new':
+                    new Game21();
                     break;
 
                 // case 'end';
@@ -65,21 +64,20 @@ class Game extends AbstractController
                 //     Game21::end();
                 //     break;
 
-                case 'hit';
+                case 'hit':
                     Player21::getPlayer()->hit();
                     break;
 
-                case 'stand';
+                case 'stand':
                     Player21::getPlayer()->stand();
                     break;
 
-                default;
+                default:
             }
         }
 
         // Pass values back to "view"
         if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
-
             $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
 
             $playerScore = $_SESSION['player']->getCurrentScore();
@@ -104,11 +102,11 @@ class Game extends AbstractController
             // 'activeHand' => $activeHand,
             'playerScore' => $playerScore,
             // 'playerHand' => $playerHand,
-            'playerHand' => explode(", ",$playerHand),
+            'playerHand' => explode(", ", $playerHand),
             'playerWins' => $playerWins,
             'dealerScore' => $dealerScore,
             // 'dealerHand' => $dealerHand,
-            'dealerHand' => explode(", ",$dealerHand),
+            'dealerHand' => explode(", ", $dealerHand),
             'dealerWins' => $dealerWins,
             'session' => $_SESSION,
         ];
