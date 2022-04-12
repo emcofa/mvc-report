@@ -1,0 +1,29 @@
+.scoreboard {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.table-scoreboard {
+    margin: 0 auto;
+    font-family: 'Oswald', sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

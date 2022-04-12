@@ -1,0 +1,63 @@
+{% include "base.html.twig" %}
+
+{# {% block title %}Dice{% endblock %} #}
+
+{% block content %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container2">
+        <h2>{{ title }}</h2>
+        <form method="post">
+            <p>
+                <input type="submit" value="DEAL">
+            </p>
+            <p>
+                <input type="submit" value="STAND">
+            </p>
+        </form>
+        <div class="card-info-wrapper">
+            <div class="column-links single-card">
+                <h3>Player:</h3>
+                <img class="cards" src="{{ asset("img/cards/" ~ card_deck ~ ".svg" ) }}" width="200" height="280"
+                    alt="{{card_deck}}">
+            </div>
+            <div class="column-links">
+                <h3>Dealer:</h3>
+            </div>
+        </div>
+        <div class="scoreboard">
+            <table class="table-scoreboard">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-right">Current card total</th>
+                        <th class="text-right">Total wins</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Player</strong>
+                        </td>
+                        <td class="text-right">total points</td>
+                        <td class="text-right">total wins</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Dealer</strong>
+                        </td>
+                        <td class="text-right">total points</td>
+                        <td class="text-right">total wins</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+    {% include 'footer.twig' %}
+</body>
+
+{% endblock %}
