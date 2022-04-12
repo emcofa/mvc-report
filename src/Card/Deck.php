@@ -32,6 +32,7 @@ class Deck
     }
 
 
+
     public function shuffle(array $cards)
     {
         $this->deleteCards = null;

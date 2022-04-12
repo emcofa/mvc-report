@@ -6,55 +6,72 @@
 
 <body>
     {% include 'nav.twig' %}
-    <div class="container2">
-        <h2>{{ title }}</h2>
-        <form method="post">
-            <p>
-                <input type="submit" value="DEAL">
-            </p>
-            <p>
-                <input type="submit" value="STAND">
-            </p>
-        </form>
-        <div class="card-info-wrapper">
-            <div class="column-links single-card">
-                <h3>Player:</h3>
-                <img class="cards" src="{{ asset("img/cards/" ~ card_deck ~ ".svg" ) }}" width="200" height="280"
-                    alt="{{card_deck}}">
-            </div>
-            <div class="column-links">
-                <h3>Dealer:</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Kortspel 21</h2>
             </div>
         </div>
+        <div id="table" class="row">
+            <div>
+                <div class="box">
+                    <h3>Spelare:</h3>
+                    {% for card in playerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg" ) }}"
+                        width="105" height="145" alt="Testar kortnamn">
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <div class="box">
+                    <h3>Dealer:</h3>
+                    {% for card in dealerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg" ) }}"
+                        width="105" height="145" alt="">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div id="buttons" class="row">
+
+            <div class="buttons">
+                <button><a class="btn" href="?action=hit">Dra ett till kort</a></button>
+                <button><a class="btn" href="?action=stand">Stanna</a></button>
+                <button><a class="btn" href="?action=new">Nytt spel</a>
+                <!-- <a class="btn btn-danger" href="?action=end">Avsluta spel</a> -->
+            </div>
+        </div>
+
         <div class="scoreboard">
             <table class="table-scoreboard">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th class="text-right">Current card total</th>
-                        <th class="text-right">Total wins</th>
+                        <th>&nbsp;</th>
+                        <th class="text-right">Nuvarande totala poäng</th>
+                        <th class="text-right">Totala vinster</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <strong>Player</strong>
+                        <td><strong>Spelare</strong></td>
+                        <td class="text-right">
+                            {{playerScore}}
                         </td>
-                        <td class="text-right">total points</td>
-                        <td class="text-right">total wins</td>
+                        <td class="text-right">
+                            {{playerWins}}
+                        </td>
                     </tr>
                     <tr>
-                        <td>
-                            <strong>Dealer</strong>
+                        <td><strong>Dealer</strong></td>
+                        <td class="text-right">
+                            {{dealerScore}}
                         </td>
-                        <td class="text-right">total points</td>
-                        <td class="text-right">total wins</td>
+                        <td class="text-right">
+                            {{dealerWins}}
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-
     </div>
 
     {% include 'footer.twig' %}

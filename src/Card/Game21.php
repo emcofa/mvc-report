@@ -4,94 +4,179 @@ namespace App\Card;
 
 class Game21
 {
-    // prints out a deck of cards
-    public $DECK = array();
-    public $DEALER = array();
-    public $PLAYER = array();
-    public $numCards = 52;
 
+   const
+      /**
+       * @var int The final score in Blackjack
+       */
+      BLACKJACK = 21;
+   private $activeGame = false;
 
-    public function dealDealer()
-    {
-        return array_pop($this->DECK) . "," . array_pop($this->DECK);
-    }
+   public function __construct()
+   {
+      if (session_status() === PHP_SESSION_ACTIVE) {
 
-    public function dealPlayer()
-    {
-        return array_pop($this->DECK) . "," . array_pop($this->DECK);
-    }
+         // First hand or just a new hand
+         if ($this->activeGame == false) {
 
-    public function dealCard()
-    {
-        return array_pop($this->DECK);
-    }
+            $this->activeGame  = true;
 
-    public function translateCard($card)
-    {
-        $face = substr($card, 0, -1);
-        $suit = substr($card, -1, 1);
-        switch ($suit) {
-            case 'C':
-                return $face . " of Clubs";
-            case 'S':
-                return $face . " of Spades";
-            case 'H':
-                return $face . " of Hearts";
-            case 'D':
-                return $face . " of Diamonds";
-        }
-    }
-    public function getHandValue($cards)
-    {
-        $value = 0;
-        foreach ($cards as &$values) {
-            $value += $this->getCardValue($values);
-        }
-        return $value;
-    }
+            // Shuffle deck
+            $_SESSION['deck'] = Card::shuffleDeck();
 
-    public function getCardValue($card)
-    {
-        $face = substr($card, 0, -1);
-        $suit = substr($card, -1, 1);
-        $num_pattern = '/[0-9]/';
-        $face_pattern = '/[JQK]/';
-        if (preg_match($num_pattern, $face)) {
-            // This is a number card
-            return $face;
-        } else if (preg_match($face_pattern, $face)) {
-            // This is a regular face card value of 10
-            return 10;
-        } else {
-            // Ace 1 or 12
-            return 1;
-            echo "ACE.";
-        }
-        echo "Face: " . $face . "<br />Suit: " . $suit . "<br />";
-    }
+            // Generate players
+            $_SESSION['player'] = new Player21;
+            $_SESSION['dealer'] = new Player21('dealer');
+         }
 
-    /**returns 1 if game is over, 0 if no victory conditions are met**/
-    public function winCheck($uValue, $dValue, $stand)
-    {
-        if ($uValue > 21) {
-            /**YOU LOSE**/
-            echo "<div style='background-color:red; text-align:center; color:white; font-size:26px; font-weight:bold; padding:20px;'>You Lose!!!</div>";
-            return 1;
-        } else if ($dValue > 21) {
-            /**YOU WIN**/
-            echo "<div style='background-color:green; text-align:center; color:white; font-size:26px; font-weight:bold; padding:20px;'>You Win!!!</div>";
-            return 1;
-        } else if ($stand == 1) {
-            if ($uValue > $dValue) {
-                /**YOU WIN**/
-                echo "<div style='background-color:green; text-align:center; color:white; font-size:26px; font-weight:bold; padding:20px;'>You Win!!!</div>";
-                return 1;
-            } else {
-                /**YOU LOSE**/
-                echo "<div style='background-color:red; text-align:center; color:white; font-size:26px; font-weight:bold; padding:20px;'>You Lose!!!</div>";
-                return 1;
-            }
-        }
-        return 0;
-    }
+         self::purgeFlash();
+         self::new();
+      }
+   }
+
+   /**
+    * Reset player scores and shuffle deck
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function new()
+   {
+      $_SESSION['handOver'] = false;
+
+      // Clear hands
+      Player21::getPlayer('player')->clearCurrentHand();
+      Player21::getPlayer('dealer')->clearCurrentHand();
+
+      // Divvy out two cards each
+      Player21::getPlayer('player')->hit();
+      Player21::getPlayer('dealer')->hit();
+      Player21::getPlayer('player')->hit();
+      Player21::getPlayer('dealer')->hit();
+
+      self::refresh();
+   }
+
+   /**
+    * Called after a player hits or stands; this method see who the winner of a hand is
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function checkForWinner()
+   {
+      $player = Player21::getPlayer();
+      $dealer = Player21::getPlayer('dealer');
+
+      $playerScore = $player->getCurrentScore();
+      $dealerScore = $dealer->getCurrentScore(false);
+
+      if ($playerScore > self::BLACKJACK) {
+         $dealer->win();
+         self::flash('danger', 'Player busted! Dealer wins!');
+      } else if ($dealerScore > self::BLACKJACK) {
+         $player->win();
+         self::flash('success', 'Dealer busted! Player wins!');
+      } else if ($playerScore === self::BLACKJACK) {
+         $player->win();
+         self::flash('success', 'Player gets Blackjack!');
+      } else if ($playerScore === self::BLACKJACK && $dealerScore === self::BLACKJACK) {
+         self::flash('warning', 'Two Blackjacks! No score change.');
+      } else if ($dealerScore === self::BLACKJACK) {
+         $dealer->win();
+         self::flash('danger', 'Dealer gets Blackjack!');
+      } else if ($playerScore > $dealerScore && $dealerScore < Player21::DEALERSTANDS) {
+         $dealer->dealersTurn();
+      } else if ($playerScore > $dealerScore) {
+         $player->win();
+         self::flash('success', 'Player wins!');
+      } else if ($dealerScore > $playerScore) {
+         $dealer->win();
+         self::flash('danger', 'Dealer wins!');
+      } else if ($dealerScore === $playerScore) {
+         self::flash('warning', 'Same score! No score change.');
+      } else {
+         //
+      }
+   }
+
+   /**
+    * Game over
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function end()
+   {
+      if (session_status() === PHP_SESSION_ACTIVE) {
+         session_destroy();
+         self::refresh();
+      }
+   }
+
+   /**
+    * Flashes a message
+    * @static
+    * @param string $type Type of message; pairs with a Bootstrap CSS class
+    * @param string $message Message details of the outcome of a hand
+    * @access public
+    * @return void
+    */
+   public static function flash(string $type, string $message)
+   {
+      if (session_status() === PHP_SESSION_ACTIVE) {
+         $_SESSION['flash']['type'] = $type;
+         $_SESSION['flash']['message'] = $message;
+
+         self::handOver();
+         self::refresh();
+      }
+   }
+
+   /**
+    * Purges flash message from session scope- generally called when a new hand has started
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function purgeFlash()
+   {
+      unset($_SESSION['flash']);
+   }
+
+   /**
+    * Responsible for indicating that a hand is over so the dealer can determine next steps
+    * as well as revealing the dealer's hand
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function handOver()
+   {
+      $_SESSION['handOver'] = true;
+   }
+
+   /**
+    * Responsible for refreshing the page to indicate session changes
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function refresh()
+   {
+      header('Location: /');
+   }
+
+   /**
+    * Checks to make sure a session is valid and active prior to executing game actions
+    * @static
+    * @access public
+    * @return void
+    */
+   public static function checkForValidSession(): void
+   {
+      if (session_status() === PHP_SESSION_ACTIVE) {
+         self::flash('warning', 'Invalid session or your session has expired.  Ending game.');
+      }
+   }
 }
