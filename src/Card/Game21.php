@@ -19,7 +19,7 @@ class Game21
         self::new();
     }
 
-    public static function new()
+    public static function new(): void
     {
         $_SESSION['handOver'] = false;
 
@@ -34,7 +34,7 @@ class Game21
         self::refresh();
     }
 
-    public static function checkIfGameEnd()
+    public static function checkStatus()
     {
         $player = Player21::getPlayer();
         $dealer = Player21::getPlayer('dealer');
@@ -59,6 +59,8 @@ class Game21
             return $message;
         } elseif ($playerScore > $dealerScore && $dealerScore < 17) {
             $dealer->dealersTurn();
+            $message = 'Dealer nöjd, tryck på knappen igen för att se resultat.';
+            return $message;
         } elseif ($playerScore > $dealerScore) {
             $message = 'Spelare vinner!';
             return $message;
@@ -69,7 +71,7 @@ class Game21
             $message = 'Samma poäng! Det blev lika.';
             return $message;
         } else {
-            $message = 'Error';
+            $message = 'Något gick fel, tryck på nytt spel för att starta om spelet.';
             return $message;
         }
     }

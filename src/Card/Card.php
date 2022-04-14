@@ -17,19 +17,17 @@ class Card
         $this->value = $value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value . $this->type;
     }
 
     public function getValueOfCard(): int
     {
+        $value = is_numeric($this->value) ? $this->value : 10;
         if (strtolower($this->value) === 'ace') {
-            $value = 11; // @TODO An Ace can be either 1 or 11; player choice
-        } else {
-            $value = is_numeric($this->value) ? $this->value : 10;
+            $value = 11;
         }
-
         return $value;
     }
 

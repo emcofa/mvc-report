@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Card\Game21;
 use App\Card\Player21;
+use App\Card\Deck;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class Game extends AbstractController
         SessionInterface $session
     ): Response {
         session_start();
-        $card = $session->get("deck") ?? new \App\Card\Deck();
+        $card = $session->get("deck") ?? new Deck();
         $message = "";
 
         if (isset($_GET['action'])) {
@@ -71,17 +72,16 @@ class Game extends AbstractController
             }
         }
 
+        $playerScore = 0;
+        $playerHand = [];
+        $dealerScore = 0;
+        $dealerHand = [];
         if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
             $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
             $playerScore = $_SESSION['player']->getCurrentScore();
             $playerHand = $_SESSION['player']->getCurrentHand();
             $dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);
             $dealerHand = $_SESSION['dealer']->getCurrentHand($activeHand);
-        } else {
-            $playerScore = 0;
-            $playerHand = [];
-            $dealerScore = 0;
-            $dealerHand = [];
         }
 
         $data = [

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Card\Deck;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class DeckWith2Jokers extends CardDeck
      */
     public function deck2(): Response
     {
-        $card = new \App\Card\Deck();
+        $card = new Deck();
         $data = [
             'title' => 'Spelkort med jokrar',
             'card_deck' => $card->deck(),

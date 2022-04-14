@@ -18,7 +18,7 @@ class CardDeck extends AbstractController
      */
     public function deck(): Response
     {
-        $card = new \App\Card\Deck();
+        $card = new Deck();
         $data = [
             'title' => 'Spelkort (sorterade i färg och värde)',
             'card_deck' => $card->deck(),
@@ -52,14 +52,12 @@ class CardDeck extends AbstractController
     public function cardDeckDraw(
         SessionInterface $session
     ): Response {
-        $card = $session->get("deck") ?? new \App\Card\Deck();
+        $card = $session->get("deck") ?? new Deck();
 
         $data = [
             'title' => 'Du drog följande:',
             'card_deck' => $card->draw(),
             'count' => $card->getNumberCards(),
-            // 'die_as_string' => $die->getAsString(),
-            // 'link_to_roll' => $this->generateUrl('dice-graphic-roll', ['numRolls' => 5,]),
         ];
 
         $session->set("deck", $card);
@@ -76,7 +74,7 @@ class CardDeck extends AbstractController
         SessionInterface $session,
         Request $request
     ): Response {
-        $card = $session->get("deck") ?? new \App\Card\Deck();
+        $card = $session->get("deck") ?? new Deck();
 
         $data = [
             'title' => 'Du drog följande:',

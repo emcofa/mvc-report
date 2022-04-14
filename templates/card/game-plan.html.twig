@@ -30,13 +30,13 @@
                 </div>
             </div>
         </div>
-        <p>{{message}}</p>
+        <p id="message">{{message}}</p>
         <div id="buttons" class="row">
 
             <div class="buttons">
-                <button><a class="btn" href="?action=hit">Dra ett till kort</a></button>
-                <button><a class="btn" href="?action=stand">Stanna, se vem vinner runda</a></button>
-                <button><a class="btn" href="?action=new">Nytt spel</a>
+                <button onclick="window.location.href='?action=hit'" class="btn" id="btn1">Dra ett till kort</button>
+                <button onclick="disableButton();window.location.href='?action=stand'" class="btn" id="btn2">Stanna</button>
+                <button onclick="window.location.href='?action=new'" class="btn">Nytt spel</button>
             </div>
         </div>
 
@@ -68,5 +68,17 @@
 
     {% include 'footer.twig' %}
 </body>
+
+<script>
+    function disableButton() {
+        console.log("jag fungerar")
+        let button = document.getElementById("btn2");
+        let message = document.getElementById("message");
+        console.log(button.innerHTML)
+        console.log(message.innerHTML)
+    };
+
+</script>
+
 
 {% endblock %}

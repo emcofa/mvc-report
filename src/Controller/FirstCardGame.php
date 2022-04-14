@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Card\BasicCardGame;
 
-class BasicCardGame extends AbstractController
+class FirstCardGame extends AbstractController
 {
     /**
      * @Route("/card/deck/deal/{players}/{cards}", name="gamePlayer")
@@ -17,7 +18,7 @@ class BasicCardGame extends AbstractController
         int $players,
         int $cards
     ): Response {
-        $card = new \App\Card\BasicCardGame();
+        $card = new BasicCardGame();
         $data = [
             'title' => 'Kortspel',
             'players' => $players,

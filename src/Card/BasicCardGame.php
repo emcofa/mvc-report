@@ -20,7 +20,7 @@ class BasicCardGame
         }
     }
 
-    public function deal(&$allCards, $players, $numCards)
+    public function deal(&$allCards, $players, $numCards): array
     {
         $hand = array();
         if ($players * $numCards > $this->numCards) {
@@ -51,8 +51,7 @@ class BasicCardGame
     {
         if ($this->numCards - count($this->allCards) < 0) {
             return 0;
-        } else {
-            return count($this->allCards);
         }
+        return count($this->allCards);
     }
 }

@@ -19,15 +19,15 @@ class Deck
         }
     }
 
-    public function deck()
+    public function deck(): array
     {
         return $this->allCards;
     }
 
-    public function draw()
+    public function draw(): string
     {
         if (count($this->allCards) == 0) {
-            return;
+            return "0";
         }
         shuffle($this->allCards);
         $cards = $this->allCards[0];
@@ -38,19 +38,19 @@ class Deck
         return $cards;
     }
 
-    public function drawNumber(int $number)
+    public function drawNumber(int $number): array
     {
         if (count($this->allCards) == 0) {
-            return;
+            return [];
         }
-        $x = 0;
-        while ($x <= $number - 1) {
+        $counter = 0;
+        while ($counter <= $number - 1) {
             shuffle($this->allCards);
             $cards = $this->allCards[0];
             array_shift($this->allCards);
             $this->deleteCards[] = $cards;
             $deleteCards[] = $cards;
-            $x++;
+            $counter++;
         }
         return $deleteCards;
     }
@@ -59,8 +59,7 @@ class Deck
     {
         if ($this->numCards - count($this->allCards) < 0) {
             return 0;
-        } else {
-            return count($this->allCards);
         }
+        return count($this->allCards);
     }
 }
