@@ -2,21 +2,18 @@
 
 namespace App\Card;
 
-class CardHand
+class BasicCardGame
 {
     // prints out a deck of cards
     public $numCards = 52;
-    private $values = array('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A');
-    private $suits  = array('H', 'D', 'C', 'S');
     private $allCards;
     private $gameArray = [];
-
 
     public function __construct()
     {
         $this->allCards = [];
-        foreach ($this->suits as $suit) {
-            foreach ($this->values as $value) {
+        foreach (Card::SUITS as $suit) {
+            foreach (Card::VALUES as $value) {
                 $this->allCards[] = $value . $suit;
             }
         }

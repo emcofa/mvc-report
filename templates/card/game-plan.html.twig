@@ -30,14 +30,13 @@
                 </div>
             </div>
         </div>
-
+        <p>{{message}}</p>
         <div id="buttons" class="row">
 
             <div class="buttons">
                 <button><a class="btn" href="?action=hit">Dra ett till kort</a></button>
-                <button><a class="btn" href="?action=stand">Stanna</a></button>
+                <button><a class="btn" href="?action=stand">Stanna, se vem vinner runda</a></button>
                 <button><a class="btn" href="?action=new">Nytt spel</a>
-                <!-- <a class="btn btn-danger" href="?action=end">Avsluta spel</a> -->
             </div>
         </div>
 
@@ -47,7 +46,6 @@
                     <tr>
                         <th>&nbsp;</th>
                         <th class="text-right">Nuvarande totala poäng</th>
-                        <th class="text-right">Totala vinster</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,17 +54,11 @@
                         <td class="text-right">
                             {{playerScore}}
                         </td>
-                        <td class="text-right">
-                            {{playerWins}}
-                        </td>
                     </tr>
                     <tr>
                         <td><strong>Dealer</strong></td>
                         <td class="text-right">
                             {{dealerScore}}
-                        </td>
-                        <td class="text-right">
-                            {{dealerWins}}
                         </td>
                     </tr>
                 </tbody>

@@ -1,3 +1,11 @@
+
+.nav-container {
+    height: 72px;
+    background-color: #E5E5E5;
+    margin-bottom: 0px;
+    border-bottom: 1px solid black;
+}
+
 nav {
     display: flex;
     align-items: center;
@@ -42,6 +50,10 @@ nav .logo {
 }
 
 .nav-items li:nth-last-of-type(4) {
+    margin: 2px;
+}
+
+.nav-items li:nth-last-of-type(5) {
     margin: 2px;
 }
 

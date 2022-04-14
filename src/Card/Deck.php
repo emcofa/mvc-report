@@ -2,20 +2,18 @@
 
 namespace App\Card;
 
+//class for creating deck of Card class
 class Deck
 {
-    // prints out a deck of cards
     public $numCards = 52;
-    private $values = array('2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14');
-    private $suits  = array('H', 'D', 'C', 'S');
     private $allCards;
     private $deleteCards = [];
 
     public function __construct()
     {
         $this->allCards = [];
-        foreach ($this->suits as $suit) {
-            foreach ($this->values as $value) {
+        foreach (Card::SUITS as $suit) {
+            foreach (Card::VALUES as $value) {
                 $this->allCards[] = $value . $suit;
             }
         }
@@ -24,30 +22,6 @@ class Deck
     public function deck()
     {
         return $this->allCards;
-    }
-
-    public function value()
-    {
-        return $this->allCards;
-    }
-
-
-
-    public function shuffle(array $cards)
-    {
-        $this->deleteCards = null;
-        $total_cards = count($cards);
-        $this->numCards = 52;
-
-        foreach ($cards as $index => $card) {
-            $card2_index = mt_rand(1, $total_cards) - 1;
-            $card2 = $cards[$card2_index];
-
-            $cards[$index] = $card2;
-            $cards[$card2_index] = $card;
-        }
-
-        return $cards;
     }
 
     public function draw()
@@ -80,7 +54,6 @@ class Deck
         }
         return $deleteCards;
     }
-
 
     public function getNumberCards(): int
     {

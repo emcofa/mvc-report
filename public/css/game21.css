@@ -49,3 +49,16 @@ button {
     font-family: 'Oswald', sans-serif;
     letter-spacing: 1.2;
 }
+
+.begin-game-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    color: rgb(230, 149, 0);
+}
+
+.begin-game-btn:hover {
+    opacity: 0.7;
+    transition: 0.3s ease;
+    font-size: 2rem;
+}
+

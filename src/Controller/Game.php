@@ -48,88 +48,57 @@ class Game extends AbstractController
         SessionInterface $session
     ): Response {
         session_start();
-
         $card = $session->get("deck") ?? new \App\Card\Deck();
+        $message = "";
 
         if (isset($_GET['action'])) {
+
             switch ($_GET['action']) {
 
-                case 'new':
-                    new Game21();
+                case 'new';
+                    new Game21;
+                    $message = "";
                     break;
 
-                // case 'end';
-                //     $playerHand = [];
-                //     $dealerScore = [];
-                //     Game21::end();
-                //     break;
-
-                case 'hit':
+                case 'hit';
                     Player21::getPlayer()->hit();
+                    $message = "";
                     break;
 
-                case 'stand':
-                    Player21::getPlayer()->stand();
+                case 'stand';
+                    $message = Player21::getPlayer()->stand();
                     break;
 
-                default:
+                default;
             }
         }
 
-        // Pass values back to "view"
         if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
-            $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
 
+            $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
             $playerScore = $_SESSION['player']->getCurrentScore();
             $playerHand = $_SESSION['player']->getCurrentHand();
-            $playerWins = $_SESSION['player']->getTotalWins();
-
             $dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);
             $dealerHand = $_SESSION['dealer']->getCurrentHand($activeHand);
-            $dealerWins = $_SESSION['dealer']->getTotalWins();
         } else {
             $playerScore = 0;
             $playerHand = [];
-            $playerWins = 0;
-
             $dealerScore = 0;
             $dealerHand = [];
-            $dealerWins = 0;
         }
 
         $data = [
             'title' => 'Kortspel 21',
-            // 'activeHand' => $activeHand,
             'playerScore' => $playerScore,
             // 'playerHand' => $playerHand,
             'playerHand' => explode(", ", $playerHand),
-            'playerWins' => $playerWins,
             'dealerScore' => $dealerScore,
             // 'dealerHand' => $dealerHand,
             'dealerHand' => explode(", ", $dealerHand),
-            'dealerWins' => $dealerWins,
-            'session' => $_SESSION,
+            'message' => $message,
         ];
 
         $session->set("game-plan", $card);
         return $this->render('card/game-plan.html.twig', $data);
-    }
-
-    /**
-     * @Route(
-     *      "/game/plan",
-     *      name="game-plan-process",
-     *      methods={"POST"}
-     * )
-     */
-    public function gamePlanProcess(): Response
-    {
-        // $data = [
-        //     'title' => 'Kortspel 21',
-        // ];
-
-        // return $this->render('card/game-plan.html.twig', $data);
-
-        return $this->redirectToRoute('game-plan');
     }
 }
