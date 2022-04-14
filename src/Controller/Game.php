@@ -52,29 +52,26 @@ class Game extends AbstractController
         $message = "";
 
         if (isset($_GET['action'])) {
-
             switch ($_GET['action']) {
-
-                case 'new';
-                    new Game21;
+                case 'new':
+                    new Game21();
                     $message = "";
                     break;
 
-                case 'hit';
+                case 'hit':
                     Player21::getPlayer()->hit();
                     $message = "";
                     break;
 
-                case 'stand';
+                case 'stand':
                     $message = Player21::getPlayer()->stand();
                     break;
 
-                default;
+                default:
             }
         }
 
         if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
-
             $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
             $playerScore = $_SESSION['player']->getCurrentScore();
             $playerHand = $_SESSION['player']->getCurrentHand();

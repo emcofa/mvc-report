@@ -4,7 +4,7 @@ namespace App\Card;
 
 use App\Card\Game21;
 
-//class for managing player and dealer 
+//class for managing player and dealer
 class Player21
 {
     protected $player;

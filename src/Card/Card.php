@@ -2,7 +2,6 @@
 
 namespace App\Card;
 
-
 //class for creating cards
 class Card
 {
@@ -14,7 +13,6 @@ class Card
 
     public function __construct(string $type, string $value)
     {
-
         $this->type = $type;
         $this->value = $value;
     }
@@ -54,7 +52,6 @@ class Card
 
     public static function getTopCardFromDeck(): self
     {
-
         return array_shift($_SESSION['deck']);
     }
 }

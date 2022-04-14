@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Card\Card;
 use App\Card\Deck;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CardDeck extends AbstractController
 {
-        /**
+    /**
      * @Route("/card/deck", name="deck")
      */
     public function deck(): Response
-    {   
+    {
         $card = new \App\Card\Deck();
         $data = [
             'title' => 'Spelkort (sorterade i färg och värde)',
@@ -89,5 +88,4 @@ class CardDeck extends AbstractController
 
         return $this->render('card/draw-number.html.twig', $data);
     }
-    
 }
