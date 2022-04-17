@@ -29,13 +29,14 @@
                     {% endfor %}
                 </div>
             </div>
+            <p>(För att se vinnare av varje runda måste du trycka på knappen "stanna")</p>
         </div>
-        <p id="message">{{message}}</p>
+        <h3 id="message">{{message}}</h3>
         <div id="buttons" class="row">
 
             <div class="buttons">
                 <button onclick="window.location.href='?action=hit'" class="btn" id="btn1">Dra ett till kort</button>
-                <button onclick="disableButton();window.location.href='?action=stand'" class="btn" id="btn2">Stanna</button>
+                <button onclick="disableButton();window.location.href='?action=stand'" class="btn" id="btn2">Stanna (se resultat)</button>
                 <button onclick="window.location.href='?action=new'" class="btn">Nytt spel</button>
             </div>
         </div>

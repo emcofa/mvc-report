@@ -87,10 +87,8 @@ class Game extends AbstractController
         $data = [
             'title' => 'Kortspel 21',
             'playerScore' => $playerScore,
-            // 'playerHand' => $playerHand,
             'playerHand' => explode(", ", $playerHand),
             'dealerScore' => $dealerScore,
-            // 'dealerHand' => $dealerHand,
             'dealerHand' => explode(", ", $dealerHand),
             'message' => $message,
         ];
