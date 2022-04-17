@@ -70,6 +70,48 @@
             till ett lite längre stycke som jag tänker ska fungera som inte gör det och då får jag backa tillbaka alla
             steg för att se vad som är fel. Då är det bättre att lägga till en del i taget och kolla så allt fungerar.
         </p>
+        <h3>KMOM03</h3>
+        <p>Jag tyckte det var ganska svårt att modellera ett kortspel efter ett flödesdiagram och pseudokod. Eftersom
+            jag tyckte förra veckan var så omfattande (hann göra pseudokoden och flödesdiagrammet innan vi fick
+            tillåtelse att vänta med det till denna vecka) hade jag svårt att visualisera hur jag skulle implementera
+            klasserna och dess kod inför denna vecka. Därav blev det inte riktigt som jag tänkte eftersom vissa delar
+            inte fungerade och så döpte jag om variabler/metoder/klasser för att de inte skulle ha för lika namn. Om jag
+            hade ägnat mer tid åt att ha möjlighet att kunna göra en bra pseudokod tror jag absolut att det kan vara
+            till användning för att stödja min problemlösning och tankearbete för att strukturera min kod.</p>
+        <p>Jag löste grunderna i spelet. Det fick bli så att jag fick hitta på lite egna regler för att jag skulle få
+            ihop spelet. Ess är till exempel alltid värt 11. Jag gjorde även så att spelaren börjar med två kort och
+            banken bara ett för att spelaren inte ska behöva trycka på knappen så många gånger. Jag insåg när jag
+            började koda att det var svårt att återanvända all kod som jag gjorde förra kursmomentet då den koden var
+            skapad så den skulle fungera med den veckans uppgifter. Jag insåg att jag behövde skapa ytterligare en
+            “card” klass som skapar själva korten och dess värde. Med hjälp av den klassen kunde jag dock återanvända
+            mycket av koden. Jag tycker det har varit lite svårt eftersom vi inte har fått någon grundlig föreläsning om
+            hur klasser och dess attribut fungerar i Php så mycket har man behövt ta reda på själv eller googlat. Även
+            hur sessioner fungerar har jag fortfarande lite svårt att förstå hur det fungerar. Känner inte att det finns
+            jättemycket tid att sätta sig in i alla nya begrepp/repetera från webtec-kursen. Därav är min kod kanske
+            inte den bästa SOLID eftersom jag inte riktigt vet hur jag ska kunna förbättra den när jag fortfarande
+            håller på att lära mig hur jag ska formulera den. Jag vet att jag får upp många felmeddelanden med “composer
+            lint” men innan var det nästan dubbelt så mycket och nu har jag verkligen försökt korta ner men vissa
+            felmeddelanden som jag får upp har jag ingen aning om vad de betyder och när jag googlar får jag inga svar
+            alls. Jag tog i princip bort mina “else-satser” förutom en eller två som jag var tvungen att ha med för att
+            min kod inte skulle krascha. Jag försökte även göra ett Interface för Player-klassen men eftersom jag inte
+            har gjort något sådant innan vet jag inte om jag gjorde rätt. Jag hade kunnat göra bättre också att
+            knapparna i templaten inte går att trycka på allihop samtidigt eller att det dyker upp ett flash-meddelande
+            direkt när poängen överstiger 21 eller liknande. Men helt ärligt hade jag kämpigt som det var att få spelet
+            att gå runt så jag är glad att jag ens fick till något.</p>
+        <p>
+            Jag tycker Symfony fortfarande är ett klurigt ramverk. Jag tycker det är svårt med Namespace och dessa
+            felmeddelanden som kommer upp som inte alls förklarar vad som är fel. Felsökningen tar upp ca 80% (det vill
+            säga försöka ta reda på vad som är fel i koden) vilket lämnar ytterst lite tid till att faktiskt försöka
+            implementera en bra kod som reglerar spelreglerna på ett bra sätt utan upprepning. Jag är som jag tidigare
+            nämnt en rejäl nybörjare inom programmering så jag vet att jag har mycket kvar att lära innan jag kan skriva
+            en dry-kod helt och hållet.
+        </p>
+        <p>Mitt TIL är att bara fokusera på grunderna och inte stressa över om det inte blir perfekt och jag inte blir
+            helt nöjd över koden. Jag lägger mer tid än vad ramarna visar (säkert nästan dubbelt så mycket) och jag blir
+            knappt nöjd ändå. Jag tyckte dock veckans omfattning var bra då det kändes som en lagom mängd. Anledningen
+            till att det gick åt så mycket tid för min del var på grund av felsökningen och att jag inte har lärt mig
+            grunderna i hur man kan formulera koden i objektorienterad PHP helt och hållet ännu vilket kräver att jag
+            måste leta information på egen hand.</p>
     </div>
 
     {% include 'footer.twig' %}
