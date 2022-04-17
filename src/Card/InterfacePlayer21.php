@@ -2,7 +2,7 @@
 
 namespace App\Card;
 
-//Interface for players
+//Interface for players of game 21
 interface InterfacePlayer21
 {
     /**
