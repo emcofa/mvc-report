@@ -22,4 +22,14 @@ class DeckTest extends TestCase
         $this->assertContains("AceS", $getDeck);
         $this->assertContains("QueenD", $getDeck);
     }
+
+    /**
+     * See if deck contains 52 cards
+     */
+    public function testSizeOfDeck()
+    {
+        $deck = new Deck();
+        $getDeck = $deck->deck();
+        $this->assertEquals(count($getDeck), 52);
+    }
 }

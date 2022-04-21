@@ -11,12 +11,14 @@ class Game21
     {
         if ($this->activeGame == false) {
             $this->activeGame  = true;
-            $_SESSION['deck'] = Card::shuffleDeck();
-            $_SESSION['player'] = new Player21();
-            $_SESSION['dealer'] = new Player21('dealer');
         }
+    }
 
-        self::new();
+
+
+    public function gameStatus(): bool
+    {
+        return $this->activeGame;
     }
 
     public static function new(): void
@@ -69,9 +71,6 @@ class Game21
             return $message;
         } elseif ($dealerScore === $playerScore) {
             $message = 'Samma poäng! Det blev lika.';
-            return $message;
-        } else {
-            $message = 'Något gick fel, tryck på nytt spel för att starta om spelet.';
             return $message;
         }
     }

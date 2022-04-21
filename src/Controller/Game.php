@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Card\Card;
 use App\Card\Game21;
 use App\Card\Player21;
 use App\Card\Deck;
@@ -14,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class Game extends AbstractController
 {
+
+    protected $playerScore = 0;
+    protected $playerHand = [];
+    protected $dealerScore = 0;
+    protected $dealerHand = [];
     /**
      * @Route("/game/card", name="game21")
      */
@@ -46,16 +52,19 @@ class Game extends AbstractController
      * )
      */
     public function gamePlan(
-        SessionInterface $session
+        SessionInterface $session,
+        Request $request
     ): Response {
-        session_start();
-        $card = $session->get("deck") ?? new Deck();
+        $session->get("deck") ?? Card::shuffleDeck();
+        $session->get("player") ?? new Player21();
+        $session->get("dealer") ?? new Player21('dealer');
         $message = "";
 
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
+        if ($request->query->get("action")) {
+            switch ($request->query->get("action")) {
                 case 'new':
-                    new Game21();
+                    $game = new Game21();
+                    $game->new();
                     $message = "";
                     break;
 
@@ -67,33 +76,28 @@ class Game extends AbstractController
                 case 'stand':
                     $message = Player21::getPlayer()->stand();
                     break;
-
                 default:
             }
         }
-
-        $playerScore = 0;
-        $playerHand = [];
-        $dealerScore = 0;
-        $dealerHand = [];
-        if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
-            $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
-            $playerScore = $_SESSION['player']->getCurrentScore();
-            $playerHand = $_SESSION['player']->getCurrentHand();
-            $dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);
-            $dealerHand = $_SESSION['dealer']->getCurrentHand($activeHand);
-        }
+        $var = $request->query->get("action");
+        var_dump($var);
+        // if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
+        $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
+        $this->playerScore = $_SESSION['player']->getCurrentScore();
+        $this->playerHand = $_SESSION['player']->getCurrentHand();
+        $this->dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);
+        $this->dealerHand = $_SESSION['dealer']->getCurrentHand($activeHand);
+        // }
 
         $data = [
             'title' => 'Kortspel 21',
-            'playerScore' => $playerScore,
-            'playerHand' => explode(", ", $playerHand),
-            'dealerScore' => $dealerScore,
-            'dealerHand' => explode(", ", $dealerHand),
+            'playerScore' => $this->playerScore,
+            'playerHand' => explode(", ", $this->playerHand),
+            'dealerScore' => $this->dealerScore,
+            'dealerHand' => explode(", ", $this->dealerHand),
             'message' => $message,
         ];
 
-        $session->set("game-plan", $card);
         return $this->render('card/game-plan.html.twig', $data);
     }
 }

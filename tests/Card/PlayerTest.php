@@ -11,6 +11,24 @@ use PHPUnit\Framework\TestCase;
 class PlayerTest extends TestCase
 {
     /**
+     * Test to create a new player and see if is instance of Player21 class
+     */
+    public function testCreatePlayer()
+    {
+       $player = new Player21;
+       $this->assertInstanceOf(Player21::class, $player);
+    }
+
+    /**
+     * Test to create a dealer and see if is instance of Player21 class
+     */
+    public function testCreateDealer()
+    {
+       $dealer = new Player21('dealer');
+       $this->assertInstanceOf(Player21::class, $dealer);
+    }
+
+    /**
      * Test to create a player and draw two numeric cards and get the total score of the cards
      */
     public function testGetRightScoreNumCards()
@@ -45,19 +63,46 @@ class PlayerTest extends TestCase
         $this->assertSame(2, $dealer->getCurrentScore());
     }
 
-    public function testClearPlayerHand()
+    /**
+     * Test to clear players hand and see if value 0 returns
+     */
+    public function testToClearPlayersHand()
     {
         $player = new Player21;
+        $player->hit(new Card('C', '5'));
+        $player->hit(new Card('C', '3'));
+        $player->hit(new Card('H', '10'));
+        $player->hit(new Card('S', '2'));
 
-        $player->hit(new Card('diamond', '2'));
-        $player->hit(new Card('club', '6'));
-        $player->hit(new Card('spade', '10'));
-        $player->hit(new Card('heart', 'Ace'));
-
-        $this->assertSame(29, $player->getCurrentScore());
+        $this->assertSame(20, $player->getCurrentScore());
 
         $player->clearCurrentHand();
 
         $this->assertSame(0, $player->getCurrentScore());
+    }
+
+    /**
+     * Test to get current hand of player
+     */
+    public function testToGetCurrentHandPlayer()
+    {
+        $player = new Player21;
+        $player->hit(new Card('H', '3'));
+        $player->hit(new Card('S', '8'));
+        $player->hit(new Card('C', 'King'));
+
+        $this->assertSame("3H, 8S, KingC", $player->getCurrentHand());
+    }
+
+    /**
+     * Test to get current hand of dealer (first draw should not count)
+     */
+    public function testToGetCurrentHandDealer()
+    {
+        $dealer = new Player21('dealer');;
+        $dealer->hit(new Card('H', '3'));
+        $dealer->hit(new Card('S', 'King'));
+
+        $this->assertSame("KingS", $dealer->getCurrentHand());
     }
 }
