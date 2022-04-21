@@ -57,6 +57,9 @@ class Player21 implements InterfacePlayer21
 
     public function getCurrentScore($activeHand = true): int
     {
+        if ($this->currentHand === []) {
+            return 0;
+        }
         $score = $this->currentHand[1]->getValueOfCard();
         if (strtolower($this->player) === 'player' || (strtolower($this->player) === 'dealer' && !$activeHand)) {
             $score = $this->currentScore;
