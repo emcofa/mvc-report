@@ -27,13 +27,13 @@ class Player21 implements InterfacePlayer21
 
     public function stand(): string
     {
-        Game21::handOver();
+        // Game21::handOver();
         $status = Game21::checkStatus();
         return $status;
     }
 
     public function clearCurrentHand(): void
-    {
+    {   
         $this->currentHand = [];
         $this->currentScore = 0;
     }

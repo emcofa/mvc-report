@@ -56,14 +56,16 @@ class Game extends AbstractController
         Request $request
     ): Response {
         $session->get("deck") ?? Card::shuffleDeck();
-        $session->get("player") ?? new Player21();
+        $player = $session->get("player") ?? new Player21();
         $session->get("dealer") ?? new Player21('dealer');
+        $session->set("player", $player);
         $message = "";
 
         if ($request->query->get("action")) {
             switch ($request->query->get("action")) {
                 case 'new':
                     $game = new Game21();
+                    $session->set("handOver", false);
                     $game->new();
                     $message = "";
                     break;
@@ -75,14 +77,14 @@ class Game extends AbstractController
 
                 case 'stand':
                     $message = Player21::getPlayer()->stand();
+                    $session->set("handOver", true);
                     break;
                 default:
             }
         }
-        $var = $request->query->get("action");
-        var_dump($var);
+
         // if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
-        $activeHand = ($_SESSION['handOver'] ?? true === true) ? false : true;
+        $activeHand = ($session->get("handOver") ?? true === true) ? false : true;
         $this->playerScore = $_SESSION['player']->getCurrentScore();
         $this->playerHand = $_SESSION['player']->getCurrentHand();
         $this->dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);

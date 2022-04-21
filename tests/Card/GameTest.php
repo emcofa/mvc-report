@@ -20,8 +20,11 @@ class GameTest extends TestCase
     }
 
     public function testNewGame()
-    {
-        $handover = Game21::handOver();
-        $this->assertEquals($handover, false);
+    {   
+
+        // $player = new Player21();
+        // $dealer = new Player21("dealer");
+        $game = new Game21();
+        $game->new();
     }
 }

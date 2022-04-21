@@ -32,4 +32,31 @@ class DeckTest extends TestCase
         $getDeck = $deck->deck();
         $this->assertEquals(count($getDeck), 52);
     }
+
+    /**
+     * See if a string card returns
+     */
+
+    public function testdrawCard()
+    {
+        $deck = new Deck();
+        $getCard = $deck->draw();
+        $this->assertIsString($getCard);
+    }
+
+    public function testdrawXAmountOfCards()
+    {
+        $deck = new Deck();
+        $getCard = $deck->drawNumber(4);
+        $this->assertEquals(count($getCard), 4);
+    }
+
+    public function testGetCardsLeft()
+    {
+        $deck = new Deck();
+        $deck->draw();
+        $deck->draw();
+        $deck->draw();
+        $this->assertEquals($deck->getNumberCards(), 49);
+    }
 }

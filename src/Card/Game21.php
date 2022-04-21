@@ -14,17 +14,13 @@ class Game21
         }
     }
 
-
-
-    public function gameStatus(): bool
+    public function gameStatus()
     {
         return $this->activeGame;
     }
 
     public static function new(): void
     {
-        $_SESSION['handOver'] = false;
-
         Player21::getPlayer('player')->clearCurrentHand();
         Player21::getPlayer('dealer')->clearCurrentHand();
 
@@ -72,13 +68,12 @@ class Game21
         } elseif ($dealerScore === $playerScore) {
             $message = 'Samma poäng! Det blev lika.';
             return $message;
+        } else {
+            $message = 'Något gick fel, tryck på nytt spel för att starta om spelet.';
+            return $message;
         }
     }
 
-    public static function handOver()
-    {
-        $_SESSION['handOver'] = true;
-    }
 
     public static function refresh()
     {
