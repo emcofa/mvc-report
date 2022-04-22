@@ -2,14 +2,29 @@
 
 namespace App\Card;
 
-//first test card game class
+/**
+ * Class BasicCardGame
+ * @package App\Card;
+ * @author Emmie Fahlström
+ */
 class BasicCardGame
 {
-    // prints out a deck of cards
+    /**
+     * @var int amount of cards in deck
+     */
     public $numCards = 52;
+    /**
+     * @var array an array containing deck
+     */
     private $allCards;
+    /**
+     * @var array an array containing the drawn cards and should be divided to the players
+     */
     private $gameArray = [];
 
+    /**
+     * Constructor for creating a deck
+     */
     public function __construct()
     {
         $this->allCards = [];
@@ -20,6 +35,14 @@ class BasicCardGame
         }
     }
 
+    /**
+     * Deal x amount of cards to x amount of players
+     * @access public
+     * @param array $allCards all cards in the array
+     * @param int $players how many players who is playing the game
+     * @param int $numCards how many cards which should be drawn
+     * @return array
+     */
     public function deal(&$allCards, $players, $numCards): array
     {
         $hand = array();
@@ -31,7 +54,14 @@ class BasicCardGame
         return $hand;
     }
 
-    public function startGame($players, $cardsAmount)
+    /**
+     * Start the game
+     * @access public
+     * @param int $players how many players who is playing the game
+     * @param int $cardsAmount how many cards which should be drawn
+     * @return array
+     */
+    public function startGame($players, $cardsAmount): array
     {
         shuffle($this->allCards);
 
@@ -47,6 +77,11 @@ class BasicCardGame
         return $dividedToPlayers;
     }
 
+    /**
+     * Returns the number of card containing in the deck
+     * @access public
+     * @return int
+     */
     public function getNumberCards(): int
     {
         if ($this->numCards - count($this->allCards) < 0) {

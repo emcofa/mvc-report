@@ -2,27 +2,45 @@
 
 namespace App\Card;
 
-//class for handling rules and game flow of game 21
+/**
+ * Class Game21
+ * @package App\Card;
+ * @author Emmie Fahlström
+ */
 class Game21
 {
+    /**
+     * @var bool variabel for setting if game is active or not
+     */
     private $activeGame = false;
-    private $player;
-    private $dealer;
 
+
+    /**
+     * Constructor (creates new players)
+     */
     public function __construct()
     {
         if ($this->activeGame == false) {
             $this->activeGame  = true;
+            // $_SESSION['deck'] = Card::shuffleDeck();
             $this->player = new Player21();
             $this->dealer = new Player21("dealer");
         }
     }
 
-    public function gameStatus()
+    /**
+     * @return bool checks game status
+     */
+    public function gameStatus(): bool
     {
         return $this->activeGame;
     }
 
+    /**
+     * Resets current hands and player scores
+     * @access public
+     * @return void
+     */
     public function new(): void
     {
         Player21::getPlayer('player')->clearCurrentHand();
@@ -36,7 +54,13 @@ class Game21
         self::refresh();
     }
 
-    public static function checkStatus()
+    /**
+     * Checks who is the winner of the game
+     * @static
+     * @access public
+     * @return string
+     */
+    public static function checkStatus(): string
     {
         $player = Player21::getPlayer();
         $dealer = Player21::getPlayer('dealer');
@@ -75,7 +99,13 @@ class Game21
         }
     }
 
-    public static function refresh()
+    /**
+     * Refreshing the page
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function refresh(): void
     {
         header('Location: /');
     }
