@@ -15,11 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class Game extends AbstractController
 {
-
-    protected $playerScore = 0;
-    protected $playerHand = [];
-    protected $dealerScore = 0;
-    protected $dealerHand = [];
     /**
      * @Route("/game/card", name="game21")
      */
@@ -56,14 +51,13 @@ class Game extends AbstractController
         Request $request
     ): Response {
         $session->get("deck") ?? Card::shuffleDeck();
-        $player = $session->get("player") ?? new Player21();
-        $session->get("dealer") ?? new Player21('dealer');
-        $session->set("player", $player);
         $message = "";
 
         if ($request->query->get("action")) {
             switch ($request->query->get("action")) {
                 case 'new':
+                    $session->get("player") ?? new Player21();
+                    $session->get("dealer") ?? new Player21('dealer');
                     $game = new Game21();
                     $session->set("handOver", false);
                     $game->new();
@@ -83,20 +77,13 @@ class Game extends AbstractController
             }
         }
 
-        // if (isset($_SESSION['player']) && isset($_SESSION['dealer'])) {
         $activeHand = ($session->get("handOver") ?? true === true) ? false : true;
-        $this->playerScore = $_SESSION['player']->getCurrentScore();
-        $this->playerHand = $_SESSION['player']->getCurrentHand();
-        $this->dealerScore = $_SESSION['dealer']->getCurrentScore($activeHand);
-        $this->dealerHand = $_SESSION['dealer']->getCurrentHand($activeHand);
-        // }
-
         $data = [
             'title' => 'Kortspel 21',
-            'playerScore' => $this->playerScore,
-            'playerHand' => explode(", ", $this->playerHand),
-            'dealerScore' => $this->dealerScore,
-            'dealerHand' => explode(", ", $this->dealerHand),
+            'playerScore' => $_SESSION['player']->getCurrentScore(),
+            'playerHand' => explode(", ", $_SESSION['player']->getCurrentHand()),
+            'dealerScore' => Player21::getPlayer('dealer')->getCurrentScore($activeHand),
+            'dealerHand' => explode(", ", Player21::getPlayer('dealer')->getCurrentHand($activeHand)),
             'message' => $message,
         ];
 

@@ -22,9 +22,9 @@ class GameTest extends TestCase
     public function testNewGame()
     {   
 
-        // $player = new Player21();
-        // $dealer = new Player21("dealer");
-        $game = new Game21();
-        $game->new();
+        // // $player = new Player21();
+        // // $dealer = new Player21("dealer");
+        // $refresh = Game21::refresh();
+        // $this->assertEquals($refresh, true);
     }
 }

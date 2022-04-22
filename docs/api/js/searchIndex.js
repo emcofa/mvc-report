@@ -151,6 +151,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Card-Game21.html#method___construct"
         },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003AgameStatus\u0028\u0029",
+            "name": "gameStatus",
+            "summary": "",
+            "url": "classes/App-Card-Game21.html#method_gameStatus"
+        },                {
             "fqsen": "\\App\\Card\\Game21\u003A\u003Anew\u0028\u0029",
             "name": "new",
             "summary": "",
@@ -161,11 +166,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Card-Game21.html#method_checkStatus"
         },                {
-            "fqsen": "\\App\\Card\\Game21\u003A\u003AhandOver\u0028\u0029",
-            "name": "handOver",
-            "summary": "",
-            "url": "classes/App-Card-Game21.html#method_handOver"
-        },                {
             "fqsen": "\\App\\Card\\Game21\u003A\u003Arefresh\u0028\u0029",
             "name": "refresh",
             "summary": "",
@@ -175,6 +175,16 @@ Search.appendIndex(
             "name": "activeGame",
             "summary": "",
             "url": "classes/App-Card-Game21.html#property_activeGame"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024player",
+            "name": "player",
+            "summary": "",
+            "url": "classes/App-Card-Game21.html#property_player"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024dealer",
+            "name": "dealer",
+            "summary": "",
+            "url": "classes/App-Card-Game21.html#property_dealer"
         },                {
             "fqsen": "\\App\\Card\\InterfacePlayer21",
             "name": "InterfacePlayer21",

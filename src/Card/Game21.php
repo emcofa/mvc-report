@@ -6,11 +6,15 @@ namespace App\Card;
 class Game21
 {
     private $activeGame = false;
+    private $player;
+    private $dealer;
 
     public function __construct()
     {
         if ($this->activeGame == false) {
             $this->activeGame  = true;
+            $this->player = new Player21();
+            $this->dealer = new Player21("dealer");
         }
     }
 
@@ -19,7 +23,7 @@ class Game21
         return $this->activeGame;
     }
 
-    public static function new(): void
+    public function new(): void
     {
         Player21::getPlayer('player')->clearCurrentHand();
         Player21::getPlayer('dealer')->clearCurrentHand();
@@ -68,12 +72,8 @@ class Game21
         } elseif ($dealerScore === $playerScore) {
             $message = 'Samma poäng! Det blev lika.';
             return $message;
-        } else {
-            $message = 'Något gick fel, tryck på nytt spel för att starta om spelet.';
-            return $message;
         }
     }
-
 
     public static function refresh()
     {

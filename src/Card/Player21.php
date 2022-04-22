@@ -13,6 +13,7 @@ class Player21 implements InterfacePlayer21
 
     public function __construct($player = 'player')
     {
+        // echo("inne i konstruktor");
         $this->player = $player;
         $this->currentHand = [];
         $this->currentScore = 0;
@@ -27,13 +28,12 @@ class Player21 implements InterfacePlayer21
 
     public function stand(): string
     {
-        // Game21::handOver();
         $status = Game21::checkStatus();
         return $status;
     }
 
     public function clearCurrentHand(): void
-    {   
+    {
         $this->currentHand = [];
         $this->currentScore = 0;
     }
