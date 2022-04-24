@@ -47,8 +47,7 @@ class Game extends AbstractController
      * )
      */
     public function new(
-        SessionInterface $session,
-        Request $request
+        SessionInterface $session
     ): Response {
         $session->clear();
         $player = new Player21("Player");

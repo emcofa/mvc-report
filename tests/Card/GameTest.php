@@ -14,32 +14,61 @@ class GameTest extends TestCase
      * Test to start a new game
      */
     public function testStartGame()
-    {
-        $game = new Game21();
-        $this->assertEquals($game->gameStatus(), true);
+    {   
+        $player = new Player21("player");
+        $dealer = new Player21("dealer");
+        $deck = new Deck();
+        $game = new Game21($player, $dealer, $deck);
+        $this->assertEquals($game->returnPlayer(), $player);
+        $this->assertEquals($game->returnDealer(), $dealer);
+        $this->assertEquals($game->returnDeck(), $deck);
     }
 
-    public function testNewGame()
+    public function testInstanceClassGame21()
     {   
-        $game = new Game21();
-        // $refresh = Game21::refresh();
+        $player = new Player21("player");
+        $dealer = new Player21("dealer");
+        $deck = new Deck();
+        $game = new Game21($player, $dealer, $deck);
         $this->assertInstanceOf(Game21::class, $game);
     }
 
-    /**
-     * Construct object, plays the game and dealer wins.
-     */
-    public function testPlayDealerWins()
+    public function testNewGame21()
     {   
-        Card::shuffleDeck();
-        $game = new Game21();
-        // $player = new Player21();
-        // $player->hit(new Card('S', '10'));
-        // $player->hit(new Card('H', 'ACE'));
-        // $dealer = new Player21('dealer');
-        // $dealer->hit(new Card('S', '8'));
-        // $dealer->hit(new Card('H', '8'));
-        // $dealer->hit(new Card('H', '3'));
-        $this->assertEquals($game->new(), 'Spelare');
+        $player = new Player21("player");
+        $dealer = new Player21("dealer");
+        $deck = new Deck();
+        $game = new Game21($player, $dealer, $deck);
+        $game->new();
+        $res = $player->returnCurrentHand();
+        $this->assertEquals(count($res), 2);
+        $res2 = $dealer->returnCurrentHand();
+        $this->assertEquals(count($res2), 1);
+        $res3 = $player->getScore();
+        $this->assertNotEquals($res3, 0);
+    }
+
+    public function testDealersTurn()
+    {   
+        $player = new Player21("player");
+        $dealer = new Player21("dealer");
+        $deck = new Deck();
+        $game = new Game21($player, $dealer, $deck);
+        $game->new();
+        $game->dealersTurn();
+        $res = $player->returnCurrentHand();
+        $this->assertNotEquals(count($res), 1);
+    }
+
+    public function testStatus()
+    {   
+        $player = new Player21("player");
+        $dealer = new Player21("dealer");
+        $deck = new Deck();
+        $game = new Game21($player, $dealer, $deck);
+        $game->new();
+        $game->dealersTurn();
+        $res = $game->checkStatus();
+        $this->assertIsString($res);
     }
 }

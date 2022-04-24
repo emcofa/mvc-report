@@ -31,7 +31,7 @@ class Card
     /**
      * Constructor
      * @param string $type Card suit
-     * @param string $Value Card rank
+     * @param string $value Card rank
      */
     public function __construct(string $type, string $value)
     {
@@ -44,7 +44,7 @@ class Card
      * @access public
      * @return int
      */
-    public function getValueOfCard(): int
+    public function getValueOfCard()
     {
         $value = is_numeric($this->value) ? $this->value : 10;
         if (strtolower($this->value) === 'ace') {

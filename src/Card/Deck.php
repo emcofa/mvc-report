@@ -91,10 +91,9 @@ class Deck
             $cards = $this->allCards[0];
             array_shift($this->allCards);
             $this->deleteCards[] = $cards;
-            $deleteCards[] = $cards;
             $counter++;
         }
-        return $deleteCards;
+        return $this->deleteCards;
     }
 
     /**

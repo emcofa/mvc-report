@@ -72,7 +72,6 @@ class CardDeck extends AbstractController
     public function drawNumber(
         int $number,
         SessionInterface $session,
-        Request $request
     ): Response {
         $card = $session->get("deck") ?? new Deck();
         $data = [

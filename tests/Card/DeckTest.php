@@ -10,19 +10,17 @@ use PHPUnit\Framework\TestCase;
  */
 class DeckTest extends TestCase
 {
+
     /**
-     * Test to create card and see if the card is in the deck
+     * Test to shuffle deck
      */
-    public function testCreateDeck()
+    public function testShuffleDeck()
     {
         $deck = new Deck();
-        $getDeck = $deck->deck();
-        $this->assertContains("10C", $getDeck);
-        $this->assertContains("4H", $getDeck);
-        $this->assertContains("AceS", $getDeck);
-        $this->assertContains("QueenD", $getDeck);
+        $shuffleDeck1 = $deck->shuffleDeck();
+        $shuffleDeck2 = $deck->shuffleDeck();
+        $this->assertNotEquals($shuffleDeck1, $shuffleDeck2);
     }
-
     /**
      * See if deck contains 52 cards
      */
@@ -33,6 +31,7 @@ class DeckTest extends TestCase
         $this->assertEquals(count($getDeck), 52);
     }
 
+
     /**
      * See if a string card returns
      */
@@ -41,7 +40,7 @@ class DeckTest extends TestCase
     {
         $deck = new Deck();
         $getCard = $deck->draw();
-        $this->assertIsString($getCard);
+        $this->assertInstanceOf(Card::class, $getCard);
     }
 
     public function testdrawXAmountOfCards()

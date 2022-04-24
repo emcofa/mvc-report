@@ -124,14 +124,8 @@ class Game21 implements InterfaceGame21
         } elseif ($playerScore === 21) {
             $message = 'Spelare får 21 och vinner rundan!';
             return $message;
-        } elseif ($playerScore === 21 && $dealerScore === 21) {
-            $message = 'Spelare och dealer får 21! Det blev lika.';
-            return $message;
         } elseif ($dealerScore === 21) {
             $message = 'Dealer får 21 och vinner rundan!';
-            return $message;
-        } elseif ($playerScore > $dealerScore && $dealerScore < 17) {
-            $message = 'Dealer nöjd, tryck på knappen igen för att se resultat.';
             return $message;
         } elseif ($playerScore > $dealerScore) {
             $message = 'Spelare vinner!';
@@ -140,7 +134,7 @@ class Game21 implements InterfaceGame21
             $message = 'Dealer vinner!';
             return $message;
         } elseif ($dealerScore === $playerScore) {
-            $message = 'Samma poäng! Det blev lika.';
+            $message = 'Samma poäng! Ingen vinner.';
             return $message;
         }
     }

@@ -37,26 +37,6 @@ class CardTest extends TestCase
         $this->assertEquals('5', $res3);
     }
 
-
-    /**
-     * Test to see if correct type (suit) of card returns
-     */
-    public function testTypeOfCard()
-    {
-        $card = new Card("D", "Jack");
-        $res = $card->getTypeOfCard();
-        $this->assertEquals('Jack', $res);
-    }
-
-    /**
-     * Test to see if array of card returns
-     */
-    public function testShuffleDeck()
-    {   
-        $shuffleDeck = Card::shuffleDeck();
-        $this->assertIsArray($shuffleDeck);
-    }
-
     /**
      * Test to see if a string of the card returns
      */
@@ -66,14 +46,4 @@ class CardTest extends TestCase
         $this->assertEquals('JackD', $card);
     }
 
-    // /**
-    //  * Test to see if a card returns from method
-    //  */
-    // public function testCardFromTopDeck()
-    // {   
-    //     new Game21();
-    //     $card = new Card("D", "Jack");
-    //     // $topCard = $card->getTopCardFromDeck();
-    //     $this->assertInstanceOf("\App\Card\Card", $topCard);
-    // }
 }
