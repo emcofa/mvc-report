@@ -124,6 +124,9 @@
                             </ul>
         </div>
     
+            <span class="phpdocumentor-element__implements">
+            implements
+                            <a href="classes/App-Card-InterfaceGame21.html"><abbr title="\App\Card\InterfaceGame21">InterfaceGame21</abbr></a>                    </span>
     
     </h2>
 
@@ -157,6 +160,18 @@
 
 
 
+<h3 id="interfaces_class_traits">
+    Interfaces, Classes, Traits and Enums
+    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/App-Card-InterfaceGame21.html"><abbr title="\App\Card\InterfaceGame21">InterfaceGame21</abbr></a></dt>
+        <dd></dd>
+    
+    
+    
+    </dl>
 
 
 <h3 id="toc">
@@ -166,9 +181,23 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/App-Card-Game21.html#property_activeGame">$activeGame</a>
+    <a href="classes/App-Card-Game21.html#property_dealer">$dealer</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: <a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/App-Card-Game21.html#property_deck">$deck</a>
+    <span>
+                        &nbsp;: <a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/App-Card-Game21.html#property_player">$player</a>
+    <span>
+                        &nbsp;: <a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -177,35 +206,49 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Constructor (creates new players)</dd>
+<dd>Constructor (creates a new game)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-Card-Game21.html#method_checkStatus">checkStatus()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Checks who is the winner of the game</dd>
+<dd>Checks who is the winner of the game andr returns status</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/App-Card-Game21.html#method_gameStatus">gameStatus()</a>
+    <a href="classes/App-Card-Game21.html#method_dealersTurn">dealersTurn()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Dealers turn to draw card after player is finished</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-Card-Game21.html#method_new">new()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Resets current hands and player scores</dd>
+<dd>Resets current player scores and draw new cards</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/App-Card-Game21.html#method_refresh">refresh()</a>
+    <a href="classes/App-Card-Game21.html#method_returnDealer">returnDealer()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: <a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>    </span>
 </dt>
-<dd>Refreshing the page</dd>
+<dd>Returns the dealer</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/App-Card-Game21.html#method_returnDeck">returnDeck()</a>
+    <span>
+                                &nbsp;: <a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a>    </span>
+</dt>
+<dd>Returns the deck</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/App-Card-Game21.html#method_returnPlayer">returnPlayer()</a>
+    <span>
+                                &nbsp;: <a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>    </span>
+</dt>
+<dd>Returns the player</dd>
 
         </dl>
 
@@ -226,9 +269,77 @@
             -private
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_activeGame">
-        $activeGame
-        <a href="classes/App-Card-Game21.html#property_activeGame" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_dealer">
+        $dealer
+        <a href="classes/App-Card-Game21.html#property_dealer" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">20</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$dealer</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"><p>variabel for setting dealer</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_deck">
+        $deck
+        <a href="classes/App-Card-Game21.html#property_deck" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">25</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$deck</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"><p>variabel for deck</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_player">
+        $player
+        <a href="classes/App-Card-Game21.html#property_player" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -242,12 +353,12 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$activeGame</span>
-     = <span class="phpdocumentor-signature__default-value">false</span></code>
+        <span class="phpdocumentor-signature__type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$player</span>
+    </code>
 
     
-        <section class="phpdocumentor-description"><p>variabel for setting if game is active or not</p>
+        <section class="phpdocumentor-description"><p>variabel for setting player</p>
 </section>
 
     
@@ -273,18 +384,45 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Constructor (creates new players)</p>
+        <p class="phpdocumentor-summary">Constructor (creates a new game)</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$player</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dealer</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$deck</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$player</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$dealer</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$deck</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -297,7 +435,7 @@
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
     <h4 class="phpdocumentor-element__name" id="method_checkStatus">
         checkStatus()
@@ -306,15 +444,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Checks who is the winner of the game</p>
+        <p class="phpdocumentor-summary">Checks who is the winner of the game andr returns status</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">checkStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">checkStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     
     
@@ -325,13 +463,6 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">static</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">access</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -354,32 +485,46 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_gameStatus">
-        gameStatus()
-        <a href="classes/App-Card-Game21.html#method_gameStatus" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_dealersTurn">
+        dealersTurn()
+        <a href="classes/App-Card-Game21.html#method_dealersTurn" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dealers turn to draw card after player is finished</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">gameStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">dealersTurn</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
     
     
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>checks game status</p>
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">access</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>public</p>
 </section>
 
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
     
 </article>
                     <article
@@ -395,11 +540,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Resets current hands and player scores</p>
+        <p class="phpdocumentor-summary">Resets current player scores and draw new cards</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -434,24 +579,57 @@
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_refresh">
-        refresh()
-        <a href="classes/App-Card-Game21.html#method_refresh" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_returnDealer">
+        returnDealer()
+        <a href="classes/App-Card-Game21.html#method_returnDealer" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Refreshing the page</p>
+        <p class="phpdocumentor-summary">Returns the dealer</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">refresh</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">returnDealer</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_returnDeck">
+        returnDeck()
+        <a href="classes/App-Card-Game21.html#method_returnDeck" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">84</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the deck</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">returnDeck</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a></span></code>
 
     
     
@@ -462,13 +640,6 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">static</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">access</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -480,7 +651,40 @@
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Deck.html"><abbr title="\App\Card\Deck">Deck</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_returnPlayer">
+        returnPlayer()
+        <a href="classes/App-Card-Game21.html#method_returnPlayer" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Card/Game21.php"><a href="files/src-card-game21.html"><abbr title="src/Card/Game21.php">Game21.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">102</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the player</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">returnPlayer</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/App-Card-Player21.html"><abbr title="\App\Card\Player21">Player21</abbr></a></span>
             &mdash;
         
     

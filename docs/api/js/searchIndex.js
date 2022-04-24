@@ -51,30 +51,15 @@ Search.appendIndex(
             "summary": "Constructor",
             "url": "classes/App-Card-Card.html#method___construct"
         },                {
-            "fqsen": "\\App\\Card\\Card\u003A\u003A__toString\u0028\u0029",
-            "name": "__toString",
-            "summary": "",
-            "url": "classes/App-Card-Card.html#method___toString"
-        },                {
             "fqsen": "\\App\\Card\\Card\u003A\u003AgetValueOfCard\u0028\u0029",
             "name": "getValueOfCard",
             "summary": "Returns\u0020the\u0020value\u0020of\u0020the\u0020card",
             "url": "classes/App-Card-Card.html#method_getValueOfCard"
         },                {
-            "fqsen": "\\App\\Card\\Card\u003A\u003AgetTypeOfCard\u0028\u0029",
-            "name": "getTypeOfCard",
-            "summary": "Returns\u0020the\u0020type\u0020of\u0020the\u0020card",
-            "url": "classes/App-Card-Card.html#method_getTypeOfCard"
-        },                {
-            "fqsen": "\\App\\Card\\Card\u003A\u003AshuffleDeck\u0028\u0029",
-            "name": "shuffleDeck",
-            "summary": "Shuffles\u0020the\u0020deck",
-            "url": "classes/App-Card-Card.html#method_shuffleDeck"
-        },                {
-            "fqsen": "\\App\\Card\\Card\u003A\u003AgetTopCardFromDeck\u0028\u0029",
-            "name": "getTopCardFromDeck",
-            "summary": "Returns\u0020the\u0020first\u0020card\u0020object\u0020from\u0020deck\u0020and\u0020then\u0020removes\u0020the\u0020card",
-            "url": "classes/App-Card-Card.html#method_getTopCardFromDeck"
+            "fqsen": "\\App\\Card\\Card\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/App-Card-Card.html#method___toString"
         },                {
             "fqsen": "\\App\\Card\\Card\u003A\u003ASUITS",
             "name": "SUITS",
@@ -108,12 +93,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Card\\Deck\u003A\u003Adeck\u0028\u0029",
             "name": "deck",
-            "summary": "Returns\u0020the\u0020card\u0020deck",
+            "summary": "returns\u0020sorted\u0020deck",
             "url": "classes/App-Card-Deck.html#method_deck"
+        },                {
+            "fqsen": "\\App\\Card\\Deck\u003A\u003AshuffleDeck\u0028\u0029",
+            "name": "shuffleDeck",
+            "summary": "Shuffles\u0020the\u0020deck",
+            "url": "classes/App-Card-Deck.html#method_shuffleDeck"
         },                {
             "fqsen": "\\App\\Card\\Deck\u003A\u003Adraw\u0028\u0029",
             "name": "draw",
-            "summary": "Returns\u0020the\u0020drawn\u0020card",
+            "summary": "Returns\u0020the\u0020drawn\u0020card\u0020\u0028Card\u0020object\u0029",
             "url": "classes/App-Card-Deck.html#method_draw"
         },                {
             "fqsen": "\\App\\Card\\Deck\u003A\u003AdrawNumber\u0028\u0029",
@@ -148,73 +138,53 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Card\\Game21\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructor\u0020\u0028creates\u0020new\u0020players\u0029",
+            "summary": "Constructor\u0020\u0028creates\u0020a\u0020new\u0020game\u0029",
             "url": "classes/App-Card-Game21.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Card\\Game21\u003A\u003AgameStatus\u0028\u0029",
-            "name": "gameStatus",
-            "summary": "",
-            "url": "classes/App-Card-Game21.html#method_gameStatus"
         },                {
             "fqsen": "\\App\\Card\\Game21\u003A\u003Anew\u0028\u0029",
             "name": "new",
-            "summary": "Resets\u0020current\u0020hands\u0020and\u0020player\u0020scores",
+            "summary": "Resets\u0020current\u0020player\u0020scores\u0020and\u0020draw\u0020new\u0020cards",
             "url": "classes/App-Card-Game21.html#method_new"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003AdealersTurn\u0028\u0029",
+            "name": "dealersTurn",
+            "summary": "Dealers\u0020turn\u0020to\u0020draw\u0020card\u0020after\u0020player\u0020is\u0020finished",
+            "url": "classes/App-Card-Game21.html#method_dealersTurn"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003AreturnDeck\u0028\u0029",
+            "name": "returnDeck",
+            "summary": "Returns\u0020the\u0020deck",
+            "url": "classes/App-Card-Game21.html#method_returnDeck"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003AreturnDealer\u0028\u0029",
+            "name": "returnDealer",
+            "summary": "Returns\u0020the\u0020dealer",
+            "url": "classes/App-Card-Game21.html#method_returnDealer"
+        },                {
+            "fqsen": "\\App\\Card\\Game21\u003A\u003AreturnPlayer\u0028\u0029",
+            "name": "returnPlayer",
+            "summary": "Returns\u0020the\u0020player",
+            "url": "classes/App-Card-Game21.html#method_returnPlayer"
         },                {
             "fqsen": "\\App\\Card\\Game21\u003A\u003AcheckStatus\u0028\u0029",
             "name": "checkStatus",
-            "summary": "Checks\u0020who\u0020is\u0020the\u0020winner\u0020of\u0020the\u0020game",
+            "summary": "Checks\u0020who\u0020is\u0020the\u0020winner\u0020of\u0020the\u0020game\u0020andr\u0020returns\u0020status",
             "url": "classes/App-Card-Game21.html#method_checkStatus"
         },                {
-            "fqsen": "\\App\\Card\\Game21\u003A\u003Arefresh\u0028\u0029",
-            "name": "refresh",
-            "summary": "Refreshing\u0020the\u0020page",
-            "url": "classes/App-Card-Game21.html#method_refresh"
-        },                {
-            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024activeGame",
-            "name": "activeGame",
+            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024player",
+            "name": "player",
             "summary": "",
-            "url": "classes/App-Card-Game21.html#property_activeGame"
+            "url": "classes/App-Card-Game21.html#property_player"
         },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21",
-            "name": "InterfacePlayer21",
+            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024dealer",
+            "name": "dealer",
             "summary": "",
-            "url": "classes/App-Card-InterfacePlayer21.html"
+            "url": "classes/App-Card-Game21.html#property_dealer"
         },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003Ahit\u0028\u0029",
-            "name": "hit",
-            "summary": "Player\u0020takes\u0020a\u0020card\u0020from\u0020the\u0020top\u0020of\u0020the\u0020deck",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_hit"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003Astand\u0028\u0029",
-            "name": "stand",
-            "summary": "The\u0020player\u0020is\u0020satisfied.\u0020Winner\u0020pronounces.",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_stand"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003AclearCurrentHand\u0028\u0029",
-            "name": "clearCurrentHand",
-            "summary": "Resets\u0020current\u0020hand\u0020and\u0020current\u0020score",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_clearCurrentHand"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003AgetCurrentHand\u0028\u0029",
-            "name": "getCurrentHand",
-            "summary": "Returns\u0020current\u0020hand",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_getCurrentHand"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003AgetCurrentScore\u0028\u0029",
-            "name": "getCurrentScore",
-            "summary": "Returns\u0020current\u0020score\u0020of\u0020hand",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_getCurrentScore"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003AdealersTurn\u0028\u0029",
-            "name": "dealersTurn",
-            "summary": "Dealers\u0020turn\u0020to\u0020draw\u0020cards\u0020\u0028lowest\u0020value\u0020of\u0020dealer\u0020\u003D\u002017\u0029",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_dealersTurn"
-        },                {
-            "fqsen": "\\App\\Card\\InterfacePlayer21\u003A\u003AgetPlayer\u0028\u0029",
-            "name": "getPlayer",
-            "summary": "Get\u0020player,\u0020default\u0020\u0022player\u0022\u0020else\u0020\u0022dealer",
-            "url": "classes/App-Card-InterfacePlayer21.html#method_getPlayer"
+            "fqsen": "\\App\\Card\\Game21\u003A\u003A\u0024deck",
+            "name": "deck",
+            "summary": "",
+            "url": "classes/App-Card-Game21.html#property_deck"
         },                {
             "fqsen": "\\App\\Card\\Player21",
             "name": "Player21",
@@ -226,40 +196,30 @@ Search.appendIndex(
             "summary": "Constructor",
             "url": "classes/App-Card-Player21.html#method___construct"
         },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003Ahit\u0028\u0029",
-            "name": "hit",
-            "summary": "Hit\u0020a\u0020card\u0020from\u0020the\u0020deck\u0020and\u0020calculate\u0020score\u0020and\u0020add\u0020it\u0020to\u0020players\u0020hand",
-            "url": "classes/App-Card-Player21.html#method_hit"
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AaddToCurrentHand\u0028\u0029",
+            "name": "addToCurrentHand",
+            "summary": "Adds\u0020the\u0020pulled\u0020card\u0020to\u0020the\u0020current\u0020hand",
+            "url": "classes/App-Card-Player21.html#method_addToCurrentHand"
         },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003Astand\u0028\u0029",
-            "name": "stand",
-            "summary": "Returns\u0020who\u0020is\u0020the\u0020winner\u0020of\u0020the\u0020game",
-            "url": "classes/App-Card-Player21.html#method_stand"
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AreturnCurrentHand\u0028\u0029",
+            "name": "returnCurrentHand",
+            "summary": "Returns\u0020current\u0020hand",
+            "url": "classes/App-Card-Player21.html#method_returnCurrentHand"
         },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003AclearCurrentHand\u0028\u0029",
-            "name": "clearCurrentHand",
-            "summary": "Resets\u0020the\u0020players\u0020hand",
-            "url": "classes/App-Card-Player21.html#method_clearCurrentHand"
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AsetScore\u0028\u0029",
+            "name": "setScore",
+            "summary": "Sets\u0020the\u0020score",
+            "url": "classes/App-Card-Player21.html#method_setScore"
         },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003AgetCurrentHand\u0028\u0029",
-            "name": "getCurrentHand",
-            "summary": "Returns\u0020a\u0020list\u0020of\u0020the\u0020players\u0020hand",
-            "url": "classes/App-Card-Player21.html#method_getCurrentHand"
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AresetScore\u0028\u0029",
+            "name": "resetScore",
+            "summary": "Resets\u0020points",
+            "url": "classes/App-Card-Player21.html#method_resetScore"
         },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003AgetCurrentScore\u0028\u0029",
-            "name": "getCurrentScore",
-            "summary": "Returns\u0020the\u0020score\u0020of\u0020the\u0020players\u0020hand",
-            "url": "classes/App-Card-Player21.html#method_getCurrentScore"
-        },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003AdealersTurn\u0028\u0029",
-            "name": "dealersTurn",
-            "summary": "The\u0020dealer\u0020draw\u0020a\u0020new\u0020card,\u0020at\u0020least\u0020until\u0020he\u0020has\u0020reached\u0020the\u0020score\u002017.\u0020After\u0020he\u0020can\u0020decide\u0020to\u0020draw\u0020another\u0020one\u0020or\u0020stand.",
-            "url": "classes/App-Card-Player21.html#method_dealersTurn"
-        },                {
-            "fqsen": "\\App\\Card\\Player21\u003A\u003AgetPlayer\u0028\u0029",
-            "name": "getPlayer",
-            "summary": "Get\u0020the\u0020current\u0020player\u0020\u0028player\u0020or\u0020dealer\u0029",
-            "url": "classes/App-Card-Player21.html#method_getPlayer"
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AgetScore\u0028\u0029",
+            "name": "getScore",
+            "summary": "Get\u0020total\u0020score\u0020of\u0020player\u0020and\u0020dealer",
+            "url": "classes/App-Card-Player21.html#method_getScore"
         },                {
             "fqsen": "\\App\\Card\\Player21\u003A\u003A\u0024player",
             "name": "player",
@@ -366,10 +326,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-Game.html#method_start"
         },                {
-            "fqsen": "\\App\\Controller\\Game\u003A\u003AgamePlan\u0028\u0029",
-            "name": "gamePlan",
+            "fqsen": "\\App\\Controller\\Game\u003A\u003Anew\u0028\u0029",
+            "name": "new",
             "summary": "",
-            "url": "classes/App-Controller-Game.html#method_gamePlan"
+            "url": "classes/App-Controller-Game.html#method_new"
+        },                {
+            "fqsen": "\\App\\Controller\\Game\u003A\u003Ahit\u0028\u0029",
+            "name": "hit",
+            "summary": "",
+            "url": "classes/App-Controller-Game.html#method_hit"
+        },                {
+            "fqsen": "\\App\\Controller\\Game\u003A\u003Astand\u0028\u0029",
+            "name": "stand",
+            "summary": "",
+            "url": "classes/App-Controller-Game.html#method_stand"
         },                {
             "fqsen": "\\App\\Controller\\Index",
             "name": "Index",
@@ -470,6 +440,41 @@ Search.appendIndex(
             "name": "Kernel",
             "summary": "",
             "url": "classes/App-Kernel.html"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21",
+            "name": "InterfaceGame21",
+            "summary": "",
+            "url": "classes/App-Card-InterfaceGame21.html"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Resets\u0020current\u0020player\u0020scores\u0020and\u0020draw\u0020new\u0020cards",
+            "url": "classes/App-Card-InterfaceGame21.html#method_new"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003AdealersTurn\u0028\u0029",
+            "name": "dealersTurn",
+            "summary": "Dealers\u0020turn\u0020to\u0020draw\u0020card\u0020after\u0020player\u0020is\u0020finished",
+            "url": "classes/App-Card-InterfaceGame21.html#method_dealersTurn"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003AreturnDeck\u0028\u0029",
+            "name": "returnDeck",
+            "summary": "Returns\u0020the\u0020deck",
+            "url": "classes/App-Card-InterfaceGame21.html#method_returnDeck"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003AreturnDealer\u0028\u0029",
+            "name": "returnDealer",
+            "summary": "Returns\u0020the\u0020dealer",
+            "url": "classes/App-Card-InterfaceGame21.html#method_returnDealer"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003AreturnPlayer\u0028\u0029",
+            "name": "returnPlayer",
+            "summary": "Returns\u0020the\u0020player",
+            "url": "classes/App-Card-InterfaceGame21.html#method_returnPlayer"
+        },                {
+            "fqsen": "\\App\\Card\\InterfaceGame21\u003A\u003AcheckStatus\u0028\u0029",
+            "name": "checkStatus",
+            "summary": "Checks\u0020who\u0020is\u0020the\u0020winner\u0020of\u0020the\u0020game\u0020and\u0020returns\u0020status",
+            "url": "classes/App-Card-InterfaceGame21.html#method_checkStatus"
         },                {
             "fqsen": "\\",
             "name": "\\",
