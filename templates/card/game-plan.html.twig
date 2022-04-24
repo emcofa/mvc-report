@@ -29,15 +29,14 @@
                     {% endfor %}
                 </div>
             </div>
-            <p>(För att se vinnare av varje runda måste du trycka på knappen "stanna")</p>
         </div>
         <h3 id="message">{{message}}</h3>
         <div id="buttons" class="row">
 
             <div class="buttons">
-                <a class="begin-game-btn btn" href="{{ path("game-plan") }}">Nytt spel</a>
-                <a class="begin-game-btn btn" href="{{ path("stand") }}">Stanna (se resultat)</a>
-                <a class="begin-game-btn btn" href="{{ path("hit") }}">Dra ett till kort</a>
+                <a class="button" href="{{ path("game-plan") }}">Nytt spel</a>
+                <a class="button" href="{{ path("hit") }}">Dra ett till kort</a>
+                <a class="button" href="{{ path("stand") }}">Stanna</a>
             </div>
         </div>
 
