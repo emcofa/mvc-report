@@ -4,7 +4,6 @@ namespace App\Card;
 
 use PHPUnit\Framework\TestCase;
 
-
 /**
  * Test cases for class Card.
  */
@@ -41,9 +40,8 @@ class CardTest extends TestCase
      * Test to see if a string of the card returns
      */
     public function testStringReturns()
-    {   
+    {
         $card = new Card("D", "Jack");
         $this->assertEquals('JackD', $card);
     }
-
 }

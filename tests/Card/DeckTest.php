@@ -4,13 +4,11 @@ namespace App\Card;
 
 use PHPUnit\Framework\TestCase;
 
-
 /**
  * Test cases for class Deck.
  */
 class DeckTest extends TestCase
 {
-
     /**
      * Test to shuffle deck
      */

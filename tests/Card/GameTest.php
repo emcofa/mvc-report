@@ -9,12 +9,11 @@ use PHPUnit\Framework\TestCase;
  */
 class GameTest extends TestCase
 {
-
     /**
      * Test to start a new game
      */
     public function testStartGame()
-    {   
+    {
         $player = new Player21("player");
         $dealer = new Player21("dealer");
         $deck = new Deck();
@@ -25,7 +24,7 @@ class GameTest extends TestCase
     }
 
     public function testInstanceClassGame21()
-    {   
+    {
         $player = new Player21("player");
         $dealer = new Player21("dealer");
         $deck = new Deck();
@@ -34,7 +33,7 @@ class GameTest extends TestCase
     }
 
     public function testNewGame21()
-    {   
+    {
         $player = new Player21("player");
         $dealer = new Player21("dealer");
         $deck = new Deck();
@@ -49,7 +48,7 @@ class GameTest extends TestCase
     }
 
     public function testDealersTurn()
-    {   
+    {
         $player = new Player21("player");
         $dealer = new Player21("dealer");
         $deck = new Deck();
@@ -61,7 +60,7 @@ class GameTest extends TestCase
     }
 
     public function testStatus()
-    {   
+    {
         $player = new Player21("player");
         $dealer = new Player21("dealer");
         $deck = new Deck();
