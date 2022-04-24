@@ -55,7 +55,7 @@ class Player21
     }
 
     /**
-     * Sets the score
+     * Sets the score for player and dealer
      *
      * @param int $currentScore adds the score to the scoreboard.
      * @access public
@@ -67,7 +67,7 @@ class Player21
     }
 
     /**
-     * Resets points
+     * Resetsthe score for player and dealer
      * @access public
      * @return void
      */
