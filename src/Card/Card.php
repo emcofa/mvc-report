@@ -53,10 +53,11 @@ class Card
         return $value;
     }
     /**
-     * @return string Card to string
-     */
-    public function __toString(): string
+    * returns string card
+    * @return string returns string card
+    */
+    public function cardToString(): string
     {
-        return $this->value . $this->type;
+        return  $this->value . $this->type;
     }
 }

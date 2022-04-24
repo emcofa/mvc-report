@@ -14,10 +14,16 @@ class DeckJson
      */
     public function deck(): Response
     {
-        $card = new Deck();
+        $cards = [];
+        $deck = new Deck();
+        $new = $deck->deck();
+
+        for ($counter = 0, $length = count($new); $counter < $length; $counter++) {
+            array_push($cards, $new[$counter]->cardToString());
+        }
         $data = [
             'title' => 'Playing cards',
-            'card_deck' => $card->deck(),
+            'card_deck' => $cards,
         ];
 
         $response = new Response();

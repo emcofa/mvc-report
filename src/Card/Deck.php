@@ -38,6 +38,14 @@ class Deck
     }
 
     /**
+     * @return string Card to string
+     */
+    public function __toString(): string
+    {
+        return $this->type . $this->value;
+    }
+
+    /**
      * returns sorted deck
      * @access public
      * @return array
