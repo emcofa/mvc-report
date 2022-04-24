@@ -13,10 +13,12 @@ class Deck
      * @var int amount of cards in deck
      */
     public $numCards = 52;
+
     /**
      * @var array an array containing deck
      */
-    private $allCards;
+    private $allCards = [];
+
     /**
      * @var array an array containing cards which has been drawn
      */
@@ -28,15 +30,15 @@ class Deck
     public function __construct()
     {
         $this->allCards = [];
-        foreach (Card::SUITS as $suit) {
+        foreach (Card::SUITS as $type) {
             foreach (Card::VALUES as $value) {
-                $this->allCards[] = $value . $suit;
+                array_push($this->allCards, new Card($type, $value));
             }
         }
     }
 
     /**
-     * Returns the card deck
+     * returns sorted deck
      * @access public
      * @return array
      */
@@ -44,23 +46,32 @@ class Deck
     {
         return $this->allCards;
     }
+    /**
+     * Shuffles the deck
+     * @access public
+     * @return array
+     */
+    public function shuffleDeck(): array
+    {
+        shuffle($this->allCards);
+        return $this->allCards;
+    }
 
     /**
-     * Returns the drawn card
+     * Returns the drawn card (Card object)
      * @access public
-     * @return string
+     * @return Card
      */
-    public function draw(): string
+    public function draw(): Card
     {
         if (count($this->allCards) == 0) {
             return "0";
         }
-        shuffle($this->allCards);
         $cards = $this->allCards[0];
         array_shift($this->allCards);
 
-        $this->deleteCards[] = $cards;
-
+        // $val = $cards->getValueOfCard();
+        // echo($val)
         return $cards;
     }
 
@@ -77,7 +88,6 @@ class Deck
         }
         $counter = 0;
         while ($counter <= $number - 1) {
-            shuffle($this->allCards);
             $cards = $this->allCards[0];
             array_shift($this->allCards);
             $this->deleteCards[] = $cards;

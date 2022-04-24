@@ -21,10 +21,25 @@ class GameTest extends TestCase
 
     public function testNewGame()
     {   
-
-        // // $player = new Player21();
-        // // $dealer = new Player21("dealer");
+        $game = new Game21();
         // $refresh = Game21::refresh();
-        // $this->assertEquals($refresh, true);
+        $this->assertInstanceOf(Game21::class, $game);
+    }
+
+    /**
+     * Construct object, plays the game and dealer wins.
+     */
+    public function testPlayDealerWins()
+    {   
+        Card::shuffleDeck();
+        $game = new Game21();
+        // $player = new Player21();
+        // $player->hit(new Card('S', '10'));
+        // $player->hit(new Card('H', 'ACE'));
+        // $dealer = new Player21('dealer');
+        // $dealer->hit(new Card('S', '8'));
+        // $dealer->hit(new Card('H', '8'));
+        // $dealer->hit(new Card('H', '3'));
+        $this->assertEquals($game->new(), 'Spelare');
     }
 }

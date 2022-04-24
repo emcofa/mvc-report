@@ -46,44 +46,70 @@ class Game extends AbstractController
      *      methods={"GET","HEAD"}
      * )
      */
-    public function gamePlan(
+    public function new(
         SessionInterface $session,
         Request $request
     ): Response {
-        $session->get("deck") ?? Card::shuffleDeck();
-        $message = "";
+        $session->clear();
+        $player = new Player21("Player");
+        $dealer = new Player21("Dealer");
+        $deck = new Deck();
+        $game = $session->get("game") ?? new Game21($player, $dealer, $deck);
+        $game->new();
+        $session->set("game", $game);
+        $playerScore = $game->returnPlayer()->getScore();
+        $dealerScore = $game->returnDealer()->getScore();
 
-        if ($request->query->get("action")) {
-            switch ($request->query->get("action")) {
-                case 'new':
-                    $session->get("player") ?? new Player21();
-                    $session->get("dealer") ?? new Player21('dealer');
-                    $game = new Game21();
-                    $session->set("handOver", false);
-                    $game->new();
-                    $message = "";
-                    break;
-
-                case 'hit':
-                    Player21::getPlayer()->hit();
-                    $message = "";
-                    break;
-
-                case 'stand':
-                    $message = Player21::getPlayer()->stand();
-                    $session->set("handOver", true);
-                    break;
-                default:
-            }
-        }
-
-        $activeHand = ($session->get("handOver") ?? true === true) ? false : true;
         $data = [
-            'title' => 'Kortspel 21',
-            'playerScore' => $_SESSION['player']->getCurrentScore(),
-            'playerHand' => explode(", ", $_SESSION['player']->getCurrentHand()),
-            'dealerScore' => Player21::getPlayer('dealer')->getCurrentScore($activeHand),
-            'dealerHand' => explode(", ", Player21::getPlayer('dealer')->getCurrentHand($activeHand)),
+            'playerScore' => $playerScore,
+            'playerHand' => $player->returnCurrentHand(),
+            'dealerScore' => $dealerScore,
+            'dealerHand' => $dealer->returnCurrentHand(),
+            'message' => "",
+        ];
+
+        return $this->render('card/game-plan.html.twig', $data);
+    }
+
+    /**
+     * @Route("/hit", name="hit")
+     */
+    public function hit(SessionInterface $session): Response
+    {
+        $game = $session->get("game");
+        $hit = $game->returnDeck()->draw();
+        $game->returnPlayer()->addToCurrentHand($hit);
+        $score = $hit->getValueOfCard();
+        $game->returnPlayer()->setScore($score);
+        $session->set("game", $game);
+
+        $data = [
+            'playerScore' => $game->returnPlayer()->getScore(),
+            'playerHand' => $game->returnPlayer()->returnCurrentHand(),
+            'dealerScore' => $game->returnDealer()->getScore(),
+            'dealerHand' => $game->returnDealer()->returnCurrentHand(),
+            'message' => "",
+        ];
+
+        return $this->render('card/game-plan.html.twig', $data);
+    }
+
+    /**
+     * @Route("/stand", name="stand")
+     */
+    public function stand(SessionInterface $session): Response
+    {
+        $game = $session->get("game");
+        $game->dealersTurn();
+        $message = $game->checkStatus();
+
+        $session->set("game", $game);
+
+        $data = [
+            'playerScore' => $game->returnPlayer()->getScore(),
+            'playerHand' => $game->returnPlayer()->returnCurrentHand(),
+            'dealerScore' => $game->returnDealer()->getScore(),
+            'dealerHand' => $game->returnDealer()->returnCurrentHand(),
             'message' => $message,
         ];
 

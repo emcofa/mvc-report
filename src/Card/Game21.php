@@ -7,66 +7,113 @@ namespace App\Card;
  * @package App\Card;
  * @author Emmie Fahlström
  */
-class Game21
+class Game21 implements InterfaceGame21
 {
     /**
-     * @var bool variabel for setting if game is active or not
+     * @var object variabel for setting player
      */
-    private $activeGame = false;
+    private Player21 $player;
+
+    /**
+     * @var object variabel for setting dealer
+     */
+    private Player21 $dealer;
+
+    /**
+     * @var object variabel for deck
+     */
+    private Deck $deck;
 
 
     /**
-     * Constructor (creates new players)
+     * Constructor (creates a new game)
      */
-    public function __construct()
+    public function __construct(Player21 $player, Player21 $dealer, Deck $deck)
     {
-        if ($this->activeGame == false) {
-            $this->activeGame  = true;
-            // $_SESSION['deck'] = Card::shuffleDeck();
-            $this->player = new Player21();
-            $this->dealer = new Player21("dealer");
-        }
+        $this->player = $player;
+        $this->dealer = $dealer;
+        $this->deck = $deck;
     }
-
     /**
-     * @return bool checks game status
-     */
-    public function gameStatus(): bool
-    {
-        return $this->activeGame;
-    }
-
-    /**
-     * Resets current hands and player scores
+     * Resets current player scores and draw new cards
      * @access public
      * @return void
      */
     public function new(): void
     {
-        Player21::getPlayer('player')->clearCurrentHand();
-        Player21::getPlayer('dealer')->clearCurrentHand();
+        $this->player->resetScore();
+        $this->dealer->resetScore();
+        $this->deck->shuffleDeck();
+        $hit = $this->returnDeck()->draw();
+        $hit2 = $this->returnDeck()->draw();
+        $hit3 = $this->returnDeck()->draw();
+        $this->player->addToCurrentHand($hit);
+        $this->player->addToCurrentHand($hit2);
+        $this->dealer->addToCurrentHand($hit3);
+        $score = $hit->getValueOfCard();
+        $score2 = $hit2->getValueOfCard();
+        $score3 = $hit3->getValueOfCard();
+        $this->player->setScore($score);
+        $this->player->setScore($score2);
+        $this->dealer->setScore($score3);
+    }
 
-        Player21::getPlayer('player')->hit();
-        Player21::getPlayer('dealer')->hit();
-        Player21::getPlayer('player')->hit();
-        Player21::getPlayer('dealer')->hit();
 
-        self::refresh();
+
+    /**
+     * Dealers turn to draw card after player is finished
+     * @access public
+     * @return void
+     */
+    public function dealersTurn(): void
+    {
+        while ($this->dealer->getScore() < 17) {
+            $hit = $this->returnDeck()->draw();
+            $this->dealer->addToCurrentHand($hit);
+            $score = $hit->getValueOfCard();
+            $this->dealer->setScore($score);
+        }
+    }
+
+
+    /**
+     * Returns the deck
+     * @access public
+     * @return Deck
+     */
+    public function returnDeck(): Deck
+    {
+        return $this->deck;
     }
 
     /**
-     * Checks who is the winner of the game
-     * @static
+     * Returns the dealer
+     * @return Player21
+     */
+    public function returnDealer(): Player21
+    {
+        return $this->dealer;
+    }
+
+    /**
+     * Returns the player
+     * @return Player21
+     */
+    public function returnPlayer(): Player21
+    {
+        return $this->player;
+    }
+
+
+    /**
+     * Checks who is the winner of the game andr returns status
      * @access public
      * @return string
      */
-    public static function checkStatus(): string
+    public function checkStatus(): string
     {
-        $player = Player21::getPlayer();
-        $dealer = Player21::getPlayer('dealer');
-
-        $playerScore = $player->getCurrentScore();
-        $dealerScore = $dealer->getCurrentScore(false);
+        $playerScore = $this->player->getScore();
+        $dealerScore = $this->dealer->getScore();
 
         if ($playerScore > 21) {
             $message = 'Spelare tjock! Dealer vinner spelet!';
@@ -84,7 +131,6 @@ class Game21
             $message = 'Dealer får 21 och vinner rundan!';
             return $message;
         } elseif ($playerScore > $dealerScore && $dealerScore < 17) {
-            $dealer->dealersTurn();
             $message = 'Dealer nöjd, tryck på knappen igen för att se resultat.';
             return $message;
         } elseif ($playerScore > $dealerScore) {
@@ -97,16 +143,5 @@ class Game21
             $message = 'Samma poäng! Det blev lika.';
             return $message;
         }
-    }
-
-    /**
-     * Refreshing the page
-     * @static
-     * @access public
-     * @return void
-     */
-    public static function refresh(): void
-    {
-        header('Location: /');
     }
 }

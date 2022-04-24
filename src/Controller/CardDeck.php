@@ -34,14 +34,15 @@ class CardDeck extends AbstractController
     public function cardDeckShuffle(
         SessionInterface $session
     ): Response {
-        $card = $session->get("deck") ??  Card::shuffleDeck();
-        session_destroy();
+        $session->clear();
+        $deck = $session->get("deck") ?? new Deck();
+        $card = $deck->shuffleDeck();
         $data = [
             'title' => 'Spelkort (osorterade)',
             'card_deck' => $card,
         ];
 
-        $session->set("deck", $card);
+        $session->set("deck", $deck);
 
         return $this->render('card/deck.html.twig', $data);
     }
@@ -53,7 +54,6 @@ class CardDeck extends AbstractController
         SessionInterface $session
     ): Response {
         $card = $session->get("deck") ?? new Deck();
-
         $data = [
             'title' => 'Du drog följande:',
             'card_deck' => $card->draw(),
@@ -75,7 +75,6 @@ class CardDeck extends AbstractController
         Request $request
     ): Response {
         $card = $session->get("deck") ?? new Deck();
-
         $data = [
             'title' => 'Du drog följande:',
             'number' => $number,

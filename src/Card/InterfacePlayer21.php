@@ -18,7 +18,7 @@ interface InterfacePlayer21
      * @access public
      * @return void
      */
-    public function stand();
+    public static function stand();
 
     /**
      * Resets current hand and current score
@@ -33,7 +33,7 @@ interface InterfacePlayer21
      * @access public
      * @return string
      */
-    public function getCurrentHand($activeHand = true);
+    public function getCurrentHand($player, $activeHand = true);
 
     /**
      * Returns current score of hand
@@ -41,7 +41,7 @@ interface InterfacePlayer21
      * @access public
      * @return int
      */
-    public function getCurrentScore($activeHand = true);
+    public function getCurrentScore($whichPlayer, $activeHand = true);
 
     /**
      * Dealers turn to draw cards (lowest value of dealer = 17)
@@ -49,12 +49,4 @@ interface InterfacePlayer21
      * @return void
      */
     public function dealersTurn();
-
-    /**
-     * Get player, default "player" else "dealer
-     * @param $player
-     * @access public
-     * @return self
-     */
-    public static function getPlayer($player = 'player');
 }

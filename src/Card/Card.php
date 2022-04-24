@@ -40,14 +40,6 @@ class Card
     }
 
     /**
-     * @return string Card to string
-     */
-    public function __toString(): string
-    {
-        return $this->value . $this->type;
-    }
-
-    /**
      * Returns the value of the card
      * @access public
      * @return int
@@ -60,43 +52,11 @@ class Card
         }
         return $value;
     }
-
     /**
-     * Returns the type of the card
-     * @access public
-     * @return string
+     * @return string Card to string
      */
-    public function getTypeOfCard(): string
+    public function __toString(): string
     {
-        return $this->value;
-    }
-
-    /**
-     * Shuffles the deck
-     * @static
-     * @access public
-     * @return array
-     */
-    public static function shuffleDeck(): array
-    {
-        foreach (self::SUITS as $type) {
-            foreach (self::VALUES as $value) {
-                $deck[] = new static($type, $value);
-            }
-        }
-        shuffle($deck);
-
-        return $deck;
-    }
-
-    /**
-     * Returns the first card object from deck and then removes the card
-     * @static
-     * @access public
-     * @return Card
-     */
-    public static function getTopCardFromDeck(): self
-    {
-        return array_shift($_SESSION['deck']);
+        return $this->value . $this->type;
     }
 }
