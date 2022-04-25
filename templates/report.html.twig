@@ -112,7 +112,48 @@
             till att det gick åt så mycket tid för min del var på grund av felsökningen och att jag inte har lärt mig
             grunderna i hur man kan formulera koden i objektorienterad PHP helt och hållet ännu vilket kräver att jag
             måste leta information på egen hand.</p>
+        <h3>KMOM04</h3>
+        <p>Jag tycker PHPUnit var ett mycket smidigt testverktyg då det genom Code Coverage går att se svart på vitt vad
+            det är som testas och inte så man kan få en överblick hur man ska utforma sina tester. Jag tycker PHPUnit
+            känns på liknande sätt hur man skriver tester i Python så därav var det ganska enkelt att förstå sig på. Jag
+            hade troligtvis kunna skriva bättre och utförligare tester som skapa tester när koden går fel eller via
+            mocking men jag var tvungen att skriva om majoriteten av min kod denna vecka då jag insåg att jag gjort helt
+            fel när det gäller sessioner i Symfony så mitt fokus låg ganska mycket på det. </p>
+
+        <p>På kortspelet i min src-katalog nådde jag upp till nästan 80% i kodtäckning. Det var vissa delar som jag
+            tyckte var svåra att testa. Det vill säga när kortspelet var klart och man kunde få många utfall i statusen.
+            Det tyckte jag var lite svårt att få till utan att behöva skriva en helt uppsats kod så därför testade jag
+            bara det mest basic, att det returnerade en typ av sträng. Annars tyckte jag att min kodtäckning var helt
+            okej. </p>
+
+        <p>Det finns absolut delar i min kod som kan förbättras och göras mer testbar. Som att kanske ändra om alla mina
+            if-satser till egna metoder istället, men som tidigare nämnt var jag tvungen att ändra om ganska stor del av
+            min källkod då jag hade gjort fel med sessioner i tidigare kursmoment så därför hann jag inte med att ändra
+            om ytterligare. Jag tycker emellertid att det var många delar i min kod som var enkla att testa som gjorde
+            att det gick att nå hög kodtäckning. </p>
+
+        <p>När jag skrev tester till min kod i början av veckan märkte jag att det inte fungerade med huruvida jag hade
+            kodat mina sessioner. När jag kodade mina sessioner i tidigare kursmoment följde jag en artikel som vi hade
+            som läsanvisning men fattade inte då att den inte gällde för Symfony eftersom det inte stod något om det.
+            Som jag har nämnt i tidigare redovisningstexter har tidigare kursmoment varit stressiga så har inte alls
+            känt mig nöjd över det jag har åstadkommit i kodväg. När jag började skriva tester denna vecka kom det ikapp
+            mig vilket gjorde att jag nästan fick börja om på ruta ett igen kändes det som eftersom koden jag hade
+            skrivit inte var testbar i den mån som det krävdes. Jag hade önskat att vi hade fått en mer grundläggande
+            genomgång från första början hur sessioner fungerar i Symfony och inte bara en kort artikel med kodexempel
+            eller en föreläsning när det inte förklaras så djupgående. Eftersom jag har jobbat lite med sessioner
+            tidigare i webtec-kursen (dock inte så informationen satte sig så djupt) tänkte jag att man formulerade sig
+            på samma sätt som i Symfony, men så var inte fallet. </p>
+
+        <p>Jag tycker testbar kod kan identifiera “snygg och ren kod”. Jag märkte det när jag skrev mina tester att de
+            metoder som var smidigast att testa var de som var korta och koncist utan invecklade if-satser osv. Om man
+            ändrar om alla if-satser till korta metoder skulle koden bli mer testbar och samtidigt snygg och ren. </p>
+
+        <p>Mitt TIL är nog att jag kanske får acceptera om jag inte hinner med veckans uppgifter när deadlinesen är
+            eftersom det bidrar till att jag inte skriver bra kod när det är så pass mycket att göra. Det bästa för min
+            del är att känna mig säker på det jag gör innan jag börjar koda eftersom det annars bidrar till att jag
+            inser att jag gjort fel och får göra om allt. </p>
     </div>
+
 
     {% include 'footer.twig' %}
 </body>
