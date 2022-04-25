@@ -17,6 +17,12 @@ class Player21
      * @var array An array of card objects ($players hand)
      */
     protected $currentHand;
+
+    /**
+     * @var array An array of cards (string) ($players hand)
+     */
+    protected $currentHandString;
+
     /**
      * @var int Total score of $players hand
      */
@@ -30,6 +36,7 @@ class Player21
     {
         $this->player = $player;
         $this->currentHand = [];
+        $this->currentHandString = [];
         $this->currentScore = 0;
     }
 
@@ -42,6 +49,7 @@ class Player21
     public function addToCurrentHand($pulledCard): void
     {
         array_push($this->currentHand, $pulledCard);
+        array_push($this->currentHandString, $pulledCard->cardToString());
     }
 
     /**
@@ -52,6 +60,16 @@ class Player21
     public function returnCurrentHand(): array
     {
         return $this->currentHand;
+    }
+
+    /**
+     * Returns current hand in a string
+     * @access public
+     * @return array the current hand
+     */
+    public function returnCurrentHandString(): array
+    {
+        return $this->currentHandString;
     }
 
     /**

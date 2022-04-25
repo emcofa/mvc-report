@@ -56,14 +56,12 @@ class Game extends AbstractController
         $game = $session->get("game") ?? new Game21($player, $dealer, $deck);
         $game->new();
         $session->set("game", $game);
-        $playerScore = $game->returnPlayer()->getScore();
-        $dealerScore = $game->returnDealer()->getScore();
 
         $data = [
-            'playerScore' => $playerScore,
-            'playerHand' => $player->returnCurrentHand(),
-            'dealerScore' => $dealerScore,
-            'dealerHand' => $dealer->returnCurrentHand(),
+            'playerScore' => $game->returnPlayer()->getScore(),
+            'playerHand' => $player->returnCurrentHandString(),
+            'dealerScore' => $game->returnDealer()->getScore(),
+            'dealerHand' => $dealer->returnCurrentHandString(),
             'message' => "",
         ];
 
@@ -84,9 +82,9 @@ class Game extends AbstractController
 
         $data = [
             'playerScore' => $game->returnPlayer()->getScore(),
-            'playerHand' => $game->returnPlayer()->returnCurrentHand(),
+            'playerHand' => $game->returnPlayer()->returnCurrentHandString(),
             'dealerScore' => $game->returnDealer()->getScore(),
-            'dealerHand' => $game->returnDealer()->returnCurrentHand(),
+            'dealerHand' => $game->returnDealer()->returnCurrentHandString(),
             'message' => "",
         ];
 
@@ -106,9 +104,9 @@ class Game extends AbstractController
 
         $data = [
             'playerScore' => $game->returnPlayer()->getScore(),
-            'playerHand' => $game->returnPlayer()->returnCurrentHand(),
+            'playerHand' => $game->returnPlayer()->returnCurrentHandString(),
             'dealerScore' => $game->returnDealer()->getScore(),
-            'dealerHand' => $game->returnDealer()->returnCurrentHand(),
+            'dealerHand' => $game->returnDealer()->returnCurrentHandString(),
             'message' => $message,
         ];
 
