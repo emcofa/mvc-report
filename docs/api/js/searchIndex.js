@@ -91,11 +91,6 @@ Search.appendIndex(
             "summary": "Constructor\u0020for\u0020creating\u0020a\u0020deck",
             "url": "classes/App-Card-Deck.html#method___construct"
         },                {
-            "fqsen": "\\App\\Card\\Deck\u003A\u003A__toString\u0028\u0029",
-            "name": "__toString",
-            "summary": "",
-            "url": "classes/App-Card-Deck.html#method___toString"
-        },                {
             "fqsen": "\\App\\Card\\Deck\u003A\u003Adeck\u0028\u0029",
             "name": "deck",
             "summary": "returns\u0020sorted\u0020deck",
