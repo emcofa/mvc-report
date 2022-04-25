@@ -42,6 +42,7 @@ class CardTest extends TestCase
     public function testStringReturns()
     {
         $card = new Card("D", "Jack");
-        $this->assertEquals('JackD', $card);
+        $toString = $card->cardToString();
+        $this->assertEquals('JackD', $toString);
     }
 }
