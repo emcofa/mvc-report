@@ -56,10 +56,10 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020value\u0020of\u0020the\u0020card",
             "url": "classes/App-Card-Card.html#method_getValueOfCard"
         },                {
-            "fqsen": "\\App\\Card\\Card\u003A\u003A__toString\u0028\u0029",
-            "name": "__toString",
-            "summary": "",
-            "url": "classes/App-Card-Card.html#method___toString"
+            "fqsen": "\\App\\Card\\Card\u003A\u003AcardToString\u0028\u0029",
+            "name": "cardToString",
+            "summary": "returns\u0020string\u0020card",
+            "url": "classes/App-Card-Card.html#method_cardToString"
         },                {
             "fqsen": "\\App\\Card\\Card\u003A\u003ASUITS",
             "name": "SUITS",
@@ -90,6 +90,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "Constructor\u0020for\u0020creating\u0020a\u0020deck",
             "url": "classes/App-Card-Deck.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Card\\Deck\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/App-Card-Deck.html#method___toString"
         },                {
             "fqsen": "\\App\\Card\\Deck\u003A\u003Adeck\u0028\u0029",
             "name": "deck",
@@ -206,14 +211,19 @@ Search.appendIndex(
             "summary": "Returns\u0020current\u0020hand",
             "url": "classes/App-Card-Player21.html#method_returnCurrentHand"
         },                {
+            "fqsen": "\\App\\Card\\Player21\u003A\u003AreturnCurrentHandString\u0028\u0029",
+            "name": "returnCurrentHandString",
+            "summary": "Returns\u0020current\u0020hand\u0020in\u0020a\u0020string",
+            "url": "classes/App-Card-Player21.html#method_returnCurrentHandString"
+        },                {
             "fqsen": "\\App\\Card\\Player21\u003A\u003AsetScore\u0028\u0029",
             "name": "setScore",
-            "summary": "Sets\u0020the\u0020score",
+            "summary": "Sets\u0020the\u0020score\u0020for\u0020player\u0020and\u0020dealer",
             "url": "classes/App-Card-Player21.html#method_setScore"
         },                {
             "fqsen": "\\App\\Card\\Player21\u003A\u003AresetScore\u0028\u0029",
             "name": "resetScore",
-            "summary": "Resets\u0020points",
+            "summary": "Resetsthe\u0020score\u0020for\u0020player\u0020and\u0020dealer",
             "url": "classes/App-Card-Player21.html#method_resetScore"
         },                {
             "fqsen": "\\App\\Card\\Player21\u003A\u003AgetScore\u0028\u0029",
@@ -230,6 +240,11 @@ Search.appendIndex(
             "name": "currentHand",
             "summary": "",
             "url": "classes/App-Card-Player21.html#property_currentHand"
+        },                {
+            "fqsen": "\\App\\Card\\Player21\u003A\u003A\u0024currentHandString",
+            "name": "currentHandString",
+            "summary": "",
+            "url": "classes/App-Card-Player21.html#property_currentHandString"
         },                {
             "fqsen": "\\App\\Card\\Player21\u003A\u003A\u0024currentScore",
             "name": "currentScore",
