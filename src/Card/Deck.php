@@ -20,11 +20,6 @@ class Deck
     private $allCards = [];
 
     /**
-     * @var array an array containing deck in string format
-     */
-    private $allCardsToString = [];
-
-    /**
      * @var array an array containing cards which has been drawn
      */
     private $deleteCards = [];
@@ -42,13 +37,13 @@ class Deck
         }
     }
 
-    /**
-     * @return string Card to string
-     */
-    public function __toString(): string
-    {
-        return $this->type . $this->value;
-    }
+    // /**
+    //  * @return string Card to string
+    //  */
+    // public function __toString(): string
+    // {
+    //     return $this->type . $this->value;
+    // }
 
     /**
      * returns sorted deck
@@ -83,8 +78,6 @@ class Deck
         $cards = $this->allCards[0];
         array_shift($this->allCards);
 
-        // $val = $cards->getValueOfCard();
-        // echo($val)
         return $cards;
     }
 
@@ -104,9 +97,11 @@ class Deck
             $cards = $this->allCards[0];
             array_shift($this->allCards);
             $this->deleteCards[] = $cards;
+            $deleteCards[] = $cards;
             $counter++;
         }
-        return $this->deleteCards;
+
+        return $deleteCards;
     }
 
     /**

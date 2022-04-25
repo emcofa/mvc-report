@@ -28,9 +28,9 @@ class BasicCardGame
     public function __construct()
     {
         $this->allCards = [];
-        foreach (Card::SUITS as $suit) {
+        foreach (Card::SUITS as $type) {
             foreach (Card::VALUES as $value) {
-                $this->allCards[] = $value . $suit;
+                $this->allCards[] = $value . $type;
             }
         }
     }
