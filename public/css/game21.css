@@ -68,3 +68,8 @@ tr:nth-child(even) {
     font-size: 2rem;
 }
 
+#message {
+    color:#03a9f4;
+    text-transform: uppercase;
+}
+
