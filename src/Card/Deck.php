@@ -20,6 +20,11 @@ class Deck
     private $allCards = [];
 
     /**
+     * @var array an array containing deck in string format
+     */
+    private $allCardsToString = [];
+
+    /**
      * @var array an array containing cards which has been drawn
      */
     private $deleteCards = [];

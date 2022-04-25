@@ -15,10 +15,15 @@ class DeckWith2Jokers extends CardDeck
      */
     public function deck2(): Response
     {
-        $card = new Deck();
+        $cards = new Deck();
+        $deck = $cards->deck();
+        $toString = [];
+        foreach ($deck as $card) {
+            array_push($toString, $card->cardToString());
+        }
         $data = [
             'title' => 'Spelkort med jokrar',
-            'card_deck' => $card->deck(),
+            'card_deck' => $toString,
             'add_joker_to_deck' => 'j',
         ];
 

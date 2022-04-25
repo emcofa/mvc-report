@@ -18,10 +18,15 @@ class CardDeck extends AbstractController
      */
     public function deck(): Response
     {
-        $card = new Deck();
+        $cards = new Deck();
+        $deck = $cards->deck();
+        $toString = [];
+        foreach ($deck as $card) {
+            array_push($toString, $card->cardToString());
+        }
         $data = [
             'title' => 'Spelkort (sorterade i färg och värde)',
-            'card_deck' => $card->deck(),
+            'card_deck' => $toString,
         ];
 
         return $this->render('card/deck.html.twig', $data);
@@ -36,10 +41,14 @@ class CardDeck extends AbstractController
     ): Response {
         $session->clear();
         $deck = $session->get("deck") ?? new Deck();
-        $card = $deck->shuffleDeck();
+        $shuffle = $deck->shuffleDeck();
+        $toString = [];
+        foreach ($shuffle as $card) {
+            array_push($toString, $card->cardToString());
+        }
         $data = [
             'title' => 'Spelkort (osorterade)',
-            'card_deck' => $card,
+            'card_deck' => $toString,
         ];
 
         $session->set("deck", $deck);
@@ -54,9 +63,10 @@ class CardDeck extends AbstractController
         SessionInterface $session
     ): Response {
         $card = $session->get("deck") ?? new Deck();
+        $drawn = $card->draw();
         $data = [
             'title' => 'Du drog följande:',
-            'card_deck' => $card->draw(),
+            'card_deck' => $drawn->cardToString(),
             'count' => $card->getNumberCards(),
         ];
 
@@ -74,10 +84,15 @@ class CardDeck extends AbstractController
         SessionInterface $session,
     ): Response {
         $card = $session->get("deck") ?? new Deck();
+        $drawn = $card->drawNumber($number);
+        $toString = [];
+        foreach ($drawn as $drawnCard) {
+            array_push($toString, $drawnCard->cardToString());
+        }
         $data = [
             'title' => 'Du drog följande:',
             'number' => $number,
-            'card_deck' => $card->drawNumber($number),
+            'card_deck' => $toString,
             'count' => $card->getNumberCards(),
         ];
         $session->set("deck", $card);
