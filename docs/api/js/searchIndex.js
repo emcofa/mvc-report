@@ -301,16 +301,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-DeckJson.html#method_deck"
         },                {
-            "fqsen": "\\App\\Controller\\DeckWith2Jokers",
-            "name": "DeckWith2Jokers",
-            "summary": "",
-            "url": "classes/App-Controller-DeckWith2Jokers.html"
-        },                {
-            "fqsen": "\\App\\Controller\\DeckWith2Jokers\u003A\u003Adeck2\u0028\u0029",
-            "name": "deck2",
-            "summary": "",
-            "url": "classes/App-Controller-DeckWith2Jokers.html#method_deck2"
-        },                {
             "fqsen": "\\App\\Controller\\FirstCardGame",
             "name": "FirstCardGame",
             "summary": "",
@@ -485,6 +475,26 @@ Search.appendIndex(
             "name": "checkStatus",
             "summary": "Checks\u0020who\u0020is\u0020the\u0020winner\u0020of\u0020the\u0020game\u0020and\u0020returns\u0020status",
             "url": "classes/App-Card-InterfaceGame21.html#method_checkStatus"
+        },                {
+            "fqsen": "\\App\\Card\\DeckWith2Jokers",
+            "name": "DeckWith2Jokers",
+            "summary": "Class\u0020DeckWith2Jokers",
+            "url": "classes/App-Card-DeckWith2Jokers.html"
+        },                {
+            "fqsen": "\\App\\Card\\DeckWith2Jokers\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor\u0020for\u0020creating\u0020a\u0020deck\u0020with\u0020jokers",
+            "url": "classes/App-Card-DeckWith2Jokers.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\Deck2",
+            "name": "Deck2",
+            "summary": "",
+            "url": "classes/App-Controller-Deck2.html"
+        },                {
+            "fqsen": "\\App\\Controller\\Deck2\u003A\u003Adeck2\u0028\u0029",
+            "name": "deck2",
+            "summary": "",
+            "url": "classes/App-Controller-Deck2.html#method_deck2"
         },                {
             "fqsen": "\\",
             "name": "\\",

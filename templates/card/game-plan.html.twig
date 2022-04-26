@@ -16,7 +16,7 @@
             <div>
                 <div class="box">
                     <h3>Spelare:</h3>
-                    {% for card in playerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg" ) }}"
+                    {% for card in playerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".png" ) }}"
                         width="105" height="145" alt="Testar kortnamn">
                     {% endfor %}
                 </div>
@@ -24,7 +24,7 @@
             <div>
                 <div class="box">
                     <h3>Dealer:</h3>
-                    {% for card in dealerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".svg" ) }}"
+                    {% for card in dealerHand %} <img class="cards" src="{{ asset("img/cards/" ~ card ~ ".png" ) }}"
                         width="105" height="145" alt="">
                     {% endfor %}
                 </div>
