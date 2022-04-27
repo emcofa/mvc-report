@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\LibraryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class LibraryController extends AbstractController
 {
@@ -112,5 +113,48 @@ class LibraryController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('library_show_all');
+    }
+
+    /**
+     * @Route(
+     *      "/library/create/new",
+     *      name="book-create",
+     *      methods={"GET","HEAD"}
+     * )
+     */
+    public function createBook(): Response
+    {
+        return $this->render('library/create-book.html.twig');
+    }
+
+    /**
+     * @Route(
+     *      "/library/create/new",
+     *      name="book-create-process",
+     *      methods={"POST"}
+     * )
+     */
+    public function createBookProcess(
+        Request $request,
+        ManagerRegistry $doctrine): Response
+    {
+        $title = $request->request->get('title');
+        $ISBN  = $request->request->get('ISBN');
+        $author  = $request->request->get('author');
+        $image  = $request->request->get('image');
+
+        $entityManager = $doctrine->getManager();
+
+        $book = new Library();
+        $book->setTitle($title);
+        $book->setISBN($ISBN);
+        $book->setAuthor($author);
+        $book->setImage($image);
+
+        $entityManager->persist($book);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-create');
     }
 }

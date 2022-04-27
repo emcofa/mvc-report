@@ -1,0 +1,46 @@
+{% include 'base.html.twig' %}
+
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+
+        {# read and display all flash messages
+        {% for label, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endfor %} #}
+
+        <form method="post">
+            <fieldset>
+                <legend>Lägg till en ny bok</legend>
+                <p>
+                    <label>Titel:
+                        <input type="text" name="title" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>ISBN:
+                        <input type="text" name="ISBN" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>Författare:
+                        <input type="text" name="author" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>Bild:
+                        <input type="text" name="image" value="">
+                    </label>
+                </p>
+                <p>
+                    <input type="submit" value="Lägg till bok">
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</body>
