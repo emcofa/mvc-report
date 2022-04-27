@@ -1,0 +1,20 @@
+{% include 'base.html.twig' %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+        <div class="container">
+            <div class="card-info-wrapper">
+                <div class="column-links">
+                    <h2>Bibliotek</h2>
+                    <ul class="ul-card">
+                        <li>
+                            <a href="{{ path("library_show_all") }}">Visa böcker i bibliotek</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    {% include 'footer.twig' %}
+</body>
