@@ -4,20 +4,17 @@
     {% include 'nav.twig' %}
     <div class="container">
         <h2>Bibliotek</h2>
-
-        <table>
+        <table class="table">
             {% for table in library|batch(100) %}
             <tbody>
                 <tr>
                     <th>Titel</th>
-                    <th>ISBN</th>
                     <th>Författare</th>
                     <th>Bild</th>
                 </tr>
                 <tr>
                     {% for item in table %}
                     <td><a href="show/{{item.id}}">{{item.title}}</a></td>
-                    <td>{{item.ISBN}}</td>
                     <td>{{item.author}}</td>
                     <td> <img class="library" src="{{ asset("img/library/" ~ item.image ~ "" ) }}" width="130"
                             height="200" alt="{{item.image}}"></td>
@@ -26,6 +23,7 @@
             </tbody>
             {% endfor %}
         </table>
+        <a class="button" href="create/new">Lägg till ny bok</a>
     </div>
 
     {% include 'footer.twig' %}

@@ -3,18 +3,11 @@
 <body>
     {% include 'nav.twig' %}
     <div class="container">
-        <div class="container">
-            <div class="card-info-wrapper">
-                <div class="column-links">
-                    <h2>Bibliotek</h2>
-                    <ul class="ul-card">
-                        <li>
-                            <a href="{{ path("library_show_all") }}">Visa böcker i bibliotek</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <h2>Bibliotek</h2>
+        <p>Välkommen till biblioteket!</p>
+        <p>Följ länken nedan som tar dig vidare till böckerna.</p>
+        <a class="button" href="{{ path("library_show_all") }}">Visa böcker i biblioteket</a>
+    </div>
 
     {% include 'footer.twig' %}
 </body>

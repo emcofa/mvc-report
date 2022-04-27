@@ -5,15 +5,17 @@
     <div class="container">
         <h2>Information om bok med id {{id}}</h2>
 
-        <table>
+        <table class="table">
             <tbody>
                 <tr>
+                    <th>Id</th>
                     <th>Titel</th>
                     <th>ISBN</th>
                     <th>Författare</th>
-                    <th></th>
+                    <th>Bild</th>
                 </tr>
                 <tr>
+                    <td>{{id}}</td>
                     <td>{{book.title}}</td>
                     <td>{{book.ISBN}}</td>
                     <td>{{book.author}}</td>
@@ -22,7 +24,7 @@
                 </tr>
             </tbody>
         </table>
-        <a href="../update/{{book.id}}">Uppdatera bok</a>
+        <a class="button" href="../update/{{book.id}}">Uppdatera bok</a>
     </div>
 
     {% include 'footer.twig' %}
