@@ -1,0 +1,56 @@
+{% include 'base.html.twig' %}
+
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+        <h2>Uppdatera bok med id: {{id}}</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Titel</th>
+                    <th>ISBN</th>
+                    <th>Författare</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>{{book.title}}</td>
+                    <td>{{book.ISBN}}</td>
+                    <td>{{book.author}}</td>
+                    <td> <img class="library" src="{{ asset(" img/library/" ~ book.image ~ "" ) }}" width="130"
+                            height="200" alt="{{book.image}}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <form method="post">
+            <fieldset>
+                <p>
+                    <label>Id:
+                        <input type="text" name="id" readonly value="{{id}}">
+                    </label>
+                    <label>Titel:
+                        <input type="text" name="title" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>ISBN:
+                        <input type="text" name="ISBN" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>Författare:
+                        <input type="text" name="author" value="">
+                    </label>
+                </p>
+                <p>
+                    <label>Bild:
+                        <input type="text" name="image" value="">
+                    </label>
+                </p>
+                <p>
+                    <input type="submit" value="Uppdatera bok">
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</body>

@@ -136,8 +136,8 @@ class LibraryController extends AbstractController
      */
     public function createBookProcess(
         Request $request,
-        ManagerRegistry $doctrine): Response
-    {
+        ManagerRegistry $doctrine
+    ): Response {
         $title = $request->request->get('title');
         $ISBN  = $request->request->get('ISBN');
         $author  = $request->request->get('author');
@@ -156,5 +156,59 @@ class LibraryController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('book-create');
+    }
+
+    /**
+     * @Route(
+     *      "/library/update/{id}",
+     *      name="book-update",
+     *      methods={"GET","HEAD"}
+     * )
+     */
+    public function updateBook(
+        LibraryRepository $libraryRepository,
+        int $id
+    ): Response {
+        $books = $libraryRepository
+            ->find($id);
+
+        return $this->render('library/update-book.html.twig', [
+            'id' => $id,
+            'book' => $books,
+        ]);
+    }
+    /**
+     * @Route(
+     *      "/library/update/{id}",
+     *      name="book-update-process",
+     *      methods={"POST"}
+     * )
+     */
+    public function updateProductProcess(
+        ManagerRegistry $doctrine,
+        Request $request,
+        int $id
+    ): Response {
+        $entityManager = $doctrine->getManager();
+        $library = $entityManager->getRepository(Library::class)->find($id);
+
+        if (!$library) {
+            throw $this->createNotFoundException(
+                'No book found for id ' . $id
+            );
+        }
+
+        $title = $request->request->get('title');
+        $ISBN  = $request->request->get('ISBN');
+        $author  = $request->request->get('author');
+        $image  = $request->request->get('image');
+
+        $library->setTitle($title);
+        $library->setISBN($ISBN);
+        $library->setAuthor($author);
+        $library->setImage($image);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-update', array('id' => $id));
     }
 }
