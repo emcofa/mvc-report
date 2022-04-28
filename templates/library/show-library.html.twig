@@ -8,16 +8,11 @@
             {% for table in library|batch(100) %}
             <tbody>
                 <tr>
-                    <th>Titel</th>
-                    <th>Författare</th>
-                    <th>Bild</th>
-                </tr>
-                <tr>
                     {% for item in table %}
-                    <td><a href="show/{{item.id}}">{{item.title}}</a></td>
-                    <td>{{item.author}}</td>
-                    <td> <img class="library" src="{{ asset("img/library/" ~ item.image ~ "" ) }}" width="130"
+                    <td> <img class="library" src="{{ asset("img/library/" ~ item.image ~ "" ) }}" width="140"
                             height="200" alt="{{item.image}}"></td>
+                    <td><u><a class="book-title" href="show/{{item.id}}">{{item.title}}</a></u>
+                    <p class="book-text">av {{item.author}}</p></td>
                 </tr>
                 {% endfor %}
             </tbody>

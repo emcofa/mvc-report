@@ -3,9 +3,19 @@
 <body>
     {% include 'nav.twig' %}
     <div class="container">
-        <h2>Information om bok med id {{id}}</h2>
+        {# <h2>{{book.title}}</h2> #}
 
-        <table class="table">
+        <section class="container-book">
+            <div class="item-a"><img class="library" src="{{ asset("img/library/" ~ book.image ~ "" ) }}" width="200"
+                    height="270" alt="{{book.image}}"></div>
+            <div class="item-b">
+                <h2>{{book.title}}</h2>
+                <p class="book-text">av {{book.author}}</p>
+                <p class="book-text">IBSN: {{book.ISBN}}</p>
+            </div>
+        </section>
+
+        {# <table class="table">
             <tbody>
                 <tr>
                     <th>Id</th>
@@ -19,12 +29,13 @@
                     <td>{{book.title}}</td>
                     <td>{{book.ISBN}}</td>
                     <td>{{book.author}}</td>
-                    <td> <img class="library" src="{{ asset("img/library/" ~ book.image ~ "" ) }}" width="130"
-                        height="200" alt="{{book.image}}"></td>
+                    <td> <img class="library" src="{{ asset(" img/library/" ~ book.image ~ "" ) }}" width="130"
+                            height="200" alt="{{book.image}}"></td>
                 </tr>
             </tbody>
-        </table>
+        </table> #}
         <a class="button" href="../update/{{book.id}}">Uppdatera bok</a>
+        <a class="button" href="../show">Tillbaka till alla böcker</a>
     </div>
 
     {% include 'footer.twig' %}

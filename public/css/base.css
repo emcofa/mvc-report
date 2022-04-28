@@ -160,3 +160,11 @@ a {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+td a {
+    color: black;
+}
+
+td a:hover {
+    opacity: 0.8;
+}

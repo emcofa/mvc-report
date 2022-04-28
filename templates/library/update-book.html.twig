@@ -4,8 +4,8 @@
 <body>
     {% include 'nav.twig' %}
     <div class="container">
-        <h2>Uppdatera bok med id: {{id}}</h2>
-        <table class="table">
+        <h2>Uppdatera bok med id {{id}}</h2>
+        {# <table class="table">
             <tbody>
                 <tr>
                     <th>Titel</th>
@@ -20,7 +20,7 @@
                     <td>{{book.image}}</td>
                 </tr>
             </tbody>
-        </table>
+        </table> #}
         <div class="form-container">
             <form method="post">
                 <fieldset>
@@ -29,22 +29,22 @@
                             <input type="text" name="id" readonly value="{{id}}">
                         </label>
                         <label>Titel
-                            <input type="text" name="title" value="">
+                            <input type="text" name="title" value="{{book.title}}">
                         </label>
                     </p>
                     <p>
                         <label>ISBN
-                            <input type="text" name="ISBN" value="">
+                            <input type="text" name="ISBN" value="{{book.ISBN}}">
                         </label>
                     </p>
                     <p>
                         <label>Författare
-                            <input type="text" name="author" value="">
+                            <input type="text" name="author" value="{{book.author}}">
                         </label>
                     </p>
                     <p>
                         <label>Bild
-                            <input type="text" name="image" value="">
+                            <input type="text" name="image" value="{{book.image}}">
                         </label>
                     </p>
                     <p>
@@ -53,5 +53,6 @@
                 </fieldset>
             </form>
         </div>
+        <a class="button" href="../show/{{id}}">Tillbaka till detaljöversikt</a>
     </div>
 </body>

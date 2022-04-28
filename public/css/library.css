@@ -1,0 +1,25 @@
+.book-title {
+    font-size: 24px;
+}
+
+.book-text {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-book {
+    display: grid;
+    grid-template-columns: auto auto;
+    /* grid-template-rows: 400px 400px; */
+    grid-auto-flow: row;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 1em;
+  }
+
+.item-a {
+    grid-column: 1;
+    align-self: center;
+}
+.item-b {
+    grid-column: 2;
+}
