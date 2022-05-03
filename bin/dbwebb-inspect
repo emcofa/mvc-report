@@ -1,0 +1,3860 @@
+#!/bin/bash
+# dbwebb-inspect: tool to inspect kmoms in course repos
+#
+# See more: http://dbwebb.se/dbwebb-inspect
+#
+# Author: Mikael Roos, mos@dbwebb.se
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014-2018 Mikael Roos (mos@dbwebb.se)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+#
+# Current version
+#
+DBW_VERSION="v2.12.0 (2022-03-01)"
+# --------------- DBWEBB FUNCTIONS PHASE START ---------------
+
+#
+# Get the time the script has executed since its start.
+#
+timeScript()
+{
+    local end=
+
+    #end=$( date +%s.%N )
+    end=$( date +%s )
+    echo $(( end-START_TIMER ))
+}
+
+
+
+#
+# Set correct mode on published file and dirs
+#
+publishChmod()
+{
+    local dir="$1"
+
+    if [ -d "$dir" ]; then
+        find "$dir" -type d -name 'cache' -exec chmod -R a+rw {} \;
+        find "$dir" -type d -name 'db' -exec chmod a+rwx {} \;
+        find "$dir" -type d -name 'storage' -exec chmod -R a+rwx {} \;
+        find "$dir" -type d -name 'var' -exec chmod -R a+rwx {} \;
+        find "$dir" -type d -name 'web/assets' -exec chmod -R a+rwx {} \;
+
+        find "$dir" -type f -name '*.conf' -exec chmod go-r {} \;
+        find "$dir" -type f -name '*.py' -exec chmod go-r {} \;
+        find "$dir" -type f -name 'log.txt' -exec chmod go-r {} \;
+        find "$dir" -type f -name '*.sh' -exec chmod go-r {} \;
+        find "$dir" -type f -name '*.bash' -exec chmod go-r {} \;
+        find "$dir" -type f -name '*.cgi' -exec chmod a+rx {} \;
+        find "$dir" -type f -name '*.sqlite' -exec chmod a+rw {} \;
+        find "$dir" -type f -name '*.sql' -exec chmod go+r {} \;
+
+        case "$DBW_COURSE" in
+            databas)
+                find "$dir" -type d -path '*/me/kmom*' -exec chmod -R go-r {} \;
+                find "$dir" -type d -path '*/me/skolan' -exec chmod -R go-r {} \;
+            ;;
+            # phpmvc)
+            #     find "$dir" -type d -path '*/css/anax-grid' -exec chmod o+w {} \;
+            #     find "$dir" -type f -path '*/css/anax-grid/style.css' -exec chmod o+w {} \;
+            #     find "$dir" -type f -path '*/css/anax-grid/style.less.cache' -exec chmod o+w {} \;
+            # ;;
+            linux)
+                find "$dir" -type f -not -path '*/me/redovisa/*' -not -path '*/mysite/*' -name '*.js' -exec chmod go-r {} \;
+                find "$dir" -type f -name 'mazerunner' -exec chmod go-r {} \;
+                find "$dir" -type f -name '*.txt' -exec chmod go-r {} \;
+                find "$dir" -type f -name '*.json' -exec chmod go-r {} \;
+            ;;
+            oopython \
+            | matmod)
+                find "$dir" -type f -path '*/db/*.json' -exec chmod go+w {} \;
+                find "$dir" -type f -name '*.py' -exec chmod go+r {} \;
+                #find "$dir" -type f -name '*.py' -path '*/flask/*' -exec chmod go+r {} \;
+                #find "$dir" -type f -name '*.py' -path '*/my_app/*' -exec chmod go+r {} \;
+            ;;
+        esac
+    fi
+}
+
+
+
+#
+# realpath -f dows not work on Mac OS
+#
+function get_realpath()
+{
+    # failure : file does not exist.
+    [[ ! -e "$1" ]] && return 1
+
+    # do symlinks.
+    [[ -n "$no_symlinks" ]] && local pwdp='pwd -P' || local pwdp='pwd'
+
+    # Path to dir, without eventual filename
+    local path="$( cd "$( echo "${1%/*}" )" 2>/dev/null; $pwdp )"
+
+    if [ -d "$1" ]; then
+        path="$( cd "$( echo "$1" )" 2>/dev/null; $pwdp )"
+    elif [ -f "$1" ]; then
+        path="$path/${1##*/}"
+    fi
+
+    echo "$path"
+    return 0
+}
+
+
+
+#
+# Does key exists in array?
+#
+function exists() {
+    if [ "$2" != in ]; then
+        echo "Incorrect usage."
+        echo "Correct usage: exists {key} in {array}"
+        return
+    fi
+    eval '[ ${'$3'[$1]+muahaha} ]'
+}
+
+
+
+#
+# Check if array contains a value
+#
+function contains() {
+    local e
+    for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+    return 1
+}
+
+
+
+#
+# Join elements with separator
+# join , a "b c" d #a,b c,d
+# join / var local tmp #var/local/tmp
+# join , "${FOO[@]}" #a,b,c
+#
+function join()
+{
+    local IFS="$1";
+    shift;
+    echo "$*";
+}
+
+
+
+#
+# Get the url to GitHub for a repo
+#
+function createGithubUrl()
+{
+    local course="$1"
+    local extra="$2"
+
+    case $course in
+        "design")
+            course="design-v3"
+            ;;
+        "js")
+           course="js-v2"
+           ;;
+       "webapp")
+          course="webapp-v4"
+          ;;
+    esac
+
+    echo "https://github.com/dbwebb-se/$course$extra"
+}
+
+
+
+#
+# Check for installed commands
+#
+function checkCommand
+{
+    local COMMAND="$1"
+
+    if ! hash "$COMMAND" 2>/dev/null; then
+        printf "Command $COMMAND not found."
+    else
+        printf "$( which $COMMAND )"
+    fi
+}
+
+
+
+#
+# Check command and version of it with nice string as result
+#
+function checkCommandWithVersion
+{
+    local what="$1"
+    local version="$2"
+    local options="$3"
+
+    if ! hash "$what" 2>/dev/null; then
+        printf "%-10s Command '%s' not found." "-" "$what"
+    else
+        if [ ! -z "$version" ]; then
+            printf "%-10s %s" "$( eval $what $version $options )" "$( which $what )"
+        else
+            printf "%-10s %s" "?" "$( which $what )"
+        fi
+    fi
+}
+
+
+
+
+#
+# Use command (wget, curl, lynx) to download url and output to stdout.
+#
+function getUrlToStdout
+{
+    local cmd=
+    local url="$1"
+    local filename="/tmp/dbwebb.curl.$$"
+    local exitCode=
+
+    veryVerbose "Saving url in '$filename'."
+    getUrlToFile "$url" "$filename"
+    exitCode=$?
+
+    cat "$filename" \
+        || die "Failed to echo content from downloaded file."
+    rm -f "$filename"
+
+    ( exit $exitCode )
+}
+
+
+
+#
+# Use command (wget, curl, lynx) to download url and output to file.
+# The variable OPTION_WITH_WGET_ALT can be used to specify the tool
+# to use, wget is default and options are curl and lynx.
+#
+function getUrlToFile
+{
+    local cmd=
+    local verbose=
+    local url="$1"
+    local filename="$2"
+    local overwrite="$3"
+
+    if [ -z "$OPTION_WITH_WGET_ALT" ] && hash wget 2>/dev/null; then
+        verbose="--quiet"
+        [[ $VERY_VERBOSE ]] && verbose="--verbose"
+        cmd="wget $verbose -O \"$filename\" \"$url\""
+    elif ([ -z "$OPTION_WITH_WGET_ALT" ] || [ "$OPTION_WITH_WGET_ALT" = "curl" ]) && hash curl 2>/dev/null; then
+        cmd="curl --fail --silent $verbose \"$url\" -o \"$filename\""
+    elif ([ -z "$OPTION_WITH_WGET_ALT" ] || [ "$OPTION_WITH_WGET_ALT" = "lynx" ]) && hash lynx 2>/dev/null; then
+        cmd="lynx -source \"$url\" > \"$filename\""
+    fi
+
+    veryVerbose "Command: $cmd"
+    if [ -f "$filename" ] && [ -z "$overwrite" ]; then
+        die "The file '$filename' already exists, please remove it before you download a new."
+    fi
+    [[ $OPTION_DRY ]] || bash -c "$cmd"
+}
+
+
+
+#
+# Press enter to continue
+#
+pressEnterToContinue()
+{
+    if [[ ! $YES ]]; then
+        printf "\nPress enter to continue..."
+        read void
+    fi
+}
+
+
+
+#
+# Answer yes or no to proceed
+#
+answerYesOrNo()
+{
+    local answer="y"
+    local default="$1"
+
+    if [[ ! $YES ]]; then
+        read answer
+        answer=${answer:-$default}
+    fi
+
+    echo "$answer"
+}
+
+
+
+##
+# Print confirmation message with default values.
+#
+# @param string $1 the message to display or use default.
+# @param string $2 the default value for the response.
+#
+confirm()
+{
+    [[ $YES ]] && return 0
+
+    read -r -p "${1:-Are you sure? [yN]} "
+    case "${REPLY:-$2}" in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
+
+
+##
+# Read input from user supporting a default value for reponse.
+#
+# @param string $1 the message to display.
+# @param string $1 the default value.
+#
+input()
+{
+    read -r -p "$1 [$2]: "
+    echo "${REPLY:-$2}"
+}
+
+
+
+#
+# Execute a command in a controlled manner
+#
+function executeCommandInSubShell
+{
+    executeCommand "$1" "$2" "$3" "$4" "subshell"
+}
+
+
+
+#
+# Execute a command in a controlled manner
+#
+function executeCommand
+{
+    local introText="$1"
+    local subshell="$5"
+
+    # Introduction text for the command
+    echo "$introText"
+
+    REALLY="$4"
+    if [ ! -z $REALLY ]
+    then
+        printf "\nAre you really sure? [yN] "
+        read answer
+        default="n"
+        answer=${answer:-$default}
+
+        if [ ! \( "$answer" = "y" -o "$answer" = "Y" \) ]
+        then
+            printf "Exiting...\n"
+            exit 0
+        fi
+    fi
+
+    COMMAND="$2"
+
+    if [[ $VERY_VERBOSE ]]
+    then
+        printf "\nExecuting command:"
+        printf "\n$COMMAND"
+        printf "\n-----------------------------------------"
+        printf "\n"
+    fi
+
+    if [ "$subshell" = "subshell" ]; then
+        ( "$COMMAND" )
+    else
+        bash -c "$COMMAND"
+    fi
+    STATUS=$?
+
+    if [[ $VERY_VERBOSE ]]
+    then
+        printf "\n-----------------------------------------"
+        printf "\n"
+    fi
+
+    MESSAGE=$3
+    if [[ ! $SILENT ]]; then
+        if [ $STATUS = 0 ]
+        then
+            printf "$MSG_DONE $MESSAGE"
+        else
+            printf "$MSG_FAILED $MESSAGE"
+        fi
+        printf "\n"
+    fi
+
+    return $STATUS
+}
+
+
+
+#
+# Convert version to a compareble string
+# Works for 1.0.0 and v1.0.0
+#
+function getSemanticVersion
+{
+    #local version=${1:1}
+    local version=$( echo $1 | sed s/^[vV]// )
+    echo "$version" | awk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }'
+}
+
+
+
+#
+# Check if current version of dbwebb-cli matches minimum required version.
+#
+function checkMinimumVersionRequirementOrExit
+{
+    if [[ $DBW_VERSION_REQUIREMENT ]]; then
+        local required current
+        required=$( getSemanticVersion $DBW_VERSION_REQUIREMENT )
+        current=$( getSemanticVersion $DBW_VERSION )
+        if [ "$current" -lt "$required" ]; then
+            printf "$MSG_FAILED You need to upgrade dbwebb-cli to work with this course repo.\nDo a 'dbwebb selfupdate'.\n"
+            printf "Your current version is:     %s\n" "$DBW_VERSION"
+            printf "Minimum required version is: %s\n" "$DBW_VERSION_REQUIREMENT"
+            exit 1
+        fi
+    fi
+}
+
+
+
+#
+# Check if within a valid course repo or exit
+#
+function checkIfValidCourseRepoOrExit
+{
+    if [ "$DBW_COURSE_REPO_VALID" != "yes" ]; then
+        printf "$MSG_FAILED Could not find file '%s', this is not a valid course repo." "$DBW_COURSE_FILE_NAME"
+        printf "\nThis command must be executed within a valid course repo."
+        printf "\n"
+        exit 1
+    fi
+
+    checkMinimumVersionRequirementOrExit
+}
+
+
+
+#
+# Check if config file or exit
+#
+function checkIfValidConfigOrExit()
+{
+    if [ ! -f "$DBW_CONFIG_FILE" ]; then
+        printf "$MSG_FAILED Could not find the configuration file '$DBW_CONFIG_FILE', this is needed for this operation."
+        printf "\n"
+        exit 1
+    fi
+}
+
+
+
+#
+# Check if valid combination of course and target.
+#
+function checkIfValidCombination()
+{
+    local res="$1"
+    local target="$2"
+
+    if [ -z "$res" ]; then
+        printf "$MSG_FAILED Not a valid combination of '$DBW_COURSE' and target '$target'.\n"
+        exit 2
+    fi
+}
+
+
+
+#
+# Check if subdir to me/ exists or propose to run init.
+#
+checkIfSubdirExistsOrProposeInit()
+{
+    local dir="$1"
+
+    if [ ! -d "$dir" ]; then
+        printf "$MSG_FAILED The target directory '$dir' is missing.\nPerhaps, did you run the command 'dbwebb init' or misspelled the command?\n"
+        exit 2
+    fi
+}
+
+
+
+#
+# Fail, die and present error message.
+#
+die()
+{
+    local message="$1"
+    local status="${2:-1}"
+
+    printf "$MSG_FAILED $message\n" >&2
+    exit $status
+}
+
+
+
+#
+# Print out information details in standard verbose mode.
+#
+verboseDone()
+{
+    [[ $SILENT ]] || printf "$MSG_DONE $1\\n"
+}
+
+
+
+#
+# Print out information details that command partly failed.
+#
+verboseWarning()
+{
+    [[ $SILENT ]] || printf "$MSG_WARNING $1\\n"
+}
+
+
+
+#
+# Print out information details that command has failed.
+#
+verboseFail()
+{
+    [[ $SILENT ]] || printf "$MSG_FAILED $1\\n"
+}
+
+
+
+#
+# Print out information details in standard verbose mode.
+#
+verbose()
+{
+    [[ $SILENT ]] || printf "$1\\n"
+}
+
+
+
+#
+# Print out details in very verbose mode.
+#
+veryVerbose()
+{
+    [[ $VERY_VERBOSE ]] && printf "$1\\n" >&2
+}
+
+
+
+#
+# Read the version of the labs used, from configuration file.
+#
+readLabVersionFromConfig()
+{
+    [ -f "$DBW_COURSE_DIR/.dbwebb/lab.version" ] \
+        && cat "$DBW_COURSE_DIR/.dbwebb/lab.version"
+}
+
+
+
+#
+# Set proper rights for files and directories
+# OBSOLETE to be replaced by rsync --chmod
+#
+setChmod()
+{
+    if [[ $VERY_VERBOSE ]]; then
+        printf "Ensuring that all files and directories are readable for all, below $DBW_COURSE_DIR.\n"
+    fi
+
+    find "$DBW_COURSE_DIR" -type d -exec chmod u+rwx,go+rx {} \;
+    find "$DBW_COURSE_DIR" -type f -exec chmod u+rw,go+r {} \;
+}
+
+
+
+#
+# Convert course specific module to path on disk
+#
+mapCmdToDir()
+{
+    local CMD="$1"
+    local RES=""
+
+    if [ -z "$CMD" ]; then
+        return
+    fi
+
+    case "$CMD" in
+        example)    RES="example" ;;
+        me)         RES="me" ;;
+        redovisa)   RES="me/redovisa" ;;
+        kmom01)     RES="me/kmom01" ;;
+        kmom02)     RES="me/kmom02" ;;
+        kmom03)     RES="me/kmom03" ;;
+        kmom04)     RES="me/kmom04" ;;
+        kmom05)     RES="me/kmom05" ;;
+        kmom06)     RES="me/kmom06" ;;
+        kmom10)     RES="me/kmom10" ;;
+    esac
+
+    [ ! -z $RES ] && echo "$RES" && return
+
+    # Check for known pathes in course repo config file
+    local mapFile="$DBW_COURSE_DIR/.dbwebb.map"
+    local item=
+    if [ -f "$mapFile" ]; then
+        while IFS= read -r path
+        do
+            item=$( basename "$path" )
+            if [ "$CMD" = "$item" -a -d "$path" ]; then
+                echo "$path"
+                return
+            fi
+        done < <(grep "^[^#]" "$mapFile")
+    fi
+
+    # Check for existing directories below me/
+    [ -d "$DBW_COURSE_DIR/me/$CMD" ] && echo "me/$CMD" && return
+
+    # Check me/* for match
+    RES=$( cd "$DBW_COURSE_DIR" && find me -mindepth 2 -maxdepth 2 -name "$CMD" -type d | head -n 1 )
+
+    echo "$RES"
+    return
+}
+
+
+
+#
+# Get path to dir to check, use both parts of courses and fallback
+# to absolute and relative paths.
+#
+function createDirsInMeFromMapFile
+{
+    local mapFile="$DBW_COURSE_DIR/.dbwebb.map"
+    if [ -f "$mapFile" ]; then
+        while IFS= read -r path
+        do
+            echo "$path"
+            install -d "$DBW_COURSE_DIR/$path"
+        done < <(grep "^[^#]" "$mapFile")
+    fi
+}
+
+
+
+#
+# Get path to dir to check, use both parts of courses and fallback
+# to absolute and relative paths.
+#
+function getPathToDirectoryFor
+{
+    local dir="$( mapCmdToDir $1 )"
+
+    if [ -z "$command" ]; then
+        echo "$DBW_CURRENT_DIR"
+    elif [ -z "$dir" -a -d "$command" ]; then
+        echo "$command"
+    elif [ -z "$dir" -a -d "$DBW_CURRENT_DIR/$command" ]; then
+        echo "$DBW_CURRENT_DIR/$command"
+    elif [ ! -z "$dir" -a -d "$DBW_COURSE_DIR" -a -d "$DBW_COURSE_DIR/$dir" ]; then
+        echo "$DBW_COURSE_DIR/$dir"
+    else
+        printf "\n$MSG_FAILED The item '$command' was mapped to directory '$dir' which is not a valid directory.\n"
+        exit 1
+    fi
+}
+
+
+
+#
+# Validate the uploaded files
+#
+createUploadDownloadPaths()
+{
+    local ignoreSubdir="$1"
+    SUBDIR="$( mapCmdToDir $ITEM )"
+
+    if [ -z "$WHAT" -o -z "$WHERE" ]; then
+        printf "$MSG_FAILED Missing argument for source or destination. Perhaps re-create the config-file?"
+        printf "\n\n"
+        exit 1
+    fi
+
+    #if [ -d "$DBW_CURRENT_DIR/$ITEM" ]; then
+    #    SUBDIR="${ITEM%/}"
+    #elif [ ! -z "$ITEM" -a -z "$SUBDIR" ]; then
+    if [ ! -z "$ITEM" -a -z "$SUBDIR" ]; then
+        printf "\n$MSG_FAILED Not a valid combination course: '$DBW_COURSE' and item: '$ITEM'."
+        printf "\n\n"
+        exit 1
+    fi
+
+    if [ ! -z "$ignoreSubdir" ]; then
+        WHAT="$WHAT/"
+        WHERE="$WHERE/"
+    elif [ ! -z "$SUBDIR" ]; then
+        WHAT="$WHAT/$SUBDIR/"
+        WHERE="$WHERE/$SUBDIR/"
+    else
+        WHAT="$WHAT/"
+        WHERE="$WHERE/"
+    fi
+
+    #echo "WHAT=$WHAT"
+    #echo "WHERE=$WHERE"
+
+    if [ ! -d "$WHAT" ]; then
+        printf "\n$MSG_FAILED Target directory is not a valid directory: '$WHAT'"
+        printf "\n\n"
+        exit 1
+    fi
+}
+
+
+
+#
+# Selfupdate
+#
+selfupdate()
+{
+    local what="$1"
+    local version=${2:-master}
+    local target="$DBW_EXECUTABLE_PATH"
+    local remote=
+    local silent="--quiet"
+    local repo="https://raw.githubusercontent.com/mosbth/dbwebb-cli/$version"
+
+    if [[ $VERY_VERBOSE ]]; then
+        silent=""
+    fi
+
+    case $what in
+        dbwebb)
+            remote="$repo/dbwebb2"
+        ;;
+
+        dbwebb-validate)
+            remote="$repo/dbwebb2-validate"
+        ;;
+
+        dbwebb-inspect)
+            remote="$repo/dbwebb2-inspect"
+        ;;
+    esac
+
+    printf "Your current version is: "
+    $what --version
+
+    echo "Selfupdating '$what' from $repo"
+
+    # Downloading
+    # printf '\nDownloading... '; wget $silent $remote -O /tmp/$$;
+    if hash wget 2> /dev/null; then
+        local dli="Downloading using wget... "
+        local dlc="wget $silent $remote -O /tmp/$$"
+    else
+        echo "Failed. Did not find wget. Please install wget."
+        exit 1
+    fi
+    local dlm="to download."
+    executeCommand "$dli" "$dlc" "$dlm"
+    [[ $STATUS > 0 ]] && echo "Could not download the remote file, check the download link if its correct." && exit 1
+
+    # Installing
+    # printf '\nInstalling... '; install /tmp/$$ $target;
+    local ini="Installing... "
+    local inc="install /tmp/$$ $target"
+    local inm="to install."
+    executeCommand "$ini" "$inc" "$inm"
+    local ins=$?
+
+    # Cleaning up
+    # printf '\nCleaning up... '; rm /tmp/$$;
+    local cli="Cleaning up... "
+    local clc="rm /tmp/$$"
+    local clm="to clean up."
+    executeCommand "$cli" "$clc" "$clm"
+
+    if [ $ins != 0 ]; then
+        exit 1
+    fi
+
+    printf "The updated version is now: "
+    $what --version
+}
+
+
+
+#
+# Perform an assert
+#
+function assert()
+{
+    EXPECTED=$1
+    TEST=$2
+    MESSAGE=$3
+    ASSERTS=$(( $ASSERTS + 1 ))
+    local onlyExitStatus=$4
+    local error=
+    local status=
+
+    bash -c "$TEST" &> "$TMPFILE"
+    status=$?
+
+    if [ \( -z "$onlyExitStatus" \) -o \( ! $status -eq $EXPECTED \) ]; then
+        error=$( cat "$TMPFILE" )
+    fi
+    rm -f "$TMPFILE"
+
+    if [ \( ! $status -eq $EXPECTED \) -o \( ! -z "$error" \) ]; then
+        FAULTS=$(( $FAULTS + 1 ))
+
+        printf "\n\n$MSG_WARNING %s\n" "$MESSAGE"
+        [ -z "$error" ] || printf "%s\n\n" "$error"
+
+        ASSERTS_SUMMARY="$ASSERTS_SUMMARY\n $MSG_WARNING $MESSAGE\n"
+    else
+        ASSERTS_SUMMARY="$ASSERTS_SUMMARY."
+    fi
+
+    return $status
+}
+
+
+
+#
+# Add details to the assert summary, for example when a new section is
+# started, to visualise and greoup the asserts into sections.
+#
+function assertSummaryAdd()
+{
+    local message="$1"
+    local space="            "
+    # ten="          "
+    # forty="$ten$ten$ten$ten"
+    # y="very short text"
+    # y="${y:0:40}${forty:0:$((40 - ${#y}))}"
+    # echo "'${y}'"
+
+    message="${message:0:12}${space:0:$((12 - ${#message}))}"
+    ASSERTS_SUMMARY="$ASSERTS_SUMMARY\n# $message"
+}
+
+
+
+# #
+# # Perform an assert on exit value returned
+# # TODO Check if this is really needed by python inspect
+# # OBSOLETE Not used
+# #
+# assertExit()
+# {
+#     EXPECTED=$1
+#     TEST=$2
+#     MESSAGE=$3
+#     ASSERTS=$(( $ASSERTS + 1 ))
+#
+#     bash -c "$TEST" &> "$TMPFILE"
+#     STATUS=$?
+#     ERROR=$( cat "$TMPFILE" )
+#     rm -f "$TMPFILE"
+#
+#     if [ $STATUS -ne $EXPECTED ]; then
+#         FAULTS=$(( $FAULTS + 1 ))
+#
+#         printf "\n$TEST"
+#         printf "\n\n$MSG_FAILED $MESSAGE\n"
+#         [ -z "$ERROR" ] || printf "$ERROR\n\n"
+#
+#         return 1
+#     fi
+#
+#     return 0
+#
+# }
+
+
+
+
+#
+# Clean up and output results from asserts
+# TODO Seems to be used by validate
+#
+function assertResults()
+{
+    if [ $FAULTS -gt 0 ]; then
+        printf "\n\n$MSG_FAILED"
+        printf " Asserts: $ASSERTS Faults: $FAULTS\n\n"
+        exit 1
+    fi
+
+    printf "\n$MSG_OK"
+    printf " Asserts: $ASSERTS Faults: $FAULTS\n"
+    exit 0
+}
+
+
+
+# --------------- DBWEBB FUNCTIONS PHASE END ---------------
+# --------------- DBWEBB BOOTSTRAP PHASE START ---------------
+
+#START_TIMER=$( date +%s.%N )
+START_TIMER=$( date +%s )
+
+# Messages
+MSG_OK="\033[0;30;42mOK\033[0m"
+MSG_DONE="\033[1;37;40mDONE\033[0m"
+MSG_WARNING="\033[43mWARNING\033[0m"
+MSG_FAILED="\033[0;37;41mFAILED\033[0m"
+
+# For asserts
+ASSERTS=0
+FAULTS=0
+TMPFILE="/tmp/dbwebb-error-{$USER}-$$"
+
+
+
+#
+# Find my environment, before any work can be done
+#
+
+
+# What was the command issued?
+DBW_EXECUTABLE_PATH="$0"
+DBW_EXECUTABLE="$( basename "$0" )"
+
+# Where is the executable
+DBW_EXECUTABLE_DIR="$( dirname "$0" )"
+
+# What is the current directory
+DBW_CURRENT_DIR="$( pwd )"
+
+
+
+# What is the directory of the current course repo, find recursivly up the tree
+DBW_COURSE_FILE_NAME=".dbwebb.course"
+
+dir="$DBW_CURRENT_DIR/."
+while [ "$dir" != "/" ]; do
+    dir=$( dirname "$dir" )
+    found="$( find "$dir" -maxdepth 1 -name $DBW_COURSE_FILE_NAME )"
+    if [ "$found" ]; then
+        DBW_COURSE_DIR="$( dirname "$found" )"
+        break
+    fi
+done
+
+
+
+#
+# Get the name of the course as $DBW_COURSE
+#
+function sourceCourseRepoFile
+{
+    DBW_COURSE_FILE="$DBW_COURSE_DIR/$DBW_COURSE_FILE_NAME"
+    DBW_COURSE_REPO_VALID=""
+    if [ -f "$DBW_COURSE_FILE" ]; then
+        DBW_COURSE_REPO_VALID="yes"
+        source "$DBW_COURSE_FILE"
+    fi
+}
+
+# Get the name of the course as $DBW_COURSE
+sourceCourseRepoFile
+
+
+
+#
+# Get the name of the course as $DBW_COURSE
+#
+function sourceDbwebbVersionFile
+{
+    DBW_VERSION_FILE="$DBW_COURSE_DIR/$DBW_VERSION_FILE_NAME"
+    DBW_VERSION_REQUIREMENT=""
+    if [ -f "$DBW_VERSION_FILE" ]; then
+        DBW_VERSION_REQUIREMENT=$(< "$DBW_VERSION_FILE" )
+    fi
+}
+
+# Get the proposed minimum version for dbwebb-cli in current course repo
+DBW_VERSION_FILE_NAME=".dbwebb/cli.version"
+sourceDbwebbVersionFile
+
+
+
+# Where is the .dbwebb.config-file
+DBW_CONFIG_FILE_NAME=".dbwebb.config"
+
+# Check if run as sudo, use SUDO_USER as HOME (only for selfupdate)
+if [[ $SUDO_USER ]]; then
+    DBW_CONFIG_FILE=$( eval echo "~$SUDO_USER/$DBW_CONFIG_FILE_NAME" )
+else
+    DBW_CONFIG_FILE="$HOME/$DBW_CONFIG_FILE_NAME"
+fi
+
+if [ -f "$DBW_CONFIG_FILE" ]; then
+    source "$DBW_CONFIG_FILE"
+fi
+
+
+
+# Detect if ssh-key is available
+DBW_SSH_KEY_OPTION=""
+if [ -f "$DBW_SSH_KEY" ]
+then
+    DBW_SSH_KEY_OPTION="-i '$DBW_SSH_KEY'"
+fi
+
+
+
+# Check OS
+DBW_OS="$( uname -a )"
+
+# Create the ssh-command with details from the config-file
+SSH_CMD="ssh ${DBW_USER}@${DBW_HOST} $DBW_SSH_KEY_OPTION"
+SSH_CMD_INTERACTIVE="ssh ${DBW_USER}@${DBW_HOST} $DBW_SSH_KEY_OPTION"
+
+# Default chmod for rsync-command
+RSYNC_CHMOD="--chmod=Du+rwx,Dgo+rx,Fu+rw,Fgo+r"
+
+# Prefer using file to exclude from
+RSYNC_EXCLUDE="$DBW_COURSE_DIR/.dbwebb/upload.exclude"
+if [ -f "$RSYNC_EXCLUDE" ]; then
+    RSYNC_EXCLUDE="--exclude-from='$RSYNC_EXCLUDE'"
+else
+    RSYNC_EXCLUDE="--exclude .git --exclude .gitignore --exclude literature --exclude tutorial --exclude slide --exclude .solution --exclude old --exclude .default --exclude platforms/ --exclude coverage/ --exclude .DS_Store --exclude npm-debug.log"
+fi
+
+# Use filt to include from, if available
+RSYNC_INCLUDE="$DBW_COURSE_DIR/.dbwebb/upload.include"
+if [ -f "$RSYNC_INCLUDE" ]; then
+    RSYNC_INCLUDE="--include-from='$RSYNC_INCLUDE'"
+else
+    RSYNC_INCLUDE=
+fi
+
+# Create the basis for the upload command
+RSYNC_CMD="rsync -av $RSYNC_CHMOD $RSYNC_INCLUDE $RSYNC_EXCLUDE --delete --delete-excluded -e \"ssh $DBW_SSH_KEY_OPTION\""
+RSYNC_DOWNLOAD_DELETE_CMD="rsync -avc $RSYNC_CHMOD --delete --delete-excluded -e \"ssh $DBW_SSH_KEY_OPTION\""
+RSYNC_DOWNLOAD_CMD="rsync -avuc $RSYNC_CHMOD -e \"ssh $DBW_SSH_KEY_OPTION\""
+
+DBW_REMOTE_DESTINATION="${DBW_USER}@${DBW_HOST}:$DBW_REMOTE_BASEDIR/$DBW_COURSE"
+DBW_REMOTE_WWW_DESTINATION="${DBW_USER}@${DBW_HOST}:$DBW_REMOTE_WWWDIR/$DBW_COURSE"
+
+DBW_WWW="https://dbwebb.se/"
+DBW_VALIDATE_CONFIGFILE="/home/saxon/students/dbwebb/dbwebb-general-config"
+#DBW_INSPECT_CONFIGFILE="/home/saxon/students/dbwebb/dbwebb-general-config"
+DBW_ARCHIVE="/home/saxon/students/dbwebb/archive/"
+
+
+# Ass arrays not supporter on mac bash v3.
+#declare -A DBW_REPOS
+#DBW_REPOS[python]="https://github.com/mosbth/python"
+#DBW_REPOS[javascript1]="https://github.com/mosbth/javascript1"
+#DBW_REPOS[linux]="https://github.com/mosbth/linux"
+#DBW_REPOS[webapp]="https://github.com/mosbth/webapp"
+#DBW_REPOS[htmlphp]="https://github.com/mosbth/htmlphp"
+DBW_COURSE_REPOS=( 'python' 'javascript1' 'linux' 'webapp' 'oopython' 'htmlphp' 'design' 'oophp' 'phpmvc' 'javascript' 'webgl' 'dbjs' 'ramverk1' 'ramverk2' 'databas' 'matmod' 'exjobbd' 'jsramverk' 'vlinux' 'devops' 'itsec' 'unix' 'js' 'mvc' 'pattern' 'webtec')
+DBW_REPO="dbwebb-cli"
+
+
+# --------------- DBWEBB BOOTSTRAP PHASE END ---------------
+function usage ()
+{
+    local txt=(
+"Utility dbwebb-inspect for inspecting kmoms: http://dbwebb.se/dbwebb-inspect"
+"Usage: dbwebb-inspect [courserepo] [kmom] [user]"
+""
+"Item:"
+"  courserepo   path to a valid course repo."
+"  kmom         a valid kmom."
+"  user         a valid user."
+""
+"Options:"
+"  --selfupdate           Update to latest version."
+"  --help, -h             Print help."
+"  --version, -v          Print version."
+"  --yes, -y              Answer yes/default to all answers."
+"  --port port, -p port   Execute external servers on this port."
+"  --useVersion id, -u id Use specific version of course."
+"  --archive path         Path where the archive is."
+"  --config path          Path to config file to source."
+"  --baseurl url          Base URL for published version."
+"  --publish-to path      Path where to publish."
+"  --publish-url url      URL to whats published."
+"  --no-validate          Ignore validate during inspect."
+    )
+    printf "%s\n" "${txt[@]}"
+}
+
+
+
+function version ()
+{
+    local txt=(
+"dbwebb-inspect version $DBW_VERSION"
+    )
+    printf "%s\n" "${txt[@]}"
+}
+
+
+
+function badUsage ()
+{
+    local message="$1"
+    local txt=(
+"For an overview of the command, execute:"
+"dbwebb-inspect --help"
+    )
+    
+    if [ ! -z "$message" ]; then
+        printf "$message\n"
+    fi
+    
+    printf "%s\n" "${txt[@]}"
+}
+#---------------------------- INSPECT PYTHON START ----------------------------
+#
+# Test python me
+# TODO rearrange structure of me in js1 and remove this function
+#
+pythonme()
+{
+    headerForTest "-- me-page" "-- ${DBW_WWW}$DBW_COURSE/$KMOM#resultat_redovisning" 
+    openFilesInEditor "me"
+    checkKmomDir "me"
+
+    printUrl "me.cgi" "me"  
+    printUrl "redovisning.cgi" "me"
+}
+
+
+
+#
+# Test python general
+#
+python()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function pythonlast()
+{
+    pythonme
+    #inspectMe "me" "me.cgi" "redovisning.cgi"
+}
+
+
+
+#
+# Test python plane
+#
+pythonplane()
+{
+    local target="me/$KMOM/plane"
+    local where="$EXEC_DIR/$KMOM/plane"
+    
+    headerForTest "-- plane" "-- ${DBW_WWW}uppgift/ditt-forsta-python-skript"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+
+    inspectCommand "plane.py" "$where" "python3 plane.py"
+    inspectCommand "plane1.py" "$where" "python3 plane1.py"
+    
+    printUrl "plane1.cgi" "$target"  
+}
+
+
+
+#
+# Test python marvin5
+#
+pythonmarvin5()
+{
+    local lab="$1"
+    local main="$2"
+    local url="$3"
+    local target="me/$KMOM/$lab"
+    local where="$EXEC_DIR/$KMOM/$lab"
+
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+
+    # Exit status
+    assertExit 0 "cd $where; python3 $main --version" "Should return exit status 0 but did not."
+    assertExit 1 "cd $where; python3 $main --MISSINGOPTION" "Should return exit status 1 but did not."
+
+    # General options
+    opts="--help"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+
+    opts="--version"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    # Ping
+    opts="ping ${DBW_WWW}humans.txt"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    opts="ping-history"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+
+    # Get
+    opts="get ${DBW_WWW}humans.txt"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    opts="--output=humans.txt get ${DBW_WWW}humans.txt"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    assert 0 "test -f $where/humans.txt" "File humans.txt is missing."
+    cat "$where/humans.txt"
+
+    # Quote
+    opts="quote"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+
+    # <title>
+    opts="title http://dbwebb.se"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+
+    # seo
+    opts="--json seo http://dbwebb.se"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+}
+
+
+
+#
+# Test python adventure
+#
+pythonAdventure()
+{
+    local lab="$1"
+    local main="$2"
+    local url="$3"
+    local target="me/$KMOM/$lab"
+    local where="$EXEC_DIR/$KMOM/$lab"
+
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+
+    # Options
+    opts="--help"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+
+    opts="--version"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    opts="--info"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    opts="--about"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    opts="--cheat"
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+    
+    # run it
+    opts=""
+    inspectCommand "$main" "$where" "python3 $main $opts" "$opts"
+}
+
+
+
+#
+# Test python game
+#
+pythongame()
+{
+    local lab="$1"
+    local main="$2"
+    local url="$3"
+    local target="me/$KMOM/$lab"
+
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    fileIsReadable "$target/$main"
+
+    if [ -f "$THEDIR/$target/$main" ]; then
+        printf "\nThe file $main is available, indicating this task is fulfilled."
+        printf "\nYou need to execute '$main' outside of this script."
+        printf "\ncd \"$EXEC_DIR/$KMOM/$lab\"; python3 $main"
+        printf "\n"
+    fi
+}
+
+
+
+#
+# Test python lab & marvin
+#
+pythonexercise()
+{
+    local lab="$1"
+    local main="$2"
+    local url="$3"
+    local target="me/$KMOM/$lab"
+
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    inspectCommand "$main" "$EXEC_DIR/$KMOM/$lab" "python3 $main"
+}
+    
+
+
+#
+# Test python kmom01
+#
+pythonkmom01()
+{
+    pythonplane "plane"
+}
+
+
+
+#
+# Test python kmom02
+#
+pythonkmom02()
+{
+    pythonexercise "lab1" "answer.py" "uppgift/python-med-variabler-villkor-funktioner-och-loopar"
+    pythonexercise "marvin1" "marvin.py" "uppgift/din-egen-chattbot-marvin-steg-1"
+}
+
+
+
+#
+# Test python kmom03
+#
+pythonkmom03()
+{
+    pythonexercise "lab2" "answer.py" "uppgift/python-med-strangar-och-filer"
+    pythonexercise "marvin2" "main.py" "uppgift/din-egen-chattbot-marvin-steg-2"
+}
+
+
+
+#
+# Test python kmom04
+#
+pythonkmom04()
+{
+    pythonexercise "lab3" "answer.py" "uppgift/python-och-listor"
+    pythonexercise "marvin3" "main.py" "uppgift/din-egen-chattbot-marvin-steg-3\n-- ${DBW_WWW}uppgift/din-egen-chattbot-marvin-inventarie"
+    pythongame "game1" "border.py" "uppgift/ett-terminal-baserat-spel-i-python-steg1"
+}
+
+
+#
+# Test python kmom05
+#
+pythonkmom05()
+{
+    pythonexercise "lab4" "answer.py" "uppgift/python-med-dictionaries-och-tupler"
+    pythonexercise "marvin4" "main.py" "uppgift/din-egen-chattbot-marvin-steg-analysera-text-och-ord\n-- ${DBW_WWW}uppgift/din-egen-chattbot-marvin-tictactoe\n-- ${DBW_WWW}uppgift/din-egen-chattbot-marvin-steg-4"
+    pythongame "game2" "retro.py" "uppgift/ett-terminal-baserat-spel-i-python-steg2"
+}
+
+
+
+#
+# Test python kmom06
+#
+pythonkmom06()
+{
+    pythonmarvin5 "marvin5" "marvin-cli.py" "uppgift/din-egen-chattbot-marvin-steg-5"
+}
+
+
+
+#
+# Test python kmom10
+#
+pythonkmom10()
+{
+    pythonAdventure "adventure" "adventure.py" "python/kmom10"
+}
+
+
+
+#---------------------------- INSPECT PYTHON END ----------------------------
+#---------------------- INSPECT JAVASCRIPT1 START -----------------------
+#
+# Test javascript1 me
+# TODO rearrange structure of me in js1 and remove this function
+#
+javascript1me()
+{
+    headerForTest "-- me-page" "-- ${DBW_WWW}${DBW_COURSE}$KMOM#resultat_redovisning" 
+    openFilesInEditor "me"
+    checkKmomDir "me"
+    printUrl "me.html" "me"  
+    printUrl "redovisning.html" "me"
+}
+
+
+
+#
+# Test javascript1 general
+#
+javascript1()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function javascript1last()
+{
+    javascript1me
+    #inspectMe "me" "me.html" "redovisning.html"
+}
+
+
+
+#
+# Test javascript1 sandbox
+# REPLACE with inspectLab
+#
+javascript1exercise()
+{
+    local lab="$1"
+    local main="$2"
+    local url="$3"
+    local target="me/$KMOM/$lab"
+
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    fileIsReadable "$target/$main"
+    printUrl "$main" "$target"  
+}
+
+
+
+#
+# Test javascript1 kmom01
+#
+javascript1kmom01()
+{
+    javascript1exercise "sandbox" "index.html" "uppgift/skapa-din-egen-sandbox-for-javascript-testprogram"
+}
+
+
+
+#
+# Test javascript1 kmom02
+#
+javascript1kmom02()
+{
+    javascript1exercise "lab1" "answer.html" "uppgift/javascript-med-variabler-loopar-och-inbyggda-funktioner"
+    javascript1exercise "flag1" "index.html" "uppgift/gor-svenska-flaggan-i-html-och-css"
+    javascript1exercise "baddie1" "index.html" "uppgift/flytta-runt-en-baddie-pa-webbsidan"
+}
+
+
+
+#
+# Test javascript1 kmom03
+#
+javascript1kmom03()
+{
+    javascript1exercise "lab2" "answer.html" "uppgift/javascript-med-funktioner"
+    javascript1exercise "flag2" "index.html" "uppgift/gor-svenska-flaggan-med-javascript-html-och-css"
+    javascript1exercise "baddie2" "index.html" "uppgift/flytta-baddie-pa-webbsida-2"
+}
+
+
+
+#
+# Test javascript1 kmom04
+#
+javascript1kmom04()
+{
+    javascript1exercise "lab3" "answer.html" "uppgift/javascript-och-arrayer"
+    javascript1exercise "lab4" "answer.html" "uppgift/javascript-och-objekt"
+    javascript1exercise "flag3" "index.html" "uppgift/gor-svenska-flaggan-med-javascript-och-objekt"
+    javascript1exercise "baddie3" "index.html" "uppgift/flytta-baddie-pa-webbsida-3"
+}
+
+
+
+#
+# Test javascript1 kmom
+#
+javascript1kmom05()
+{
+    javascript1exercise "lab5" "index.html" "uppgift/javascript-dom-och-events"
+    javascript1exercise "flag4" "index.html" "uppgift/memory-rita-flaggor-med-javascript-och-dom"
+}
+
+
+
+#
+# Test javascript1 kmom
+#
+javascript1kmom06()
+{
+    javascript1exercise "hangman" "index.html" "uppgift/hanga-gubben-som-modul-i-javascript"
+}
+
+
+
+#
+# Test javascript1 kmom
+#
+javascript1kmom10()
+{
+    javascript1exercise "intelligence" "index.html" "javascript1/kmom10"
+}
+
+
+
+#---------------------- INSPECT JAVASCRIP1 END ----------------------------
+#---------------------------- INSPECT HTMLPHP START --------------------------
+#
+# Test general
+#
+function htmlphp()
+{
+    TREE_OPTIONS="-d"
+    inspectIntro
+    
+    local meDir=
+    
+    meDir="$( echo "$KMOM" | sed 's/kmom0/me/g' | sed 's/kmom/me/g' )"
+    METARGET="me/$KMOM/$meDir"
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function htmlphplast()
+{
+    :
+}
+
+
+
+#
+# REPLACE with inspectLab
+#
+function htmlphplab()
+{
+    local lab="$1"
+    local target="me/$KMOM/$lab"
+    
+    headerForTest "-- Lab" "-- ${DBW_WWW}$DBW_COURSE/$lab" 
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    printUrl "" "$target"  
+    inspectCommand "answer.php" "$EXEC_DIR/$KMOM/$lab" "php answer.php"
+}
+
+
+
+#
+# REPLACE with inspectLab
+#
+function htmlphpsqllab()
+{
+    local lab="$1"
+    local target="me/$KMOM/$lab"
+    
+    headerForTest "-- Lab" "-- ${DBW_WWW}$DBW_COURSE/$lab" 
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    printUrl "" "$target"  
+    inspectCommand "answer.bash" "$EXEC_DIR/$KMOM/$lab" "./answer.bash"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom01()
+{
+    inspectMe "$METARGET" "me.php" "report.php" "uppgift/skapa-en-me-sida-i-kursen-htmlphp"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom02()
+{
+    inspectMe "$METARGET" "me.php" "report.php" "uppgift/bygg-ut-din-htmlphp-me-sida-till-version-2"
+
+    htmlphplab "lab1"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom03()
+{
+    inspectMe "$METARGET" "me.php" "report.php" "uppgift/bygg-ut-din-htmlphp-me-sida-till-version-3"
+
+    viewFileContent "multipage.php" "$METARGET"
+
+    htmlphplab "lab2"
+    
+    inspectExercise "multi" "uppgift/bygg-en-multisida-och-testa-arrayer"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom04()
+{
+    TREE_OPTIONS="-d"
+    inspectMe "$METARGET" "me.php" "report.php" "uppgift/bygg-ut-din-me-sida-till-version-4"
+
+    viewFileContent "config.php" "$METARGET" "incl/config.php"
+    viewFileContent "stylechooser.php" "$METARGET"
+
+    htmlphplab "lab3"
+
+    inspectExercise "stylechooser" "uppgift/bygg-en-stylevaljare-till-din-webbplats"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom05()
+{
+    TREE_OPTIONS="-d"
+    inspectMe "$METARGET" "me.php" "report.php" "htmlphp/proj5"
+
+    viewFileContent "jetty.php" "$METARGET"
+    viewFileContent "search.php" "$METARGET"
+    viewFileContent "config.php" "$METARGET"
+
+    htmlphplab "lab4"
+    htmlphpsqllab "sql1"
+
+    inspectExercise "jetty" "uppgift/bygg-en-multisida-for-att-soka-i-en-databas"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom06()
+{
+    TREE_OPTIONS="-d"
+    inspectMe "$METARGET" "me.php" "report.php" "htmlphp/proj6"
+    
+    viewFileContent "admin.php" "$METARGET"
+    
+    htmlphplab "lab5"
+}
+
+
+
+#
+# Test kmom
+#
+function htmlphpkmom10()
+{
+    TREE_OPTIONS="-d"
+    inspectMe "me/kmom06/me6" "me.php" "report.php" ""
+
+    TREE_OPTIONS="-d"
+    inspectExercise "bmo" "htmlphp/kmom10" "" "" "-"
+}
+
+
+
+#---------------------------- INSPECT HTMLPHP END ----------------------------
+#---------------------------- INSPECT DESIGN START --------------------------
+#
+# Test general
+#
+function design()
+{
+    TREE_OPTIONS="-d"
+    #inspectIntro
+
+    #local target="me/$KMOM"
+
+    headerForTest "-- $DBW_COURSE $KMOM" "-- ${DBW_WWW}$DBW_COURSE/$KMOM"
+    checkKmomDir "me/anax-flat"
+    publishKmom
+    #viewFileTree "$target"
+    validateKmom "me"
+
+
+    
+    local meDir=
+    
+    meDir="$( echo "$KMOM" | sed 's/kmom0/me/g' | sed 's/kmom/me/g' )"
+    METARGET="me/$KMOM/$meDir"
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function designlast()
+{
+    :
+}
+
+
+
+#
+#
+#
+function designRepo()
+{
+    local repo="$1"
+    local target="me/$repo"
+    
+    headerForTest "-- Repo $repo" "-- ${DBW_WWW}$DBW_COURSE/$target" 
+    openFilesInEditor "$target"
+    printUrl "" "$target"  
+
+    isGitRepo "$target"
+    hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$3" > /dev/null
+    if [ ! -z "$4" ]; then
+        hasGitTagBetween "$EXEC_DIR/$repo" "$4" "$5" > /dev/null
+    fi
+
+    if [ ! -z "$4" ]; then
+        tag=$( hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$5" )
+    else
+        tag=$( hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$3" )
+    fi
+
+    inspectCommand "" "$EXEC_DIR/$repo" "git remote -v" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git tag" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git status" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git log -n 20 --pretty=format:\"%h_%ad_:_%s%d_[%an]\" --graph --date=short" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git stash" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git checkout -b inspect $tag" ""
+
+    # All repos does not include make test
+    # Make test need test environment
+    #inspectCommand "Makefile" "$EXEC_DIR/$repo" "make test" ""
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom01()
+{
+    designRepo "anax-flat" "1.0.0" "1.1.0" "1.1.0" "1.2.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom02()
+{
+    designRepo "anax-flat" "2.0.0" "3.0.0"
+    designRepo "anax-flat/theme" "2.0.0" "3.0.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom03()
+{
+    designRepo "anax-flat" "3.0.0" "4.0.0"
+    designRepo "anax-flat/theme" "3.0.0" "4.0.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom04()
+{
+    designRepo "anax-flat" "4.0.0" "5.0.0"
+    designRepo "anax-flat/theme" "4.0.0" "5.0.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom05()
+{
+    designRepo "anax-flat" "5.0.0" "6.0.0"
+    designRepo "anax-flat/theme" "5.0.0" "6.0.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom06()
+{
+    designRepo "anax-flat" "6.0.0" "7.0.0"
+    designRepo "anax-flat/theme" "6.0.0" "7.0.0"
+}
+
+
+
+#
+# Test kmom
+#
+function designkmom10()
+{
+    designRepo "anax-flat" "10.0.0" "11.0.0"
+    designRepo "anax-flat/theme" "10.0.0" "11.0.0"
+}
+
+
+
+#---------------------------- INSPECT DESIGN END ----------------------------
+#---------------------------- INSPECT dbjs START --------------------------
+#
+# Test general
+#
+function dbjs()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function dbjslast()
+{
+    inspectMe "me/redovisa" "me.html" "redovisning.html" "" "redovisa"
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom01()
+{
+    inspectLab "uppgift/skapa-din-egen-sandbox-for-javascript-testprogram" "sandbox" "index.html" ""
+
+    inspectLab "uppgift/gor-svenska-flaggan-i-html-och-css-dbjs" "flag1" "index.html" ""
+
+    inspectLab "uppgift/javascript-med-variabler-loopar-och-inbyggda-funktioner-1" "javascript1" "answer.js" ""
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom02()
+{
+    inspectExerciseHeader "Kom igång med SQLite" "kunskap/kom-igang-med-databasen-sqlite" "kmom02/jetty"
+
+    inspectLab "uppgift/sql-lab-introduktion-till-sql-dbjs" "sql1" "answer.bash" "./answer.bash"
+
+    inspectExerciseHeader "ER Jetty" "uppgift/skapa-er-modell-av-databasen-jetty" "redovisa"
+    printUrl "jetty.html" "me/redovisa"
+
+    inspectLab "uppgift/javascript-med-funktioner-dbjs" "javascript2" "answer.js" ""
+
+    inspectLab "uppgift/gor-svenska-flaggan-med-javascript-html-och-css-dbjs" "flag2" "index.html" ""
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom03()
+{
+    local target=
+    local curlit=
+
+    inspectLab "uppgift/introduktion-till-nodejs" "node1" "answer.js" "node answer.js"
+
+
+
+    inspectExerciseHeader "server" "uppgift/skapa-en-restful-http-server-med-node-js" "$KMOM/server"
+
+    target="$EXEC_DIR/$KMOM/server"
+    runServer "index.js" "$target" "node index.js"
+
+    curlit="curl http://localhost:$LINUX_PORT"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/index.html"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/status"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/sum?2&3&5&32"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/filter?1&2&4&42&43&99"
+    inspectCommand "" "$EXEC_DIR/$KMOM/invoice" "$curlit/route-does-not-exists"
+
+    killServer "$target"
+
+
+
+    inspectExerciseHeader "invoice" "uppgift/bygg-en-faktureringsmotor-for-batklubben" "$KMOM/invoice"
+    inspectCommand "index.js" "$EXEC_DIR/$KMOM/invoice" "node index.js"
+
+    inspectLab "uppgift/sql-lab-fortsattning-med-sql" "sql2" "answer.bash" "./answer.bash"
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom04()
+{
+    inspectExerciseHeader "skolan" "uppgift/kom-igang-med-sql" "$KMOM/skolan"
+    viewFileContent "skolan.sql" "me/$KMOM/skolan"
+    # should execute the sql-file skolan/skolan.sql
+
+    inspectLab "uppgift/uppgift/nodejs-inbyggda-moduler" "node2" "answer.js" "node answer.js"
+
+    inspectExerciseHeader "terminal" "uppgift/nodejs-terminalprogram-mot-mysql" "$KMOM/terminal"
+    viewFileContent "allan" "me/$KMOM/terminal"
+    inspectCommand "" "$EXEC_DIR/$KMOM/terminal" "./allan --version"
+    inspectCommand "" "$EXEC_DIR/$KMOM/terminal" "./allan --help"
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom05()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom06()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function dbjskmom10()
+{
+    :
+}
+
+
+
+#---------------------------- INSPECT DESIGN END ----------------------------
+#---------------------------- INSPECT DBJS START --------------------------
+#
+# Test general
+#
+function oopython()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function oopythonlast()
+{
+    inspectMe "me/flask" "app.cgi" "" "" "flask"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom01()
+{
+    inspectLab "uppgift/python-med-objekt-och-klasser" "lab1" "answer.py" "python3 answer.py"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom02()
+{
+    inspectLab "uppgift/python-med-mer-objekt-och-klasser" "lab2" "answer.py" "python3 answer.py"
+
+    inspectExerciseHeader "Skapa objekt efter UML-diagram" "uppgift/skapa-objekt-efter-uml" "$KMOM/deck"
+    fileIsReadable "me/$KMOM/deck/deck.py"
+    fileIsReadable "me/$KMOM/deck/hand.py"
+    fileIsReadable "me/$KMOM/deck/card.py"
+    inspectCommand "main.py" "$THEDIR/me/$KMOM/deck" "python3 main.py"
+
+    inspectExerciseHeader "Testfall för din kortlek" "uppgift/skriv-testfall-for-ett-objekt" "$KMOM/test"
+    viewFileContent "test_deck.py" "me/$KMOM/test"
+    inspectCommand "test_deck.py" "$THEDIR/me/$KMOM/test" "python3 test_deck.py"
+
+    inspectExerciseHeader "Sequence diagram" "uppgift/skapa-sequence-diagram" "$KMOM/uml"
+    printUrl "sequenceDiagram.png" "me/$KMOM/uml"
+}
+
+
+#
+# Test kmom
+#
+function oopythonkmom03()
+{
+    inspectExerciseHeader "Skapa ett person-objekt till me-sidan" "uppgift/skapa-personobjekt-till-me-sida" "flask"
+    fileIsReadable "me/flask/person.py"
+    printUrl "person.png" "me/flask"
+    printUrl "person.html" "me/flask"
+
+    inspectExerciseHeader "Skapa ett dataobjekt till me-sidan" "uppgift/skapa-dataobjekt-till-me-sida" "flask"
+    fileIsReadable "me/flask/data.py"
+    printUrl "data.png" "me/flask"
+    printUrl "data.html" "me/flask"
+
+    inspectExerciseHeader "Skapa ett Black Jack spel" "uppgift/skapa_blackjack" "$KMOM/blackjack"
+    inspectCommand "main.py" "$EXEC_DIR/$KMOM/blackjack" "python3 main.py"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom04()
+{
+    inspectLab "uppgift/python-med-regex" "lab3" "answer.py" "python3 answer.py"
+
+    inspectExerciseHeader "Skapa en bondgårdssdatabas" "uppgift/skapa-en-bondgards-databas" "flask"
+    executeSQLite "me/flask/db/farm.sqlite" ".schema"
+
+    inspectExerciseHeader "Visa bondgården på me-sidan" "uppgift/visa-bondgarden-pa-me-sida" "flask"
+    printUrl "app.cgi" "me/flask"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom05()
+{
+    inspectLab "uppgift/python-med-rekursiva-funktioner" "lab4" "answer.py" "python3 answer.py"
+
+    inspectExerciseHeader "unorderedlist" "uppgift/terminalprogram-med-sortering-av-lista" "$KMOM/unorderedlist"
+    inspectCommand "test_list.py" "$EXEC_DIR/$KMOM/unorderedlist" "python3 test_list.py"
+    inspectCommand "main.py" "$EXEC_DIR/$KMOM/unorderedlist" "python3 main.py"
+    viewFileContent "unorderedlist.py" "me/$KMOM/unorderedlist"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom06()
+{
+    inspectExerciseHeader "booking" "uppgift/bokningssystem" "$KMOM/booking"
+    inspectCommand "main.py" "$EXEC_DIR/$KMOM/booking" "python3 main.py"
+}
+
+
+
+#
+# Test kmom
+#
+function oopythonkmom10()
+{
+    :
+}
+
+
+
+#---------------------------- INSPECT DESIGN END ----------------------------
+#---------------------------- INSPECT oophp START --------------------------
+#
+# Test general
+#
+function oophp()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function oophplast()
+{
+    inspectMe "me/anax-lite" "" "" "" "anax-lite"
+}
+
+
+
+#
+#
+#
+function oophpRepo()
+{
+    local repo="$1"
+    local target="me/$repo"
+    
+    headerForTest "-- Repo $repo" "-- ${DBW_WWW}$DBW_COURSE/$target" 
+    openFilesInEditor "$target"
+    printUrl "" "$target"  
+
+    isGitRepo "$target"
+    hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$3" > /dev/null
+    if [ ! -z "$4" ]; then
+        hasGitTagBetween "$EXEC_DIR/$repo" "$4" "$5" > /dev/null
+    fi
+
+    if [ ! -z "$4" ]; then
+        tag=$( hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$5" )
+    else
+        tag=$( hasGitTagBetween "$EXEC_DIR/$repo" "$2" "$3" )
+    fi
+
+    inspectCommand "" "$EXEC_DIR/$repo" "git remote -v" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git tag" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git status" ""
+    inspectCommand "" "$EXEC_DIR/$repo" "git log -n 20 --pretty=format:\"%h_%ad_:_%s%d_[%an]\" --graph --date=short" ""
+    #inspectCommand "" "$EXEC_DIR/$repo" "git stash" ""
+    #inspectCommand "" "$EXEC_DIR/$repo" "git checkout -b inspect $tag" ""
+
+    # All repos does not include make test
+    # Make test need test environment
+    #inspectCommand "Makefile" "$EXEC_DIR/$repo" "make test" ""
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom01()
+{
+    oophpRepo "anax-lite" "1.0.0" "2.0.0"
+
+    inspectExerciseHeader "guess" "uppgift/gissa-numret" "$KMOM/guess"
+    printUrl "index.php" "me/$KMOM/guess"
+
+    inspectExerciseHeader "skolan" "uppgift/kom-igang-med-sql" "kmom01/skolan"
+    viewFileContent "skolan.sql" "me/kmom01/skolan"
+    # should execute the sql-file skolan/skolan.sql
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom02()
+{
+    oophpRepo "anax-lite" "2.0.0" "3.0.0"
+
+    inspectExerciseHeader "skolan" "uppgift/kom-igang-med-sql" "kmom01/skolan"
+    viewFileContent "skolan.sql" "me/kmom01/skolan"
+    # should execute the sql-file skolan/skolan.sql
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom03()
+{
+    oophpRepo "anax-lite" "3.0.0" "4.0.0"
+
+    inspectExerciseHeader "skolan" "uppgift/kom-igang-med-sql" "kmom01/skolan"
+    viewFileContent "skolan.sql" "me/kmom01/skolan"
+    # should execute the sql-file skolan/skolan.sql
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom04()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom05()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom06()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function oophpkmom10()
+{
+    :
+}
+
+
+
+#---------------------------- INSPECT oophp END ----------------------------
+#---------------------------- INSPECT phpmvc START --------------------------
+#
+# Test general
+#
+function phpmvc()
+{
+    inspectIntro
+    
+    METARGET="me/$KMOM"
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function phpmvclast()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom01()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom01#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom02()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom02#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom03()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom03#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom04()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom04#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom05()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom05#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom06()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom06#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function phpmvckmom10()
+{
+    inspectMe "$METARGET" "" "" "phpmvc/kmom10#redovisning"
+}
+
+
+
+#---------------------------- INSPECT phpmvc END ----------------------------
+#---------------------------- INSPECT javascript START --------------------------
+#
+# Test general
+#
+function javascript()
+{
+    inspectIntro
+    
+    METARGET="me/$KMOM"
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function javascriptlast()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom01()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom01#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom02()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom02#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom03()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom03#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom04()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom04#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom05()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom05#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom06()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom06#uppgifter"
+}
+
+
+
+#
+# Test kmom
+#
+function javascriptkmom10()
+{
+    inspectMe "$METARGET" "" "" "javascript/kmom10#redovisning"
+}
+
+
+
+#---------------------------- INSPECT javascript END ----------------------------
+#---------------------------- INSPECT linux START --------------------------
+#
+# Test general
+#
+function linux()
+{
+    inspectIntro
+
+    # Tmp fix to make babel-node work
+    #[ -f node_modules ] || ln -s /home/saxon/students/node/node_modules
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function linuxlast()
+{
+    inspectMe "me/redovisa" "me.html" "report.html" "" "redovisa"
+}
+
+
+
+#
+# Test script exercise
+#
+linuxExerciseScript()
+{
+    local target="me/$KMOM/$1"
+    
+    inspectCommand "hello.bash" "$THEDIR/$target" "bash hello.bash"
+    viewFileContent "hello.bash" "$target"
+
+    inspectCommand "argument.bash" "$THEDIR/$target" "bash argument.bash make me proud"
+    viewFileContent "argument.bash" "$target"
+
+    inspectCommand "if_1.bash" "$THEDIR/$target" "bash if_1.bash 7"
+    inspectCommand "if_1.bash" "$THEDIR/$target" "bash if_1.bash 5"
+    inspectCommand "if_1.bash" "$THEDIR/$target" "bash if_1.bash 3"
+    viewFileContent "if_1.bash" "$target"
+
+    inspectCommand "if_2.bash" "$THEDIR/$target" "bash if_2.bash 7"
+    inspectCommand "if_2.bash" "$THEDIR/$target" "bash if_2.bash 5"
+    inspectCommand "if_2.bash" "$THEDIR/$target" "bash if_2.bash 3"
+    viewFileContent "if_2.bash" "$target"
+
+    inspectCommand "argument_2.bash" "$THEDIR/$target" "bash argument_2.bash d"
+    inspectCommand "argument_2.bash" "$THEDIR/$target" "bash argument_2.bash n"
+    inspectCommand "argument_2.bash" "$THEDIR/$target" "bash argument_2.bash a second-argument"
+    viewFileContent "argument_2.bash" "$target"
+
+    inspectCommand "forloop.bash" "$THEDIR/$target" "bash forloop.bash"
+    viewFileContent "forloop.bash" "$target"
+
+    inspectCommand "myFunction.bash" "$THEDIR/$target" "bash myFunction.bash"
+    viewFileContent "myFunction.bash" "$target"
+}
+
+
+
+#
+# Create and run bash-script
+#
+linuxExerciseCommands()
+{
+    local target="me/$KMOM/$1"
+    local where="$EXEC_DIR/$KMOM/$1"
+    local main="commands"
+
+    # Options
+    opts="--help"
+    args=""
+    inspectCommand "$main" "$where" "./$main $opts $args" "$opts $args"
+
+    opts="--version"
+    args=""
+    inspectCommand "$main" "$where" "./$main $opts $args" "$opts $args"
+
+    # Run it
+    opts=""
+    args="reverse Obi-Wan Kenobi"
+    inspectCommand "$main" "$where" "./$main $opts $args" "$opts $args"
+
+    opts=""
+    args="factors 5 6 16"
+    inspectCommand "$main" "$where" "./$main $opts $args" "$opts $args"
+}
+
+
+
+#
+# View files in irc exercise
+# OBSOLETE v1
+linuxExerciseIrc()
+{
+    local target="me/$KMOM/$1"
+    
+    pushd "$THEDIR/$target"
+    for file in ?.txt; do
+        viewFileContent "$file" "$target"
+    done
+    popd
+}
+
+
+
+#
+# Test kmom01
+#
+function linuxkmom01()
+{
+    inspectExercise "install" "uppgift/installera-debian-som-server" "log.txt" "" "ssh.png"
+}
+
+
+
+#
+# Test kmom02
+#
+function linuxkmom02()
+{
+    if [ "$USE_VERSION" = "1" ]; then
+        inspectExercise "mysite" "uppgift/strukturera-filer-kataloger-och-rattigheter-i-en-webbplats" "log.txt" "mysite.linux.se.conf" "dump.png"
+
+        inspectExercise "vhost" "uppgift/skapa-en-webbplats-pa-en-apache-virtual-host" "log.txt" "me.linux.se.conf" "dump.png"
+
+        return
+    fi
+
+    inspectLab "uppgift/linux-lab-1-introduktion-till-bash" "bash1" "answer.bash" "./answer.bash"
+
+    inspectExercise "vhost" "uppgift/skapa-en-webbplats-pa-en-apache-virtual-host" "log.txt" "me.linux.se.conf" "dump.png"
+}
+
+
+
+#
+# Test kmom03
+#
+function linuxkmom03()
+{
+    if [ "$USE_VERSION" = "1" ]; then
+        inspectExercise "irc" "uppgift/hitta-saker-i-en-loggfil-med-unix-kommandon" "log.txt" "solutions.bash" "" "" "solutions.bash" "bash solutions.bash"
+
+        linuxExerciseIrc "irc"
+        
+        inspectExercise "script" "uppgift/mina-forsta-bash-script"
+        linuxExerciseScript "script"
+
+        return
+    fi
+
+    inspectLab "uppgift/linux-lab-2-sok-i-en-logg-fil" "bash2" "answer.bash" "./answer.bash"
+
+    inspectExercise "script" "uppgift/mina-forsta-bash-script"
+    linuxExerciseScript "script"
+
+    inspectExercise "commands" "uppgift/ett-bash-script-med-options-command-arguments"
+    linuxExerciseCommands "commands"
+}
+
+
+
+#
+# Test kmom04
+#
+function linuxkmom04()
+{
+    local target=
+
+    if [ "$USE_VERSION" = "1" ]; then
+        inspectExercise "javascripting" "uppgift/utfor-nodeschool-workshopen-javascripting" "" "" "" "" "" ""
+
+        inspectExercise "server" "uppgift/skapa-en-restful-http-server-med-node-js-och-klient-i-bash" "index.js" "server.js" "" "" "" "" "" "" " (del 1 servern)"
+
+        inspectExercise "server" "uppgift/skapa-en-restful-http-server-med-node-js-och-klient-i-bash" "client.bash" "" "" "" "" "" "" "" " (del 2 klienten)"
+
+        return
+    fi
+
+    inspectLab "uppgift/linux-lab3-introduktion-till-nodejs" "node1" "answer.js" "babel-node answer.js"
+
+
+
+    # Prepare
+    inspectExerciseHeader "server" "uppgift/skapa-en-restful-http-server-med-node-js-och-klient-i-bash" "$KMOM/server"
+
+    # Start the server
+    target="$KMOM/server"
+    runServer "index.js" "$EXEC_DIR/$target" "babel-node index.js"
+
+    # Execute the client
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash hello"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash html"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash status"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash sum 2 3 4"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash filter 2 3 42 99"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash 404"
+    inspectCommand "client.bash" "$EXEC_DIR/$target" "bash client.bash all"
+
+    # Close it up
+    killServer "$EXEC_DIR/$target"
+}
+
+
+
+#
+# Test kmom
+#
+function linuxkmom05()
+{
+    inspectLab "uppgift/linux-lab4-asynkron-programmering" "node2" "answer.js" "node answer.js"
+
+    # 2018 should start up 
+    inspectExerciseHeader "maze" "uppgift/los-mazen-med-din-mazerunner-i-bash" "$KMOM/maze"
+    #target="example/nodejs/maze"
+    target="$EXEC_DIR/$KMOM/maze"
+    runServer "index.js" "$target" "node index.js" "" "ignorePidFile"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner init"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner maps"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner select maze-of-doom"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner enter"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go east"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go east"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go south"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go south"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go south"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go west"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner go west"
+    inspectCommand "mazerunner" "$EXEC_DIR/$KMOM/maze" "./mazerunner loop"
+    killServer "$target" "ignorePidFile"
+}
+
+
+
+#
+# Test kmom
+#
+function linuxkmom06()
+{
+    inspectExerciseHeader "gomoku" "uppgift/skapa-klienter-och-servrar-som-spelar-luffarschack-i-node-js" "$KMOM/gomoku"
+}
+
+
+
+#
+# Test kmom
+#
+function linuxkmom10()
+{
+    test
+}
+
+
+
+#---------------------------- INSPECT linux END ----------------------------
+#---------------------------- INSPECT webapp START --------------------------
+#
+# Test general
+#
+function webapp()
+{
+    inspectIntro
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function webapplast()
+{
+    inspectMe "me/redovisa" "" "" "" "redovisa"
+}
+
+
+
+#
+#
+# Test kmom01
+#
+function webappkmom01()
+{
+    :
+}
+
+
+
+#
+# Test kmom02
+#
+function webappkmom02()
+{
+    inspectExerciseHeader "jq" "uppgift/sokverktyg-for-json-filer" "$KMOM/jq"
+    inspectCommand "solution.bash" "$THEDIR/me/$KMOM/jq" "./solution.bash"
+}
+
+
+
+#
+# Test kmom03
+#
+function webappkmom03()
+{
+    :
+}
+
+
+
+#
+# Test kmom04
+#
+function webappkmom04()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function webappkmom05()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function webappkmom06()
+{
+    :
+}
+
+
+
+#
+# Test kmom
+#
+function webappkmom10()
+{
+    :
+}
+
+
+
+#---------------------------- INSPECT webapp END ----------------------------
+#---------------------------- INSPECT webgl START --------------------------
+#
+# REPLACE with inspectMe
+#
+function webglme()
+{
+    headerForTest "-- me-page" "-- ${DBW_WWW}$DBW_COURSE/$KMOM#resultat_redovisning" 
+    openFilesInEditor "me/redovisa/"
+    checkKmomDir "me/redovisa"
+
+    printUrl "" "me/redovisa"  
+
+    pressEnterToContinue
+}
+
+
+
+#
+# Test general
+# USE inspectIntro
+#
+function webgl()
+{
+    headerForTest "-- $DBW_COURSE $KMOM" "-- ${DBW_WWW}$DBW_COURSE/$KMOM"
+    checkKmomDir
+    publishKmom
+    validateKmom "$KMOM"
+    webglme
+}
+
+
+
+#
+# Test general, last in sequence
+#
+function webgllast()
+{
+    :
+}
+
+
+
+#
+# REPLACE with inspectLab
+#
+function webgllab()
+{
+    local lab="$1"
+    local target="me/$KMOM/$lab"
+    
+    headerForTest "-- Lab" "-- ${DBW_WWW}$DBW_COURSE/$lab" 
+    openFilesInEditor "$target"
+    checkKmomDir "$target"
+    printUrl "" "$target"  
+    
+    # Need support for lab to execute in nodejs environment
+    #inspectCommand "answer.js" "$EXEC_DIR/$KMOM/$lab" "php answer.php"
+    pressEnterToContinue
+}
+
+
+
+#
+# Test kmom01
+#
+function webglkmom01()
+{
+    test
+}
+
+
+
+#
+# Test kmom02
+#
+function webglkmom02()
+{
+    webgllab "lab1"
+}
+
+
+
+#
+# Test kmom03
+#
+function webglkmom03()
+{
+    webgllab "lab2"
+}
+
+
+
+#
+# Test kmom04
+#
+function webglkmom04()
+{
+    webgllab "lab3"
+}
+
+
+
+#
+# Test kmom
+#
+function webglkmom05()
+{
+    webgllab "lab4"
+}
+
+
+
+#
+# Test kmom
+#
+function webglkmom06()
+{
+    webgllab "lab5"
+}
+
+
+
+#
+# Test kmom
+#
+function webglkmom10()
+{
+    test
+}
+
+
+
+#---------------------------- INSPECT webgl END ----------------------------
+# --------------- DBWEBB-INSPECT MAIN START HERE ---------------
+#
+# Settings
+#
+WRAP_HEADER="\n\n\n-------------------------------------------------------------"
+WRAP_FOOTER="\n-------------------------------------------------------------"
+
+
+
+#
+# Write header for each test
+#
+headerForTest()
+{
+    what="$1"
+    task="$2"
+
+    pressEnterToContinue
+    
+    printf "$WRAP_HEADER"
+    printf "\n$what"
+    if [ ! -z "$task" ]; then
+        printf "\n$task"
+    fi
+    printf "$WRAP_FOOTER"
+}
+
+
+#
+# Open files in editor
+#
+openFilesInEditor()
+{
+    printf "\nOpen files in an editor:"
+    printf "\n$EDITOR \"%s/%s\"" "$THEDIR" "$1"
+    printf "\n"
+}
+
+
+
+#
+# Open files in editor
+#
+viewFileTree()
+{
+    local dirname="$THEDIR/$1"
+    local options="$TREE_OPTIONS"
+
+    TREE_OPTIONS=
+
+    printf "\nView content of directory:\n"
+    tree -ph -L 2 $options "$dirname"
+}
+
+
+
+#
+# Change to directory
+#
+changeToDirectory()
+{
+    local dirname="$THEDIR/$1"
+    
+    printf "\ncd \"%s/%s\"" "$THEDIR" "$1"
+    printf "\n"
+}
+
+
+
+#
+# Print url and check if it exists
+#
+printUrl()
+{
+    local what="$1"
+    local where="$2"
+
+    if [ "$what" == "-" ]; then
+        what=
+    fi
+    
+    printf "\nURL: $BASE_URL/$DBW_COURSE/$where/$what"
+
+    if [ -z "$what" ]; then
+        assert 0 "test -d \"$THEDIR/$where\"" "The directory '$where' is missing or not readable."
+    else
+        assert 0 "test -f \"$THEDIR/$where/$what\"" "The file '$what' is missing or not readable."
+    fi
+
+    printf "\n"
+}
+
+
+
+#
+# Check if file exists and display it 
+#
+executeSQLite()
+{
+    local file="$1"
+    local dir="$THEDIR"
+    local sql="$2"
+
+    assert 0 "test -f \"$THEDIR/$file\"" "The file '$file' is missing or not readable."
+
+    if [ $? -eq 0 ]; then
+        printf "\nSQLite '%s':\nView '%s' [Yn]? " "$file" "$sql"
+
+        local answer=$( answerYesOrNo "y" )
+        if [ "$answer" = "y" -o "$answer" = "Y" ]
+        then
+            echo ">>>"
+            sqlite3 --header --column "$dir/$file" "$sql"
+            echo "<<<"
+            pressEnterToContinue
+        fi
+    fi
+}
+
+
+
+#
+# Check if file exists and display it 
+#
+viewFileContent()
+{
+    local file="$1"
+    local dir="$2"
+    local fileAlt="$3"
+    
+    if [ ! -f "$THEDIR/$dir/$file" ]; then 
+        if [ -f "$THEDIR/$dir/$fileAlt" ]; then
+            file="$fileAlt"
+        fi
+    fi
+    
+    assert 0 "test -f \"$THEDIR/$dir/$file\"" "The file '$file' is missing or not readable."
+
+    if [ $? -eq 0 ]; then
+        printf "\nView file '%s' [Yn]? " "$file"
+
+        local answer=$( answerYesOrNo "y" )
+        if [ "$answer" = "y" -o "$answer" = "Y" ]
+        then
+            echo ">>>"
+            less --quit-if-one-screen --no-init "$THEDIR/$dir/$file"
+            echo "<<<"
+            pressEnterToContinue
+        fi
+    fi
+}
+
+
+
+#
+# Test check the kmom dir exists
+#
+checkKmomDir()
+{
+    local dirname="$THEDIR/$1"
+    
+    assert 0 "test -r $dirname -a -d $dirname" "Directory $dirname not readable."
+}
+
+
+
+#
+# Test check the file exists and is readable
+#
+fileIsReadable()
+{
+    local filename="$THEDIR/$1"
+    
+    assert 0 "test -r $filename" "The file $filename is not readable."
+}
+
+
+
+#
+# Check if dir seems to be a git repo
+#
+isGitRepo()
+{
+    local dirname="$THEDIR/$1"
+
+    #echo "Validate that path is a Git repo."
+    assert 0 "test -r $dirname -a -d $dirname" "Directory $dirname does not seem to be a git repo."
+}
+
+
+
+#
+# Check if the git tag is between argument
+#
+hasGitTagBetween()
+{
+    local where="$1"
+    local low=
+    local high=
+    local semTag=
+
+    low=$( getSemanticVersion "$2" )
+    high=$( getSemanticVersion "$3" )
+    #echo "Validate that tag exists >=$2 and <$3 ."
+
+    local success=false
+    local highestTag=0
+    local highestSemTag=0
+
+    if [ -d "$where" ]; then
+        while read -r tag; do
+            semTag=$( getSemanticVersion "$tag" )
+            #echo "trying tag $tag = $semTag"
+            if [ $semTag -ge $low -a $semTag -lt $high ]; then
+                #echo "success with $tag"
+                success=
+                if [ $semTag -gt $highestSemTag ]; then
+                    highestTag=$tag
+                    highestSemTag=$semTag
+                fi
+            fi
+        done < <( cd "$where" && git tag )
+    fi
+
+    if [ "$success" = "false" ]; then
+        assert -1 "test -d $where" "Failed to validate tag exists >=$2 and <$3."
+    fi
+
+    echo $highestTag
+}
+
+
+
+#
+# Test general
+#
+function inspectIntro()
+{
+    local target="me/$KMOM"
+
+    #assertSummaryAdd "intro"
+    headerForTest "-- $DBW_COURSE $KMOM" "-- ${DBW_WWW}$DBW_COURSE/$KMOM"
+    checkKmomDir "$target"
+    publishKmom
+    viewFileTree "$target"
+    validateKmom "$KMOM"
+}
+
+
+
+#
+# The me-page
+#
+function inspectMe()
+{
+    local target="$1"
+    local mepage="$2"
+    local reportpage="$3"
+    local assignment="$4"
+    local validate="$5"
+
+    # Anybody using this argument?
+    if [ ! -z "$assignment" ]; then
+        assignment="\n-- ${DBW_WWW}$assignment"
+    fi
+
+    assertSummaryAdd "me-page"
+    headerForTest "-- me-page" "-- ${DBW_WWW}$DBW_COURSE/$KMOM#resultat_redovisning$assignment" 
+    checkKmomDir "$target"
+    viewFileTree "$target"
+    #openFilesInEditor "$target"
+
+    printUrl "$mepage" "$target"  
+    [[ $reportpage ]] && printUrl "$reportpage" "$target"
+    [[ $validate ]] && validateKmom "$validate"
+}
+
+
+
+#
+# Test a lab, or general assignment
+# answer.php  - php answer.php
+# answer.bash - ./answer.bash
+#
+function inspectLab()
+{
+    local url="$1"
+    local lab="$2"
+    local main="$3"
+    local execute="$4"
+    local urlfile="$5"
+    local target="me/$KMOM/$lab"
+
+    assertSummaryAdd "$lab"
+    headerForTest "-- $lab" "-- ${DBW_WWW}$url"
+    viewFileTree "$target"
+    #openFilesInEditor "$target"
+    printUrl "$urlfile" "$target" 
+    checkKmomDir "$target"
+    fileIsReadable "$target/$main"
+    [[ $execute ]] && inspectCommand "$main" "$EXEC_DIR/$KMOM/$lab" "$execute"
+}
+
+
+
+#
+# Test a exercise
+#
+inspectExercise()
+{
+    local exercise="$1"
+    local url="$2"
+    local file1="$3"
+    local file2="$4"
+    local file3="$5"
+    local file4="$6"
+    local file5="$7"
+    local file6="$8"
+    local file7="$9"
+    local file8="${10}"
+    local info="${11}"
+    local target="me/$KMOM/$exercise"
+
+    headerForTest "-- $exercise$info" "-- ${DBW_WWW}$url"
+    checkKmomDir "$target"
+    viewFileTree "$target"
+    #openFilesInEditor "$target"
+    
+    # As files
+    [ -z "$file1" ] || viewFileContent "$file1" "$target"
+    [ -z "$file2" ] || viewFileContent "$file2" "$target"
+
+    # As urls
+    [ -z "$file3" ] || printUrl "$file3" "$target"
+    [ -z "$file4" ] || printUrl "$file4" "$target"
+
+    # As commands
+    [ -z "$file5" -a -z "$file6" ] || inspectCommand "$file5" "$THEDIR/$target" "$file6"
+    [ -z "$file7" -a -z "$file8" ] || inspectCommand "$file7" "$THEDIR/$target" "$file8"
+}
+
+
+
+#
+# Test a exercise
+#
+inspectExerciseHeader()
+{
+    local exercise="$1"
+    local url="$2"
+    local target="me/$3"
+
+    headerForTest "-- $exercise$info" "-- ${DBW_WWW}$url"
+    checkKmomDir "$target"
+    viewFileTree "$target"
+}
+
+
+
+#
+# Check the environment
+#
+dbwebbInspectTargetNotReadable()
+{
+    #local thedir="$( readlink -f "$REPO" )"
+    local thedir="$( get_realpath "$REPO" )"
+    
+    if [ ! -d "$thedir" ]; then 
+        
+        printf "\n$MSG_FAILED Directory '$REPO' not readable.\n"
+
+        local dirname=$( dirname "$REPO" )
+        if [ ! -r "$dirname" ]; then 
+            printf "\n$MSG_FAILED Directory '$dirname' not readable.\n"
+        else
+            printf "\nDirectory '$dirname' exists, doing an ls.\n"
+            ls "$dirname"
+        fi
+        
+        printf "\n$MSG_FAILED Perhaps login to the studserver and execute the command:\n"
+        echo "sudo setpre-dbwebb-kurser.bash $THEUSER"
+        echo  
+    fi 
+}
+
+
+
+#
+# Check the environment
+#
+dbwebbInspectCheckEnvironment()
+{
+    assertSummaryAdd "general"
+    headerForTest "-- dbwebb inspect"
+    printUrl "" "me"
+    #openFilesInEditor "me"
+    #changeToDirectory "me"
+}
+
+
+
+#
+# Make own copy
+#
+publishKmom()
+{
+    [[ $COPY_DIR ]] || return
+    
+    rm -rf "$COPY_DIR"
+    mkdir "$COPY_DIR"
+    
+    printf "\nPublishing a copy of %s to '%s'" "$KMOM" "$COPY_DIR"
+    rsync -a --exclude 'kmom*' "$THEDIR/me/" "$COPY_DIR/"
+    rsync -a "$THEDIR/me/$KMOM/" "${COPY_DIR}${KMOM}/"
+    
+    publishChmod "$COPY_DIR"
+
+    printf "\nURL: %s" "$COPY_URL"
+    printf "\n"
+
+    #printf "\nOpen files in an editor:"
+    #printf "\n$EDITOR \"%s\"" "$COPY_DIR"
+    #printf "\n"
+
+    printf "\nChange to directory:"
+    printf "\ncd \"%s\"" "$COPY_DIR"
+    printf "\n"
+}
+
+
+
+#
+# Test validate a kmom
+#
+validateKmom()
+{
+    local kmom=${1-$KMOM}
+
+    [[ $NO_VALIDATE ]] && return
+
+    printf "\nValidate %s [Yn]? " "$kmom"
+
+    local answer=$( answerYesOrNo "y" )
+    if [ "$answer" = "y" -o "$answer" = "Y" ]; then
+        dbwebb-validate1 --course-repo "$DBW_COURSE_DIR" "$kmom"
+    fi
+}
+
+
+
+#
+# Execute a command, maybe as another user
+# TODO remove support for $4 $opts, its not really used, but check in python & js1 before doing it.
+#
+inspectCommand()
+{
+    local what="$1"
+    local move="$2"
+    local cmd="$3"
+    local opts="$4"
+
+    filename="$move/$what"
+
+    if [ ! -z "$what" ]; then
+        assert 0 "test -f \"$filename\" -o -r \"$filename\"" "The file '$what' is missing or not readable."
+    fi
+    
+    if [ $? == 0 ]; then
+        printf "\nExecute '%s' [Yn]? " "$cmd"
+
+        local answer=$( answerYesOrNo "y" )
+        if [ "$answer" = "y" -o "$answer" = "Y" ]; then
+
+            pushd "$move" > /dev/null
+            echo ">>>"
+            $cmd
+            status=$?
+            echo "<<<"
+            popd > /dev/null
+
+            if [ $status -eq 0 ]; then
+                assert 1 "test" "Command executed successfully."
+                printf "\n$MSG_OK Command executed with a exit status 0  - indicating success."
+                printf "\n"
+            else
+                assert 0 "test" "Command returned non-zero exit status which might indicate failure."
+            fi
+        fi
+    fi
+}
+
+
+
+#
+# Set default settings for running server
+#
+serverSettings()
+{
+    LINUX_PORT=${LINUX_PORT:-1342}
+    export LINUX_PORT=${PORT:-$LINUX_PORT}
+    export LINUX_SERVER=${LINUX_SERVER:-127.0.0.1}
+}
+
+
+
+#
+# Check if port is free
+#
+checkPortIsFree()
+{
+    local program=$( netstat -lnt --program 2> /dev/null | grep $LINUX_PORT | awk '{print $7}' )
+
+    assert 0 "test -z $program" "The port $LINUX_PORT is allocated, trying to kill it."
+    [ -z $program ] || kill -9 $( echo $program | cut -d '/' -f 1 )
+
+    program=$( netstat -lnt --program 2> /dev/null | grep $LINUX_PORT | awk '{print $7}' )
+
+    assert 0 "test -z $program" "The port $LINUX_PORT is still allocated, you should use another port."
+}
+
+
+
+#
+# Execute a command as a server in the background logging output to a file.
+#
+runServer()
+{
+    local what="$1"
+    local move="$2"
+    local cmd="$3"
+    local opts="$4"
+    local ignorePidFile="$5"
+    local pid=
+
+    local filename="$move/$what"
+    
+    export SERVER_LOG="/tmp/dbwebb-inspect-server-log.$DBW_USER"
+
+    if [ ! -z "$what" ]; then
+        assert 0 "test -f \"$filename\" -o -r \"$filename\"" "The file '$what' is missing or not readable."
+    fi
+    
+    if [ $? == 0 ]; then
+        serverSettings
+        checkPortIsFree
+
+        printf "\nExecute '%s' as server on $LINUX_SERVER:$LINUX_PORT [Yn]? " "$cmd"
+
+        local answer=$( answerYesOrNo "y" )
+        if [ "$answer" = "y" -o "$answer" = "Y" ]; then
+
+            pushd "$move" > /dev/null
+            
+            echo ">>>"
+
+            [[ -f pid ]] && rm pid
+            $cmd &> $SERVER_LOG &
+            status=$?
+            SERVER_PID=$!
+            echo "$cmd started with pid '$SERVER_PID' and status $status (sleeping 3 before continue)..."
+            sleep 3
+            echo "(Will kill server automatically within 60 seconds.)"
+
+            if [[ ! $ignorePidFile ]]; then
+                assert 0 "test -f pid" "The pid-file is missing."
+                pid=$( [[ -f pid ]] && cat pid )
+                echo "File pid contains: '$pid'"
+            fi
+
+            sleep 60 && kill $SERVER_PID $id &> /dev/null &
+            echo "<<<"
+
+            popd > /dev/null
+
+            if [ $status -eq 0 ]; then
+                assert 1 "test" "Command executed successfully."
+                printf "\n$MSG_OK Command executed with a exit status 0  - indicating success."
+                printf "\n"
+            else
+                assert 0 "test" "Command returned non-zero exit status which might indicate failure."
+            fi
+        fi
+    fi
+}
+
+
+
+#
+# Kill the server started with startServer and output its logfile.
+#
+killServer()
+{
+    local move="$1"
+    local ignorePidFile="$2"
+    local PID="$SERVER_PID"
+
+    pushd "$move" > /dev/null
+
+    echo
+    echo ">>>"
+
+    if [[ ! $ignorePidFile ]]; then
+        PID=$( cat pid )
+        assert 0 "test -f pid" "The pid-file is missing."
+        echo "Killing server with PID $PID ($SERVER_PID) (sleeping 3 before continue)..."
+        kill $PID $SERVER_PID &> /dev/null
+    else
+        echo "Killing server with PID $PID (sleeping 3 before continue)..."
+        kill $SERVER_PID &> /dev/null # To be sure then file pid is missing
+    fi;
+
+    sleep 3
+
+    echo "Printing logfile from server:"
+    echo "--------- Logfile start  ---------"
+    cat "$SERVER_LOG"
+    rm -f "$SERVER_LOG"
+    echo "--------- Logfile end    ---------"
+    echo "<<<"
+    popd > /dev/null    
+}
+
+
+
+#
+# Process options
+#
+while (( $# ))
+do
+    case "$1" in
+
+        --help | -h)
+            usage
+            exit 0
+        ;;
+
+        --version | -v)
+            version
+            exit 0
+        ;;
+
+        --selfupdate)
+            selfupdate dbwebb-inspect
+            exit 0
+        ;;
+
+        --yes | -y)
+            YES="yes"
+            shift
+        ;;
+
+        --port | -p)
+            PORT="$2"
+            shift
+            shift
+        ;;
+
+        --useVersion | -u)
+            USE_VERSION="$2"
+            shift
+            shift
+        ;;
+
+        --archive)
+            if [ ! -d "$2" ]; then
+                badUsage "Path to --archive '$2' is not a directory."
+                exit 2                
+            fi
+            ARCHIVE="$2"
+            shift
+            shift
+        ;;
+
+        --config)
+            if [ ! -f "$2" ]; then
+                badUsage "Path to --config '$2' is not a file."
+                exit 2                
+            fi
+            DBW_INSPECT_CONFIGFILE="$2"
+            shift
+            shift
+        ;;
+
+        --publish-to)
+            if [ ! -d "$2" ]; then
+                badUsage "Path to --publish-to '$2' is not a directory."
+                exit 2                
+            fi
+            COPY_DIR="$2/inspect/"
+            shift
+            shift
+        ;;
+        
+        --publish-url)
+            COPY_URL="$2/inspect/"
+            shift
+            shift
+        ;;
+
+        --base-url)
+            BASE_URL="$2"
+            shift
+            shift
+        ;;
+
+        --no-validate)
+            # Useful together with -y to avoid validation
+            NO_VALIDATE="yes"
+            shift
+        ;;
+
+        -*) 
+            badUsage "$MSG_FAILED Option/command '$1' not recognized."
+            exit 2
+        ;;
+        
+        *) 
+            break
+        ;;
+        
+    esac
+done
+
+
+
+#
+# Get path to dir to check
+#
+REPO="$1"
+KMOM="$2"
+
+
+
+#
+# Check incoming arguments
+#
+if [ -z "$REPO" ]; then
+    badUsage "Missing course repo."
+    exit 2
+elif [ -z "$KMOM" ]; then
+    badUsage "Missing kmom."
+    exit 2    
+fi
+
+#THEDIR=$( readlink -f "$REPO" )
+THEDIR=$( get_realpath "$REPO" )
+if [ ! -d "$THEDIR" ]; then
+    dbwebbInspectTargetNotReadable
+    #badUsage "The path '$REPO' is not a valid directory."
+    exit 2
+fi
+
+DBW_COURSE_DIR="$THEDIR"
+sourceCourseRepoFile
+
+
+
+#
+# Source validate config file
+#
+[[ $DBW_INSPECT_CONFIGFILE ]] && . "$DBW_INSPECT_CONFIGFILE"
+
+
+
+#
+# Guess the user as owner of the repo
+#
+THEUSER=$( ls -ld "$REPO" | awk '{print $3}' )
+
+
+
+#
+# Guess BASE_URL if not available
+#
+DBW_WWW_HOST=${DBW_WWW_HOST:=http://www.student.bth.se/}
+DBW_REMOTE_BASEDIR=${DBW_REMOTE_BASEDIR:=dbwebb-kurser}
+if [[ ! $BASE_URL ]]; then
+    BASE_URL="$DBW_WWW_HOST~$THEUSER/$DBW_REMOTE_BASEDIR"    
+fi
+
+# Guess COPY_URL if not available
+if [[ ! $COPY_URL ]]; then
+    COPY_URL="$DBW_WWW_HOST~$USER/$DBW_REMOTE_BASEDIR/inspect/"    
+fi
+
+# Check if ARCHIVE should be used
+if [[ $ARCHIVE ]]; then
+    echo -n "Archiving, please wait..."
+    
+    if [ ! -d "$ARCHIVE/$THEUSER/$DBW_COURSE" ]; then
+        echo -n "creating '$ARCHIVE/$THEUSER/$DBW_COURSE'..."
+        install --mode=770 --directory "$ARCHIVE/$THEUSER/$DBW_COURSE"
+    fi
+    
+    rsync -a --no-perms --exclude vendor --delete "$THEDIR/me/" "$ARCHIVE/$THEUSER/$DBW_COURSE/"
+    find "$ARCHIVE/$THEUSER/$DBW_COURSE/" -user $USER -exec chmod g+w {} \;   
+    echo "done."
+fi
+
+
+
+#
+# Decide on target dir for execution
+#
+if [[ $COPY_DIR ]]; then
+    EXEC_DIR="$COPY_DIR"
+else
+    EXEC_DIR="$THEDIR/me/"
+fi
+
+
+
+#
+# Use local inspect file if available
+# perhaps check its md5 to ensure its not modified?
+#
+inspectVersion="Built-in"
+if [ -f "$DBW_COURSE_DIR/.dbwebb/inspect" ]; then
+    . "$DBW_COURSE_DIR/.dbwebb/inspect"
+    inspectVersion="Course repo"
+fi
+
+
+
+#
+# Do inspect
+#
+echo "#"
+echo "# $( date )"
+echo "# $( dbwebb-inspect --version )"
+echo "#"
+echo "# Repo:     $DBW_COURSE_DIR"
+echo "# Course:   $DBW_COURSE"
+echo "# Kmom:     $KMOM"
+echo "# Student:  $THEUSER"
+echo "# By:       $USER"
+echo "# Source:   $inspectVersion"
+echo "# Archived: $( [[ $ARCHIVE ]] && echo "yes" || echo "no" )"
+echo "#"
+dbwebbInspectCheckEnvironment
+
+
+
+#
+# Execute command
+#
+case "$KMOM" in
+    kmom01)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom02)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom03)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom04)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom05)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom06)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    kmom10)     ${DBW_COURSE}; "${DBW_COURSE}${KMOM}"; "${DBW_COURSE}last";;
+    *)          
+        badUsage "\n$MSG_FAILED Invalid combination of course '$DBW_COURSE' and kmom: '$KMOM'.\nYou can only inspect a complete kmom."
+        exit 1 
+        ;;
+esac
+
+
+#
+# Clean up and output results
+#
+headerForTest "-- dbwebb inspect summary"
+# assertResults # Use this, but align with validate
+
+if [ $FAULTS -gt 0 ]; then
+    printf "\n\n$MSG_FAILED"
+    STATUS=1
+else 
+    printf "\n\n$MSG_OK"
+    STATUS=0
+fi
+
+printf " Asserts: $ASSERTS Faults: $FAULTS"
+
+#printf "\n### Assert details\n\n"
+printf "$ASSERTS_SUMMARY\n"
+
+if [ $STATUS -eq 0 ]; then
+    printf "$MSG_OK Inspect PASSED all tests :-)\n\n"
+else 
+    printf "$MSG_FAILED Inspect FAILED to pass all tests :-|\n\n"
+fi
+
+#pressEnterToContinue
+#[[ $COPY_DIR ]] && rm -rf "$COPY_DIR"
+
+exit $STATUS
