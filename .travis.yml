@@ -9,7 +9,7 @@ git:
     submodules: false
 
 before_script:
-    - make install
+    - composer install
 
 script:
-    - make check test
+    - composer check
