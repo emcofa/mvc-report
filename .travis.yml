@@ -8,8 +8,13 @@ sudo: false
 git:
     submodules: false
 
+update:
+    - composer update
+
 before_script:
     - composer install
 
 script:
     - composer check
+
+
