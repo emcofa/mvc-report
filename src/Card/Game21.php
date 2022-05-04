@@ -125,13 +125,10 @@ class Game21 implements InterfaceGame21
             $message = 'Oavgjort';
             return $message;
         } elseif ($playerScore > $dealerScore) {
-            $message = 'Spelare vinner!';
+            $message = 'Spelare vinner spelet!';
             return $message;
         } elseif ($dealerScore > $playerScore) {
-            $message = 'Dealer vinner!';
-            return $message;
-        } elseif ($dealerScore === $playerScore) {
-            $message = 'Oavgjort';
+            $message = 'Dealer vinner spelet!';
             return $message;
         }
     }
