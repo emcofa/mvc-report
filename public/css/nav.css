@@ -61,6 +61,10 @@ nav .logo {
     margin: 2px;
 }
 
+.nav-items li:nth-last-of-type(7) {
+    margin: 2px;
+}
+
 .nav-items li a {
     font-family: 'Oswald', sans-serif;
     font-style: normal;

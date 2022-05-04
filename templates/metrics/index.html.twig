@@ -1,0 +1,28 @@
+{% include 'base.html.twig' %}
+
+<body>
+    {% include 'nav.twig' %}
+    <div class="container">
+        <h2>Metrics</h2>
+        <h3>Introduktion</h3>
+        <div class="container-text">
+            <p>De fyra C:na består av följande gällande kodkvalitet:</p>
+            <ul>
+                <li>Coverage</li>
+                <li>Complexity</li>
+                <li>Cohesion</li>
+                <li>Coupling</li>
+            </ul>
+            <p><strong>Coverage</strong> handlar om huruvida rader, filer, klasser och metoder täcks av en eller flera
+                testfall. Vid
+                högre kodtäckning innebär det att koden är väl testad. Om kodtäckningen är låg innebär det att det inte
+                går att försäkra kodens kvalitet och att den fungerar som den ska. <strong>Complexity</strong> handlar
+                om hur komplex en kod är. Till exemepel om en kod består av if-satser i 20 led så har koden en
+                komplexitet på 20. Ju högre komplexiteten är desto mer svårtestad och svårare att utveckla blir den.
+            </p>
+        </div>
+    </div>
+
+
+    {% include 'footer.twig' %}
+</body>
