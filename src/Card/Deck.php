@@ -68,9 +68,9 @@ class Deck
     /**
      * Returns the drawn card (Card object)
      * @access public
-     * @return Card
+     * @return Card|string
      */
-    public function draw(): Card
+    public function draw(): Card|string
     {
         if (count($this->allCards) == 0) {
             return "0";

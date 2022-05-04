@@ -7,19 +7,92 @@
         <h3>Introduktion</h3>
         <div class="container-text">
             <p>De fyra C:na består av följande gällande kodkvalitet:</p>
-            <ul>
-                <li>Coverage</li>
-                <li>Complexity</li>
-                <li>Cohesion</li>
-                <li>Coupling</li>
-            </ul>
             <p><strong>Coverage</strong> handlar om huruvida rader, filer, klasser och metoder täcks av en eller flera
                 testfall. Vid
                 högre kodtäckning innebär det att koden är väl testad. Om kodtäckningen är låg innebär det att det inte
-                går att försäkra kodens kvalitet och att den fungerar som den ska. <strong>Complexity</strong> handlar
+                går att försäkra kodens kvalitet och att den fungerar som den ska. Min kodtäckning i Card-klasserna
+                ligger på 81.63% och har 120 täckande linjer. </p>
+            <p><strong>Complexity</strong> handlar
                 om hur komplex en kod är. Till exemepel om en kod består av if-satser i 20 led så har koden en
                 komplexitet på 20. Ju högre komplexiteten är desto mer svårtestad och svårare att utveckla blir den.
+                Genom att granska analyzen av min kod i PhpMetrics visar den på att det genomsnittliga värdet för
+                cyklometriska komplexiteten ligger på 2.68. I klassen App\Card\Game21 går det att avläsa det högsta
+                värdet för komplexiteten vilket är nio. Enligt Scrutinizer visar dock att Game21 har
+                en komplexitet på 15 vilket visar på att det kan vara bra att använda sig av olika mätverktyg för att få
+                olika perspektiv på sin kod. </p>
+            <p><strong>Cohesion</strong> (LCOM) handlar om hur bra koden hänger ihop. I mätvärde är det bra att sträva
+                efter
+                ett lägre värde då det indikerar på hög sammanhållning följt av "Enansvarsprincipen" som menar att varje
+                klass, metod eller funktion
+                ska ha ansvar över en enskild del i programmets funktionalitet (<a
+                    href="https://en.wikipedia.org/wiki/Single-responsibility_principle">Wikipedia</a>). Med ett högre
+                värde indikerar det på låg sammanhållning och att en klass kanske har fler ansvarsområden. Enligt
+                PhpMetrics har min kod ett medelvärde på 1.2 LCOM. De flesta klasser ligger på ett i värde medan det
+                finns några stycken som har värdet två.</p>
+            <p><strong>Coupling</strong> handlar om hur kopplingarna i koden ser ut. I dess mätvärden går det att dela
+                in Coupling i Afferent Coupling (AC) och Efferent Coupling (EC). AC handlar om hur många klasser som
+                påverkas av den givna klassen. EC
+                handlar om hur många klasser som i sin tur påverkar den givna klassen. I min kod går det att utläsa att
+                "App\Card\Deck" har fem som AC vilket innebär att det är fem stycken andra klasser som påverkas av
+                "Deck-klassen". I EC däremot har klassen bara ett som värde vilket innebär att den i sin tur bara tar
+                emot effekter från en annan klass. (<a
+                    href="https://github.com/dbwebb-se/mvc/tree/main/example/metrics">Källa till
+                    hela stycket</a>)
             </p>
+        </div>
+        <h3>PhpMetrics</h3>
+        <div class="container-text">
+            <p>
+                Utifrån resultatet av PhpMetrics går det att att analysera följande enligt de fyra C:na.
+                I kodkomplexitet (Complexity) ligger medelvärdet av den cyklometriska komplexiteten på 2.68 enligt
+                PhpMetrics. Det högsta värdet som går att utläsa på en enskild klass ligger som tidigare nämnt på värdet
+                nio och tillhör Game21-klassen. Därav är det på gränsen om koden kanske bör brytas ner i mindre metoder
+                för att kunna göra den mer testbar och utvecklingsvänlig. I kodens sammanhållning (Cohesion) ligger
+                medelvärdet som sagt på 1.2 där de flesta klasser har ett värde på ett. Det bästa hade varit om värdet
+                låg på noll vilket resulterar att koden använder sig av enansvarsprincipen och inte har fler
+                användningsområden.</p>
+            <p> Kopplingarna i koden (Coupling) går att utläsa att klassen App\Card\Deck har fem
+                stycken andra klasser som påverkas av den (Afferent Coupling). Därav kan det vara bra att hålla koll på
+                att om något ändras i Deck-klassen måste det ses till att de andra klasserna fortfarande fungerar så de
+                inte går sönder när ändringen sker. Likaså tvärtom gällande Efferent Coupling. Controller klassen
+                App\Card\Game är påverkade av 7 stycken andra klasser och då gäller det att kopplingarna fungerar som de
+                ska för att de ska kunna samverka. Om något ändras i en klass kanske det kan innebära att ingenting
+                fungerar och koden kraschar. Gällande kodens storlek och volym (size and volume) visar PhpMetrics att
+                kodens volym är störst i Game21-klassen (om man bortser från App\Controller\LibraryController som inte
+                tillhör Card-klasserna). Kodens volym ligger på 1054.44 vilket är nästan dubbelt så mycket som de andra
+                klasserna. En anledning kan vara att koden har högre komplexitet och har en metod som kallar på andra
+                klasser vilket resulterar i flera kodlinjer som räknas med i volymen. Det kan vara problematiskt då det
+                kan vara svårare att utveckla koden i framtiden ju mer komplex koden blir.
+            </p>
+        </div>
+        <h3>Scrutinizer</h3>
+        <div class="container-text">
+            <p>I kodtäckning (Coverage) ligger som tidigare nämnt mina Card-klasser på en täckning av 81.63% enligt
+                Scrutinizer. Den klass som har högst kodtäckning är Card-klassen på 100 procent medan Game21-klassen
+                ligger på 76.79 procent. Scrutinizer menar dock att kodtäckningen är “bra” om den ligger över 60%. De
+                delar som inte täcks i Game21-klassen är checkStatus-metoden som består av många if-satser. Som tidigare
+                nämnt innebär det hög komplexitet och bidrar till svårare att testa vilket visar sig i resultatet av
+                kodtäckningen. Över hela koden generellt är det bara 21 procent kodtäckning. För att kunna öka procenten
+                skulle det kunna gå att lägga till fler tester på exempelvis Controller-klasserna.</p>
+
+            <p>Kodens komplexitet (Complexity) i Scrutinizer visar högre värden än vad PhpMetics gjorde.
+                Game-21-klassen har en komplexitet på 15 följt av Deck-klassen som har en komplexitet på tolv. En
+                standard brukar vara att hålla sig till en komplexitet av max tio vilket i detta fall innebär att det
+                det finns delar i koden som bör ändras om för att minska på kodens komplexitet och därav kunna utvidga
+                kodtäckningen.</p>
+
+            <p>Utöver Coverage och Complexity fann jag buggarna intressanta att undersöka som Scrutinizer upptäckte.
+                Det gav mig små felmeddelanden som var enkla att tyda på var och en av klasserna för att kunna förbättra
+                kodkvalitén. Sammanlagt upptäcktes sju stycken buggar som kan vara bra att åtgärda. Ett exempel på en
+                bugg kan vara att en metod returnerar en sträng när det står att den ska returnera en integer.
+            </p>
+        </div>
+        <div class="container-text">
+            <h3>Förbättringar</h3>
+            
+            buggar 7st 
+            komplexitet Game21 = PhpMetics 9 och 8, Scrutinizer 15
+            Coverage = 76.79
         </div>
     </div>
 
