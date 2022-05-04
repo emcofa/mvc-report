@@ -11,14 +11,14 @@
                 testfall. Vid
                 högre kodtäckning innebär det att koden är väl testad. Om kodtäckningen är låg innebär det att det inte
                 går att försäkra kodens kvalitet och att den fungerar som den ska. Min kodtäckning i Card-klasserna
-                ligger på 81.63% och har 120 täckande linjer. </p>
+                ligger exempelvis på 81.63 procent och har 120 täckande linjer. </p>
             <p><strong>Complexity</strong> handlar
                 om hur komplex en kod är. Till exemepel om en kod består av if-satser i 20 led så har koden en
                 komplexitet på 20. Ju högre komplexiteten är desto mer svårtestad och svårare att utveckla blir den.
-                Genom att granska analyzen av min kod i PhpMetrics visar den på att det genomsnittliga värdet för
+                Genom att granska analysen av min kod i PhpMetrics visar den på att det genomsnittliga värdet för
                 cyklometriska komplexiteten ligger på 2.68. I klassen App\Card\Game21 går det att avläsa det högsta
                 värdet för komplexiteten vilket är nio. Enligt Scrutinizer visar dock att Game21 har
-                en komplexitet på 15 vilket visar på att det kan vara bra att använda sig av olika mätverktyg för att få
+                en komplexitet på 15 vilket tyder på att det kan vara bra att använda sig av olika mätverktyg för att få
                 olika perspektiv på sin kod. </p>
             <p><strong>Cohesion</strong> (LCOM) handlar om hur bra koden hänger ihop. I mätvärde är det bra att sträva
                 efter
@@ -47,29 +47,34 @@
                 I kodkomplexitet (Complexity) ligger medelvärdet av den cyklometriska komplexiteten på 2.68 enligt
                 PhpMetrics. Det högsta värdet som går att utläsa på en enskild klass ligger som tidigare nämnt på värdet
                 nio och tillhör Game21-klassen. Därav är det på gränsen om koden kanske bör brytas ner i mindre metoder
+                eller färre if-satser
                 för att kunna göra den mer testbar och utvecklingsvänlig. I kodens sammanhållning (Cohesion) ligger
-                medelvärdet som sagt på 1.2 där de flesta klasser har ett värde på ett. Det bästa hade varit om värdet
+                medelvärdet som sagt på 1.2 där de flesta klasser har värdet ett. Det bästa hade varit om värdet
                 låg på noll vilket resulterar att koden använder sig av enansvarsprincipen och inte har fler
                 användningsområden.</p>
             <p> Kopplingarna i koden (Coupling) går att utläsa att klassen App\Card\Deck har fem
                 stycken andra klasser som påverkas av den (Afferent Coupling). Därav kan det vara bra att hålla koll på
                 att om något ändras i Deck-klassen måste det ses till att de andra klasserna fortfarande fungerar så de
-                inte går sönder när ändringen sker. Likaså tvärtom gällande Efferent Coupling. Controller klassen
-                App\Card\Game är påverkade av 7 stycken andra klasser och då gäller det att kopplingarna fungerar som de
+                inte går sönder när ändringen sker. Likaså tvärtom gällande Efferent Coupling. Controller-klassen
+                App\Controller\Game är påverkade av 7 stycken andra klasser och då gäller det att kopplingarna fungerar
+                som de
                 ska för att de ska kunna samverka. Om något ändras i en klass kanske det kan innebära att ingenting
                 fungerar och koden kraschar. Gällande kodens storlek och volym (size and volume) visar PhpMetrics att
                 kodens volym är störst i Game21-klassen (om man bortser från App\Controller\LibraryController som inte
                 tillhör Card-klasserna). Kodens volym ligger på 1054.44 vilket är nästan dubbelt så mycket som de andra
-                klasserna. En anledning kan vara att koden har högre komplexitet och har en metod som kallar på andra
+                klasserna. En anledning kan vara att koden har högre komplexitet och har en metod som kallar på många
+                andra
                 klasser vilket resulterar i flera kodlinjer som räknas med i volymen. Det kan vara problematiskt då det
                 kan vara svårare att utveckla koden i framtiden ju mer komplex koden blir.
             </p>
         </div>
         <h3>Scrutinizer</h3>
         <div class="container-text">
-            <p>I kodtäckning (Coverage) ligger som tidigare nämnt mina Card-klasser på en täckning av 81.63% enligt
+            <p>I kodtäckning (Coverage) ligger som tidigare nämnt mina Card-klasser på en täckning av 81.63 procent
+                enligt
                 Scrutinizer. Den klass som har högst kodtäckning är Card-klassen på 100 procent medan Game21-klassen
-                ligger på 76.79 procent. Scrutinizer menar dock att kodtäckningen är “bra” om den ligger över 60%. De
+                ligger på 76.79 procent. Scrutinizer menar dock att kodtäckningen är “bra” om den ligger över 60
+                procent. De
                 delar som inte täcks i Game21-klassen är checkStatus-metoden som består av många if-satser. Som tidigare
                 nämnt innebär det hög komplexitet och bidrar till svårare att testa vilket visar sig i resultatet av
                 kodtäckningen. Över hela koden generellt är det bara 21 procent kodtäckning. För att kunna öka procenten
@@ -117,9 +122,9 @@
                 <li>Komplexiteten av Game21 klassen ligger numera på en sjua och toppar inte längre listan i PhpMetrics
                     bland kodens komplexitet. I Scrutinizer har det även minskat två steg från 15 till 13. Likt de andra
                     klasserna och metoder har nu checkStatus-metoden hamnat på betyget A i komplexitet. Innan låg det på
-                    ett B. Tack vare att kompleiteten inte är lika stor gör den koden mer testbar vilket visar sig i
+                    ett B. Tack vare att komplexiteten inte är lika stor gör den koden mer testbar vilket visar sig i
                     resultatet.</li>
-                <li>Kodtäckningen har gått från 76.79 procent till 92.86 procent i klassen Game21. Det var tack vare att
+                <li>Kodtäckningen har gått från 76.79 procent till 92.86 procent i klassen Game21. Det är på grund av att
                     komplexiteten minskade för checkStatus-klassen.</li>
             </ul>
         </div>
@@ -127,7 +132,7 @@
         <div class="container-text">
             <p>Efter att ha analyserat resultatet av Scrutinizer och PhpMetrics gick det att se konkreta exempel på sin
                 egen kod för att kunna förbättra dess kvalitét. Jag insåg att det fanns många förbättringar som skulle
-                kunna göras men jag valde att fokusera på tre konkreta. Det finns mer som skulle kunna göras med min
+                kunna genomföras men jag valde att fokusera på tre konkreta. Det finns mer som skulle kunna göras med min
                 kod, exempelvis lägga till fler testfall än Card-klasserna. Jag tycker det är ett bra sätt att jobba med
                 kodkvalitét på detta sätt då det ger en överblick på sin kod som man annars inte hade koll på. Det är
                 bra att kunna skriva egna tester till sin kod för att få reda på att den fungerar men med hjälp av dessa
