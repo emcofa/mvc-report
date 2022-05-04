@@ -108,28 +108,21 @@ class Game21 implements InterfaceGame21
     /**
      * Checks who is the winner of the game andr returns status
      * @access public
-     * @return string|null
+     * @return string
      */
-    public function checkStatus(): string|null
+    public function checkStatus(): string
     {
         $playerScore = $this->player->getScore();
         $dealerScore = $this->dealer->getScore();
 
-        if ($playerScore > 21 || $dealerScore === 21) {
-            $message = 'Dealer vinner spelet!';
-            return $message;
-        } elseif ($dealerScore > 21 || $playerScore === 21) {
-            $message = 'Spelare vinner spelet!';
-            return $message;
+        if ($dealerScore > 21 || $playerScore === 21) {
+            return 'Spelare vinner spelet!';
+        } elseif ($playerScore > $dealerScore && $playerScore <= 21) {
+            return 'Spelare vinner spelet!';
         } elseif ($dealerScore === $playerScore) {
-            $message = 'Oavgjort';
-            return $message;
-        } elseif ($playerScore > $dealerScore) {
-            $message = 'Spelare vinner spelet!';
-            return $message;
-        } elseif ($dealerScore > $playerScore) {
-            $message = 'Dealer vinner spelet!';
-            return $message;
+            return 'Oavgjort';
+        } else {
+            return 'Dealer vinner spelet!';
         }
     }
 }
