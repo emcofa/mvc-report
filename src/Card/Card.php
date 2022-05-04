@@ -42,9 +42,9 @@ class Card
     /**
      * Returns the value of the card
      * @access public
-     * @return int
+     * @return int|string
      */
-    public function getValueOfCard()
+    public function getValueOfCard(): int|string
     {
         $value = is_numeric($this->value) ? $this->value : 10;
         if (strtolower($this->value) === 'ace') {

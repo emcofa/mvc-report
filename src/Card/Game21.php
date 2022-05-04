@@ -108,9 +108,9 @@ class Game21 implements InterfaceGame21
     /**
      * Checks who is the winner of the game andr returns status
      * @access public
-     * @return string
+     * @return string|null
      */
-    public function checkStatus(): string
+    public function checkStatus(): string|null
     {
         $playerScore = $this->player->getScore();
         $dealerScore = $this->dealer->getScore();

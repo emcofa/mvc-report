@@ -41,8 +41,8 @@ class Player21
     }
 
     /**
-     * Adds the pulled card to the current hand
-     * @param $pulledCard the card which has been drawn
+     * Adds pulled card to the current hand
+     * @param $pulledCard
      * @access public
      * @return void
      */
