@@ -115,17 +115,14 @@ class Game21 implements InterfaceGame21
         $playerScore = $this->player->getScore();
         $dealerScore = $this->dealer->getScore();
 
-        if ($playerScore > 21) {
-            $message = 'Spelare tjock! Dealer vinner spelet!';
+        if ($playerScore > 21 || $dealerScore === 21) {
+            $message = 'Dealer vinner spelet!';
             return $message;
-        } elseif ($dealerScore > 21) {
-            $message = 'Dealer tjock! Spelare vinner spelet!';
+        } elseif ($dealerScore > 21 || $playerScore === 21) {
+            $message = 'Spelare vinner spelet!';
             return $message;
-        } elseif ($playerScore === 21) {
-            $message = 'Spelare får 21 och vinner rundan!';
-            return $message;
-        } elseif ($dealerScore === 21) {
-            $message = 'Dealer får 21 och vinner rundan!';
+        } elseif ($dealerScore === $playerScore) {
+            $message = 'Oavgjort';
             return $message;
         } elseif ($playerScore > $dealerScore) {
             $message = 'Spelare vinner!';
@@ -134,7 +131,7 @@ class Game21 implements InterfaceGame21
             $message = 'Dealer vinner!';
             return $message;
         } elseif ($dealerScore === $playerScore) {
-            $message = 'Samma poäng! Ingen vinner.';
+            $message = 'Oavgjort';
             return $message;
         }
     }
