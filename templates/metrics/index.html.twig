@@ -75,7 +75,7 @@
                 kodtäckningen. Över hela koden generellt är det bara 21 procent kodtäckning. För att kunna öka procenten
                 skulle det kunna gå att lägga till fler tester på exempelvis Controller-klasserna.</p>
 
-            <p>Kodens komplexitet (Complexity) i Scrutinizer visar högre värden än vad PhpMetics gjorde.
+            <p>Kodens komplexitet (Complexity) i Scrutinizer visar högre värden än vad PhpMetrics gjorde.
                 Game-21-klassen har en komplexitet på 15 följt av Deck-klassen som har en komplexitet på tolv. En
                 standard brukar vara att hålla sig till en komplexitet av max tio vilket i detta fall innebär att det
                 det finns delar i koden som bör ändras om för att minska på kodens komplexitet och därav kunna utvidga
@@ -89,13 +89,53 @@
         </div>
         <div class="container-text">
             <h3>Förbättringar</h3>
-            
-            buggar 7st 
-            komplexitet Game21 = PhpMetics 9 och 8, Scrutinizer 15
-            Coverage = 76.79
+            <p><strong>Före:</strong></p>
+            <p>De förbättringar jag har valt att göra är att försöka minska på mina buggar som för tillfället ligger på
+                7
+                stycken. Varför jag har valt den förbättringen är för att det är små slarvfel i koden som kan göra att
+                koden inte har bra kvalitét. Jag hoppas dessa bugg-fixar kan få upp betyget på min kod så cirkeln i
+                Scrutinizer blir mer sluten.</p>
+
+            <p>Jag har även valt att försöka minska på komplexiteten och Game21 och dess metod checkStatus. För
+                tillfället ligger betyget på B i komplexitet i Scrutinizier men vill försöka få upp det till ett A som
+                de
+                andra klasserna. I PhpMetrics ligger komplexiteten på en nia (by class) och det skulle vara bra att
+                kunna
+                få
+                ner det några steg i alla fall. Genom att minska på komplexiteten kommer koden bli mer testbar och
+                generera en högre procent i kodtäckning. Kodtäckningen ligger på
+                76.79 procent i Game21 och genom att minska på
+                komplexitet kan jag förhoppningsvis få upp procenten några steg till. Detta i sin tur bidrar till bättre
+                kodkvalitét och att koden blir smidigare att arbeta vidare med.</p>
+            <p><strong>Efter:</strong></p>
+            <p>Efter jag har utfört mina förbättringar av koden går det att konstatera följande:</p>
+            <ul>
+                <li>Buggarna ligger numera på tre stycken, istället för sju. De tre som åsterstår anser jag är för stora
+                    att ändra i detta skede för att inte förstöra min kod och behöva ändra om för mycket då det inte
+                    finns tid till det inom denna uppgift. Denna ändring har bidragit till att koden inte består av små
+                    slarvfel som kan göra att koden verkar oseriös och av dålig kvalitét.</li>
+                <li>Komplexiteten av Game21 klassen ligger numera på en sjua och toppar inte längre listan i PhpMetrics
+                    bland kodens komplexitet. I Scrutinizer har det även minskat två steg från 15 till 13. Likt de andra
+                    klasserna och metoder har nu checkStatus-metoden hamnat på betyget A i komplexitet. Innan låg det på
+                    ett B. Tack vare att kompleiteten inte är lika stor gör den koden mer testbar vilket visar sig i
+                    resultatet.</li>
+                <li>Kodtäckningen har gått från 76.79 procent till 92.86 procent i klassen Game21. Det var tack vare att
+                    komplexiteten minskade för checkStatus-klassen.</li>
+            </ul>
+        </div>
+        <h3>Diskussion</h3>
+        <div class="container-text">
+            <p>Efter att ha analyserat resultatet av Scrutinizer och PhpMetrics gick det att se konkreta exempel på sin
+                egen kod för att kunna förbättra dess kvalitét. Jag insåg att det fanns många förbättringar som skulle
+                kunna göras men jag valde att fokusera på tre konkreta. Det finns mer som skulle kunna göras med min
+                kod, exempelvis lägga till fler testfall än Card-klasserna. Jag tycker det är ett bra sätt att jobba med
+                kodkvalitét på detta sätt då det ger en överblick på sin kod som man annars inte hade koll på. Det är
+                bra att kunna skriva egna tester till sin kod för att få reda på att den fungerar men med hjälp av dessa
+                verktyg får man en större överblick av koden som de egna testerna inte tar hänsyn till. En nackdel kan
+                dock vara att man förlitar sig helt på andras tester till sin egen kod som man egentligen själv känner
+                bäst vilket kanske kan leda till felaktiga resultat.</p>
         </div>
     </div>
-
 
     {% include 'footer.twig' %}
 </body>
