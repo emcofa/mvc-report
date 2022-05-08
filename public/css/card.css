@@ -37,7 +37,7 @@ ul a:hover {
     text-decoration: none;
     opacity: 0.7;
     transition: 0.7 ease;
-    font-size: 18px;
+    /* font-size: 18px; */
 }
 
 .card-info-wrapper {

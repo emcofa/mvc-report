@@ -34,7 +34,7 @@ nav .logo {
 .nav-items li a:hover {
     opacity: 0.7;
     transition: 0.3s ease;
-    font-size: 2rem;
+    /* font-size: 2rem; */
 }
 
 .nav-items li:nth-last-of-type(2) {
