@@ -1,0 +1,23 @@
+body {
+    box-sizing: border-box;
+    height: 125vh;
+    background-color: #fff;
+    font-family: 'Lora', serif;
+    font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    padding: 3em;
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+}

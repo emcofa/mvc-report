@@ -1,0 +1,37 @@
+{% include 'base-project.html.twig' %}
+
+<body>
+    {% include 'nav-proj.html.twig' %}
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 class="header-hero">Mål 5:</h1>
+            <p class="text-hero">Jämställdhet</p>
+        </div>
+    </div>
+    <div class="container">
+        <p>Personer som blivit utsatta för sexualbrott 2016-2017</p>
+        <p>Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>År</th>
+                    <th>Kvinnor</th>
+                    <th>Män</th>
+                </tr>
+                <tr>
+                    {% for item in project %}
+                    <td>{{item.Year}}
+                    </td>
+                    <td>{{item.Women}}
+                    </td>
+                    <td>{{item.Men}}
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        <p>Källa: Brå, Nationella trygghetsundersökningen (NTU)</p>
+
+    </div>
+    {% include 'footer-proj.html.twig' %}
+</body>
