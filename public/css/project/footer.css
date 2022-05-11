@@ -1,8 +1,9 @@
 footer {
     text-align: center;
+    color: #fff;
     padding: 1rem;
     height: 80px;
-    background-color: #4D9F38;
+    background-color: #222222;
 }
 
 .footer-column {
@@ -10,4 +11,8 @@ footer {
     grid-template-columns: auto auto;
     padding: 10px;
     grid-gap: 380px;
+}
+
+a .social {
+    color: #fff;
 }

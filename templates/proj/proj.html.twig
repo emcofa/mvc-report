@@ -9,29 +9,155 @@
         </div>
     </div>
     <div class="container">
-        <p>Personer som blivit utsatta för sexualbrott 2016-2017</p>
-        <p>Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>År</th>
-                    <th>Kvinnor</th>
-                    <th>Män</th>
-                </tr>
-                <tr>
-                    {% for item in project %}
-                    <td>{{item.Year}}
-                    </td>
-                    <td>{{item.Women}}
-                    </td>
-                    <td>{{item.Men}}
-                    </td>
-                </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        <p>Källa: Brå, Nationella trygghetsundersökningen (NTU)</p>
-
+        <div class="report1">
+            <h3>Personer som blivit utsatta för sexualbrott 2016-2017</h3>
+            <p>Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>År</th>
+                        <th>Kvinnor</th>
+                        <th>Män</th>
+                    </tr>
+                    <tr>
+                        {% for item in report1 %}
+                        <td>{{item.Year}}
+                        </td>
+                        <td>{{item.Women}}
+                        </td>
+                        <td>{{item.Men}}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <p>Källa: Brå, Nationella trygghetsundersökningen (NTU)</p>
+        </div>
+        <div class="report2">
+            <h3>Huruvida ett rättsligt ramverk finns på plats för att främja, skydda och övervaka jämställdhet och
+                icke-diskriminering på grund av kön</h3>
+            <p>0-100%</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Område</th>
+                        <th>Typ</th>
+                        <th>2018</th>
+                        <th>2019</th>
+                    </tr>
+                    <tr>
+                        {% for item in report2 %}
+                        <td>{{item.Area}}
+                        </td>
+                        <td>{{item.Type}}
+                        </td>
+                        <td>{{item.Year1}}
+                        </td>
+                        <td>{{item.Year2}}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <p>Källa: 2018 UNSD, 2019 SCBs beräkningar utifrån validerade uppgifter från Arbetsmarknadsdepartementet</p>
+        </div>
+        <div class="report3">
+            <h3>Kvinnors nettoinkomst som andel av mäns nettoinkomst 2011–2017</h3>
+            <p>Procent(%)</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>År</th>
+                        <th>20 år och äldre</th>
+                        <th>20–64 år</th>
+                        <th>65 år och äldre</th>
+                        <th>Inrikesfödda</th>
+                        <th>Utrikesfödda</th>
+                    </tr>
+                    <tr>
+                        {% for item in report3 %}
+                        <td>{{item.Year}}
+                        </td>
+                        <td>{{item.Age1}}
+                        </td>
+                        <td>{{item.Age2}}
+                        </td>
+                        <td>{{item.Age3}}
+                        </td>
+                        <td>{{item.Born1}}
+                        </td>
+                        <td>{{item.Born2}}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <p>Källa: SCB, Inkomst- och taxeringsregistret (IoT)</p>
+        </div>
+        <div class="report4">
+            <h3>Andel tid som läggs på obetalt hem- och omsorgsarbete fördelat på kön och ålder </h3>
+            <p>Andel (%) av dygnets timmar</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>År</th>
+                        <th>Kön</th>
+                        <th>15-84 (20-84) år*</th>
+                        <th>15-24 (20-24) år*</th>
+                        <th>25-44 år</th>
+                        <th>45-54 år</th>
+                        <th>55-64 år</th>
+                        <th>65+ år</th>
+                    </tr>
+                    <tr>
+                        {% for item in report4 %}
+                        <td>{{item.Year}}
+                        </td>
+                        <td>{{item.Gender}}
+                        </td>
+                        <td>{{item.Age1}}
+                        </td>
+                        <td>{{item.Age2}}
+                        </td>
+                        <td>{{item.Age3}}
+                        </td>
+                        <td>{{item.Age4}}
+                        </td>
+                        <td>{{item.Age5}}
+                        </td>
+                        <td>{{item.Age6}}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <p>Källa: Tidsanvändningsundersökningen (TA), SCB</p>
+            <p>*Populationen var 15-84 år för 2010 och 20-84 år för 2000</p>
+        </div>
+        <div class="report5">
+            <h3>Könsfördelning (%) bland chefer</h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>År</th>
+                        <th>Kvinnor</th>
+                        <th>Män</th>
+                    </tr>
+                    <tr>
+                        {% for item in report5 %}
+                        <td>{{item.Year}}
+                        </td>
+                        <td>{{item.Women}}
+                        </td>
+                        <td>{{item.Men}}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <p>Källa: Yrkesregistret</p>
+        </div>
+        <div>{{ render_chart(chart, {'class': 'my-chart'}) }} </div>
     </div>
     {% include 'footer-proj.html.twig' %}
 </body>

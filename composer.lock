@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6396df460728642ce8db9bc84df7d172",
+    "content-hash": "3ddcc4ae584181e60a839bc0194cb78c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6938,6 +6938,90 @@
             "time": "2022-04-03T13:04:20+00:00"
         },
         {
+            "name": "symfony/ux-chartjs",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-chartjs.git",
+                "reference": "8fcb3c362c4d9f641bf20d0acfdc43b1bd7206f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-chartjs/zipball/8fcb3c362c4d9f641bf20d0acfdc43b1bd7206f7",
+                "reference": "8fcb3c362c4d9f641bf20d0acfdc43b1bd7206f7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/config": "^4.4.17|^5.0|^6.0",
+                "symfony/dependency-injection": "^4.4.17|^5.0|^6.0",
+                "symfony/http-kernel": "^4.4.17|^5.0|^6.0"
+            },
+            "conflict": {
+                "symfony/flex": "<1.13",
+                "symfony/webpack-encore-bundle": "<1.11"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^4.4.17|^5.0|^6.0",
+                "symfony/phpunit-bridge": "^5.2|^6.0",
+                "symfony/twig-bundle": "^4.4.17|^5.0|^6.0",
+                "symfony/var-dumper": "^4.4.17|^5.0|^6.0",
+                "symfony/webpack-encore-bundle": "^1.11"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/ux",
+                    "url": "https://github.com/symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\Chartjs\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Titouan Galopin",
+                    "email": "galopintitouan@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Chart.js integration for Symfony",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-chartjs/tree/v2.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-01-25T15:40:02+00:00"
+        },
+        {
             "name": "symfony/validator",
             "version": "v6.0.8",
             "source": {
@@ -7333,16 +7417,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.14.0",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "1729c314574f32e49f9660a0cee870f7e603864f"
+                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/1729c314574f32e49f9660a0cee870f7e603864f",
-                "reference": "1729c314574f32e49f9660a0cee870f7e603864f",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/6b18be99bf2a5a402b80a2c00043fe0b365fe836",
+                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836",
                 "shasum": ""
             },
             "require": {
@@ -7384,7 +7468,7 @@
             "description": "Integration with your Symfony app & Webpack Encore!",
             "support": {
                 "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.14.0"
+                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.14.1"
             },
             "funding": [
                 {
@@ -7400,7 +7484,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-14T15:06:55+00:00"
+            "time": "2022-05-03T17:55:32+00:00"
         },
         {
             "name": "symfony/yaml",
