@@ -86,54 +86,54 @@ class CsvImportCommand extends Command
 
         foreach ($reader2->setHeaderOffset(0) as $row) {
             $result = (new Report2())
-                ->setArea($row['Area'])
-                ->setType($row['Type'])
-                ->setYear1($row['2018'])
-                ->setYear2($row['2019']);
+                ->setArea(strval($row['Area']))
+                ->setType(strval($row['Type']))
+                ->setYear1(strval($row['2018']))
+                ->setYear2(strval($row['2019']));
 
             $this->emi->persist($result);
         }
 
         foreach ($reader3->setHeaderOffset(0) as $row) {
             $result = (new Report3())
-                ->setYear($row['År'])
-                ->setAge1($row['20 år och äldre'])
-                ->setAge2($row['20–64 år'])
-                ->setAge3($row['65 år och äldre'])
-                ->setBorn1($row['Inrikesfödda'])
-                ->setBorn2($row['Utrikesfödda']);
+                ->setYear(strval($row['År']))
+                ->setAge1(strval($row['20 år och äldre']))
+                ->setAge2(strval($row['20–64 år']))
+                ->setAge3(strval($row['65 år och äldre']))
+                ->setBorn1(strval($row['Inrikesfödda']))
+                ->setBorn2(strval($row['Utrikesfödda']));
 
             $this->emi->persist($result);
         }
 
         foreach ($reader4->setHeaderOffset(0) as $row) {
             $result = (new Report4())
-                ->setYear($row['År'])
-                ->setGender($row['Kön'])
-                ->setAge1($row['15-84 (20-84) år*'])
-                ->setAge2($row['15-24 (20-24) år*'])
-                ->setAge3($row['25-44 år'])
-                ->setAge4($row['45-54 år'])
-                ->setAge5($row['55-64 år'])
-                ->setAge6($row['65+ år']);
+                ->setYear(strval($row['År']))
+                ->setGender(strval($row['Kön']))
+                ->setAge1(strval($row['15-84 (20-84) år*']))
+                ->setAge2(strval($row['15-24 (20-24) år*']))
+                ->setAge3(strval($row['25-44 år']))
+                ->setAge4(strval($row['45-54 år']))
+                ->setAge5(strval($row['55-64 år']))
+                ->setAge6(strval($row['65+ år']));
 
             $this->emi->persist($result);
         }
 
         foreach ($reader5->setHeaderOffset(0) as $row) {
             $result = (new Report5())
-                ->setYear($row['År'])
-                ->setWomen($row['Kvinnor'])
-                ->setMen($row['Män']);
+                ->setYear(strval($row['År']))
+                ->setWomen(strval($row['Kvinnor']))
+                ->setMen(strval($row['Män']));
 
             $this->emi->persist($result);
         }
 
         foreach ($reader->setHeaderOffset(0) as $row) {
             $result = (new Project())
-                ->setYear($row['Year'])
-                ->setWomen($row['Women'])
-                ->setMen($row['Men']);
+                ->setYear(strval($row['Year']))
+                ->setWomen(floatval($row['Women']))
+                ->setMen(floatval($row['Men']));
 
             $this->emi->persist($result);
         }

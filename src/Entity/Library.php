@@ -8,20 +8,40 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LibraryRepository::class)]
 class Library
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $isbn;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $author;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
 

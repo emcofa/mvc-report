@@ -7,33 +7,69 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: Report4Repository::class)]
 class Report4
-{
+{   
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $year;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $gender;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age1;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age2;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age3;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age4;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age5;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $age6;
 

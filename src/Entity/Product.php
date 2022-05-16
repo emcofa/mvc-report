@@ -8,14 +8,26 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Column(type: 'integer')]
     private $value;
 

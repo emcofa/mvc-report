@@ -8,20 +8,41 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: Report5Repository::class)]
 class Report5
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $year;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $women;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $men;
 
+    /**
+     * Get Id of table
+     * @access public
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;

@@ -146,10 +146,10 @@ class LibraryController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         $book = new Library();
-        $book->setTitle($title);
-        $book->setIsbn($isbn);
-        $book->setAuthor($author);
-        $book->setImage($image);
+        $book->setTitle(strval($title));
+        $book->setIsbn(strval($isbn));
+        $book->setAuthor(strval($author));
+        $book->setImage(strval($image));
 
         $entityManager->persist($book);
 
@@ -203,10 +203,10 @@ class LibraryController extends AbstractController
         $author  = $request->request->get('author');
         $image  = $request->request->get('image');
 
-        $library->setTitle($title);
-        $library->setIsbn($isbn);
-        $library->setAuthor($author);
-        $library->setImage($image);
+        $library->setTitle(strval($title));
+        $library->setIsbn(strval($isbn));
+        $library->setAuthor(strval($author));
+        $library->setImage(strval($image));
         $entityManager->flush();
 
         return $this->redirectToRoute('book-update', array('id' => $id));

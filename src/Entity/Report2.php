@@ -8,20 +8,40 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: Report2Repository::class)]
 class Report2
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $area;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $year1;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $year2;
 
@@ -49,7 +69,7 @@ class Report2
 
     public function setType(string $type): self
     {
-        $this->Type = $type;
+        $this->type = $type;
 
         return $this;
     }
