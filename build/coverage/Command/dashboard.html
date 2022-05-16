@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src/Card</title>
+  <title>Dashboard for /Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src/Command</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Card</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Command</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,6 +58,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="CsvImportCommand.php.html#20">App\Command\CsvImportCommand</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -74,6 +75,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="CsvImportCommand.php.html#20">App\Command\CsvImportCommand</a></td><td class="text-right">72</td></tr>
 
        </tbody>
       </table>
@@ -111,10 +113,9 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Player21.php.html#71"><abbr title="App\Card\Player21::returnCurrentHandString">returnCurrentHandString</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="BasicCardGame.php.html#88"><abbr title="App\Card\BasicCardGame::getNumberCards">getNumberCards</abbr></a></td><td class="text-right">66%</td></tr>
-       <tr><td><a href="Deck.php.html#113"><abbr title="App\Card\Deck::getNumberCards">getNumberCards</abbr></a></td><td class="text-right">66%</td></tr>
-       <tr><td><a href="Game21.php.html#113"><abbr title="App\Card\Game21::checkStatus">checkStatus</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="CsvImportCommand.php.html#45"><abbr title="App\Command\CsvImportCommand::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CsvImportCommand.php.html#55"><abbr title="App\Command\CsvImportCommand::configure">configure</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CsvImportCommand.php.html#68"><abbr title="App\Command\CsvImportCommand::execute">execute</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -131,9 +132,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Game21.php.html#113"><abbr title="App\Card\Game21::checkStatus">checkStatus</abbr></a></td><td class="text-right">7</td></tr>
-       <tr><td><a href="BasicCardGame.php.html#88"><abbr title="App\Card\BasicCardGame::getNumberCards">getNumberCards</abbr></a></td><td class="text-right">2</td></tr>
-       <tr><td><a href="Deck.php.html#113"><abbr title="App\Card\Deck::getNumberCards">getNumberCards</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="CsvImportCommand.php.html#68"><abbr title="App\Command\CsvImportCommand::execute">execute</abbr></a></td><td class="text-right">42</td></tr>
 
        </tbody>
       </table>
@@ -162,7 +161,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,1,3,2], "Class Coverage"))
+      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -180,7 +179,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,3,0,2,1,21], "Method Coverage"))
+      .datum(getCoverageDistributionData([3,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -230,7 +229,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[90.47619047619048,10,"<a href=\"BasicCardGame.php.html#10\">App\\Card\\BasicCardGame<\/a>"],[100,5,"<a href=\"Card.php.html#10\">App\\Card\\Card<\/a>"],[88,12,"<a href=\"Deck.php.html#10\">App\\Card\\Deck<\/a>"],[100,1,"<a href=\"DeckWith2Jokers.php.html#10\">App\\Card\\DeckWith2Jokers<\/a>"],[91.42857142857143,13,"<a href=\"Game21.php.html#10\">App\\Card\\Game21<\/a>"],[90.9090909090909,7,"<a href=\"Player21.php.html#10\">App\\Card\\Player21<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,8,"<a href=\"CsvImportCommand.php.html#20\">App\\Command\\CsvImportCommand<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -254,7 +253,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,3,"<a href=\"BasicCardGame.php.html#29\">App\\Card\\BasicCardGame::__construct<\/a>"],[83.33333333333334,2,"<a href=\"BasicCardGame.php.html#48\">App\\Card\\BasicCardGame::deal<\/a>"],[100,3,"<a href=\"BasicCardGame.php.html#67\">App\\Card\\BasicCardGame::startGame<\/a>"],[66.66666666666666,2,"<a href=\"BasicCardGame.php.html#88\">App\\Card\\BasicCardGame::getNumberCards<\/a>"],[100,1,"<a href=\"Card.php.html#36\">App\\Card\\Card::__construct<\/a>"],[100,3,"<a href=\"Card.php.html#47\">App\\Card\\Card::getValueOfCard<\/a>"],[100,1,"<a href=\"Card.php.html#59\">App\\Card\\Card::cardToString<\/a>"],[100,3,"<a href=\"Deck.php.html#31\">App\\Card\\Deck::__construct<\/a>"],[100,1,"<a href=\"Deck.php.html#54\">App\\Card\\Deck::deck<\/a>"],[100,1,"<a href=\"Deck.php.html#63\">App\\Card\\Deck::shuffleDeck<\/a>"],[80,2,"<a href=\"Deck.php.html#74\">App\\Card\\Deck::draw<\/a>"],[90,3,"<a href=\"Deck.php.html#91\">App\\Card\\Deck::drawNumber<\/a>"],[66.66666666666666,2,"<a href=\"Deck.php.html#113\">App\\Card\\Deck::getNumberCards<\/a>"],[100,1,"<a href=\"DeckWith2Jokers.php.html#15\">App\\Card\\DeckWith2Jokers::__construct<\/a>"],[100,1,"<a href=\"Game21.php.html#31\">App\\Card\\Game21::__construct<\/a>"],[100,1,"<a href=\"Game21.php.html#42\">App\\Card\\Game21::new<\/a>"],[100,2,"<a href=\"Game21.php.html#68\">App\\Card\\Game21::dealersTurn<\/a>"],[100,1,"<a href=\"Game21.php.html#84\">App\\Card\\Game21::returnDeck<\/a>"],[100,1,"<a href=\"Game21.php.html#93\">App\\Card\\Game21::returnDealer<\/a>"],[100,1,"<a href=\"Game21.php.html#102\">App\\Card\\Game21::returnPlayer<\/a>"],[66.66666666666666,6,"<a href=\"Game21.php.html#113\">App\\Card\\Game21::checkStatus<\/a>"],[100,1,"<a href=\"Player21.php.html#35\">App\\Card\\Player21::__construct<\/a>"],[100,1,"<a href=\"Player21.php.html#50\">App\\Card\\Player21::addToCurrentHand<\/a>"],[100,1,"<a href=\"Player21.php.html#61\">App\\Card\\Player21::returnCurrentHand<\/a>"],[0,1,"<a href=\"Player21.php.html#71\">App\\Card\\Player21::returnCurrentHandString<\/a>"],[100,1,"<a href=\"Player21.php.html#83\">App\\Card\\Player21::setScore<\/a>"],[100,1,"<a href=\"Player21.php.html#93\">App\\Card\\Player21::resetScore<\/a>"],[100,1,"<a href=\"Player21.php.html#103\">App\\Card\\Player21::getScore<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"CsvImportCommand.php.html#45\">App\\Command\\CsvImportCommand::__construct<\/a>"],[0,1,"<a href=\"CsvImportCommand.php.html#55\">App\\Command\\CsvImportCommand::configure<\/a>"],[0,6,"<a href=\"CsvImportCommand.php.html#68\">App\\Command\\CsvImportCommand::execute<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
