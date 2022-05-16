@@ -1,14 +1,14 @@
-{% include 'base.html.twig' %}
+{% include 'base-project.html.twig' %}
 
 <body>
-    {% include 'nav.twig' %}
+    {% include 'nav-proj.html.twig' %}
     <div class="container">
         <h2>Hållbar utveckling (jämställdhet)</h2>
         <p>Mitt projekt handlar om mål 5 bland de globala målen vilket innefattar jämställdhet. Själva syftet med målet
             är att "Uppnå jämställdhet och alla kvinnors och flickors egenmakt" <a
                 href="https://www.globalamalen.se/om-globala-malen/mal-5-jamstalldhet/">(globalamalen.se)</a>. För att
             visa områdets nuvarande status
-            har mätvärden samlats in i en databas vilket presenteras i tabeller på <a href="{{ path("proj")
+            har mätvärden samlats in i en databas vilket presenteras i tabeller och diagram på <a href="{{ path("proj")
                 }}">projekt-sidan</a>.</p>
         <div class="card-info-wrapper">
             <div class="column-links">
@@ -43,5 +43,5 @@
     </div>
 
 
-    {% include 'footer.twig' %}
+    {% include 'footer-proj.html.twig' %}
 </body>
