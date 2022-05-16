@@ -14,28 +14,28 @@ class Report4
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Year;
+    private $year;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Gender;
+    private $gender;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age1;
+    private $age1;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age2;
+    private $age2;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age3;
+    private $age3;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age4;
+    private $age4;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age5;
+    private $age5;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age6;
+    private $age6;
 
     public function getId(): ?int
     {
@@ -44,96 +44,96 @@ class Report4
 
     public function getYear(): ?string
     {
-        return $this->Year;
+        return $this->year;
     }
 
-    public function setYear(string $Year): self
+    public function setYear(string $year): self
     {
-        $this->Year = $Year;
+        $this->year = $year;
 
         return $this;
     }
 
     public function getGender(): ?string
     {
-        return $this->Gender;
+        return $this->gender;
     }
 
-    public function setGender(string $Gender): self
+    public function setGender(string $gender): self
     {
-        $this->Gender = $Gender;
+        $this->gender = $gender;
 
         return $this;
     }
 
     public function getAge1(): ?string
     {
-        return $this->Age1;
+        return $this->age1;
     }
 
-    public function setAge1(string $Age1): self
+    public function setAge1(string $age1): self
     {
-        $this->Age1 = $Age1;
+        $this->age1 = $age1;
 
         return $this;
     }
 
     public function getAge2(): ?string
     {
-        return $this->Age2;
+        return $this->age2;
     }
 
-    public function setAge2(string $Age2): self
+    public function setAge2(string $age2): self
     {
-        $this->Age2 = $Age2;
+        $this->age2 = $age2;
 
         return $this;
     }
 
     public function getAge3(): ?string
     {
-        return $this->Age3;
+        return $this->age3;
     }
 
-    public function setAge3(string $Age3): self
+    public function setAge3(string $age3): self
     {
-        $this->Age3 = $Age3;
+        $this->age3 = $age3;
 
         return $this;
     }
 
     public function getAge4(): ?string
     {
-        return $this->Age4;
+        return $this->age4;
     }
 
-    public function setAge4(string $Age4): self
+    public function setAge4(string $age4): self
     {
-        $this->Age4 = $Age4;
+        $this->age4 = $age4;
 
         return $this;
     }
 
     public function getAge5(): ?string
     {
-        return $this->Age5;
+        return $this->age5;
     }
 
-    public function setAge5(string $Age5): self
+    public function setAge5(string $age5): self
     {
-        $this->Age5 = $Age5;
+        $this->age5 = $age5;
 
         return $this;
     }
 
     public function getAge6(): ?string
     {
-        return $this->Age6;
+        return $this->age6;
     }
 
-    public function setAge6(string $Age6): self
+    public function setAge6(string $age6): self
     {
-        $this->Age6 = $Age6;
+        $this->age6 = $age6;
 
         return $this;
     }

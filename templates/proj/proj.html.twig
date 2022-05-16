@@ -9,61 +9,149 @@
         </div>
     </div>
     <div class="container">
-        <div class="report1">
-            <h3>Personer som blivit utsatta för sexualbrott 2016-2017</h3>
-            <p>Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>År</th>
-                        <th>Kvinnor</th>
-                        <th>Män</th>
-                    </tr>
-                    <tr>
-                        {% for item in report1 %}
-                        <td>{{item.Year}}
-                        </td>
-                        <td>{{item.Women}}
-                        </td>
-                        <td>{{item.Men}}
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-            <p>Källa: Brå, Nationella trygghetsundersökningen (NTU)</p>
-        </div>
         <div class="report2">
-            <h3>Huruvida ett rättsligt ramverk finns på plats för att främja, skydda och övervaka jämställdhet och
-                icke-diskriminering på grund av kön</h3>
-            <p>0-100%</p>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Område</th>
-                        <th>Typ</th>
-                        <th>2018</th>
-                        <th>2019</th>
-                    </tr>
-                    <tr>
-                        {% for item in report2 %}
-                        <td>{{item.Area}}
-                        </td>
-                        <td>{{item.Type}}
-                        </td>
-                        <td>{{item.Year1}}
-                        </td>
-                        <td>{{item.Year2}}
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-            <p>Källa: 2018 UNSD, 2019 SCBs beräkningar utifrån validerade uppgifter från Arbetsmarknadsdepartementet</p>
+            <div>
+                <p>Mål fem bland de <a href="https://www.globalamalen.se/om-globala-malen/">globala målen</a> handlar om
+                    "jämställdhet". Med detta menas att “uppnå jämställdhet och alla kvinnors och flickors egenmakt”.
+                    Syftet innebär en rättvis fördelning mellan män och kvinnor på alla plan i samhället såsom
+                    ekonomiskt, resursmässigt makt och intflytande och så vidare. Ett jämlikt samhälle är en viktig
+                    aspekt för att
+                    kunna främja hållbar utveckling då ett liv utan våld och diskriminering är en mänsklig rättighet och
+                    ett avgörande för att ett samhälle ska kunna utvecklas.</p>
+            </div>
+            <div>
+                <h2>Delmål 5.1</h2>
+                <p>Delmål 5.1 berör ämnet "Utrota diskriminering av kvinnor och flickor". Följande tabell nedan
+                    presenterar: </p>
+                <h4>Huruvida ett rättsligt ramverk finns på plats för att främja, skydda och övervaka jämställdhet och
+                    icke-diskriminering på grund av kön.</h4>
+                <div class="grid-container">
+                    <div>
+                        <p class="source">Tabellen utläses från 0 till 100% där 100 innebär total övervakning och 0
+                            ingen
+                            övervakning alls.
+                        </p>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Område</th>
+                                    <th>Typ</th>
+                                    <th>2018</th>
+                                    <th>2019</th>
+                                </tr>
+                                <tr>
+                                    {% for item in report2 %}
+                                    <td>{{item.area}}
+                                    </td>
+                                    <td>{{item.type}}
+                                    </td>
+                                    <td>{{item.year1}}
+                                    </td>
+                                    <td>{{item.year2}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+                        <p class="source">Källa: 2018 UNSD, 2019 SCBs beräkningar utifrån validerade uppgifter från
+                            Arbetsmarknadsdepartementet
+                        </p>
+                    </div>
+                    <div>
+                        <p>Som det går att utläsa i tabellens resultat skedde det en ganska markant förändring inom
+                            område 2
+                            (Våld
+                            mot kvinnor) mellan 2018 och 2019. Resterande områden stod relativt stilla i statistiken. En
+                            bidragande faktor till varför just område 2 förändrades så drastiskt var #MeToo-uppropen som
+                            satte
+                            fart hösten 2017 och hade stor påverkan världen över. <a
+                                href="https://jamstalldhetsmyndigheten.se/mans-vald-mot-kvinnor/sexuella-trakasserier/berattelser-fran-metoo-uppropen/">
+                                Jämställdsmyndigheten</a> beskriver uppropen som en unik historisk händelse där framför
+                            allt
+                            kvinnor och andra minoriteter gick tillsammans och berättade om sina erfarenheter av
+                            sexuella
+                            trakasserier och sexuellt våld. Till en början var det många offentliga personer som delade
+                            sina
+                            upplevelser vilket ledde till att många privatpersoner tog efter. Problemet blev verkligt
+                            och
+                            med
+                            hjälp av makten underifrån kunde högre instanser påverkas såsom politiken. Sommaren 2018 gav
+                            regeringen uppdrag till bland annat myndigheter för att kunna upptäcka, åtgärda, förhindra
+                            och
+                            sprida kunskap om sexuella trakasserier och sexuellt våld. Statistiken visar nu att det är
+                            en
+                            betydlig förbättring från 2018 men det finns fortfarande arbete kvar att göra inom område 1,
+                            2
+                            och 4
+                            innan det går att prata om ett jämställt samhälle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Delmål 5.2</h2>
+        <div class="report1">
+            <p>Delmål 5.2 berör ämnet "Utrota våld och utnyttjande av kvinnor och flickor". Statistiken nedan visar att
+                det är nästan 10 gånger fler kvinnor som blivit utsatt för någon typ av bland annat sexualbrott i
+                jämförelse med
+                män.</p>
+            <h4>Personer som blivit utsatta för sexualbrott 2016-2017</h4>
+            <div class="grid-container">
+                <div>
+                    <p>Som det går att läsa i Nationella trygghetsundersökningen <a
+                            href="https://bra.se/statistik/statistiska-undersokningar/nationella-trygghetsundersokningen.html">(Brottsförebyggande
+                            rådet, BRÅ)</a> toppar även kvinnor statistiken i kategorin utsatthet för trakasserier.
+                        Annars
+                        är
+                        män i större utsträckning utsatta
+                        inom de andra kategorierna som faller inom "Brott mot enskild person". Brå bevisar dock i
+                        sin
+                        rapport om Kriminalstatisitk 2020 att antalet lagförda brott avsågs 83% tillhöra män och 17%
+                        kvinnor
+                        vilket därför går att göra ett antagande att det inte är kvinnor som gör att männen är mer
+                        representerade i utsatthet för brott. <a
+                            href="https://bra.se/download/18.1f8c9903175f8b2aa7011063/1633589880963/Sammanfattning_lagforda_2020.pdf">(Kriminalstatistik
+                            2020, BRÅ)</a></p>
+                </div>
+                <div>
+                    <p class="source">Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>År</th>
+                                <th>Kvinnor</th>
+                                <th>Män</th>
+                            </tr>
+                            <tr>
+                                {% for item in report1 %}
+                                <td>{{item.Year}}
+                                </td>
+                                <td>{{item.Women}}
+                                </td>
+                                <td>{{item.Men}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    <p class="source">Källa: <a
+                            href="https://bra.se/statistik/statistiska-undersokningar/nationella-trygghetsundersokningen.html">Brå,
+                            Nationella trygghetsundersökningen (NTU)</a>
+                    </p>
+                </div>
+            </div>
+            <h4>Antal sexualbrott (%)</h4>
+            <div id="chartContainer2" style="height: 250px; width: 75%;"></div>
         </div>
         <div class="report3">
-            <h3>Kvinnors nettoinkomst som andel av mäns nettoinkomst 2011–2017</h3>
-            <p>Procent(%)</p>
+            <h2>Delmål 5.a.3(N)</h2>
+            <div>
+                <p>
+                    Delmål 5.a.3(N) visar:
+                </p>
+            </div>
+            <h4>Kvinnors nettoinkomst som andel av mäns nettoinkomst 2011–2017 (Sverige)</h4>
+            <p class="source">Procent(%)</p>
             <table class="table">
                 <tbody>
                     <tr>
@@ -76,88 +164,182 @@
                     </tr>
                     <tr>
                         {% for item in report3 %}
-                        <td>{{item.Year}}
+                        <td>{{item.year}}
                         </td>
-                        <td>{{item.Age1}}
+                        <td>{{item.age1}}
                         </td>
-                        <td>{{item.Age2}}
+                        <td>{{item.age2}}
                         </td>
-                        <td>{{item.Age3}}
+                        <td>{{item.age3}}
                         </td>
-                        <td>{{item.Born1}}
+                        <td>{{item.born1}}
                         </td>
-                        <td>{{item.Born2}}
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-            <p>Källa: SCB, Inkomst- och taxeringsregistret (IoT)</p>
-        </div>
-        <div class="report4">
-            <h3>Andel tid som läggs på obetalt hem- och omsorgsarbete fördelat på kön och ålder </h3>
-            <p>Andel (%) av dygnets timmar</p>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>År</th>
-                        <th>Kön</th>
-                        <th>15-84 (20-84) år*</th>
-                        <th>15-24 (20-24) år*</th>
-                        <th>25-44 år</th>
-                        <th>45-54 år</th>
-                        <th>55-64 år</th>
-                        <th>65+ år</th>
-                    </tr>
-                    <tr>
-                        {% for item in report4 %}
-                        <td>{{item.Year}}
-                        </td>
-                        <td>{{item.Gender}}
-                        </td>
-                        <td>{{item.Age1}}
-                        </td>
-                        <td>{{item.Age2}}
-                        </td>
-                        <td>{{item.Age3}}
-                        </td>
-                        <td>{{item.Age4}}
-                        </td>
-                        <td>{{item.Age5}}
-                        </td>
-                        <td>{{item.Age6}}
+                        <td>{{item.born2}}
                         </td>
                     </tr>
                 </tbody>
                 {% endfor %}
             </table>
-            <p>Källa: Tidsanvändningsundersökningen (TA), SCB</p>
-            <p>*Populationen var 15-84 år för 2010 och 20-84 år för 2000</p>
+            <p class="source">Källa: SCB, Inkomst- och taxeringsregistret (IoT)</p>
+            <div class="grid-container grid-extra">
+                <div class="item">
+                    <p>
+                        Resultatet visar att kvinnor tjänar ca 80% av vad en man tjänar. <a
+                            href="https://www.scb.se/hitta-statistik/artiklar/2020/kvinnors-inkomst-narmar-sig-mans--men-langsamt/">SCB</a>
+                        menar på att kvinnors inkomst sakta men säkert närmar sig mäns inkomst. I början av 00-talet låg
+                        kvinnors procent på 76,6% av mäns medan det 20 år senare ligger 81%.
+                        Sveriges Akademiker (<a
+                            href="https://www.saco.se/opinion--fakta/livsloner-for-akademiker/skillnader-i-livslon-mellan-kvinnor-och-man/">SACO</a>)
+                        menar dock att det finns förklarliga skäl till varför kvinnor tjänar mindre och ger förslag på
+                        hur
+                        klyftorna kan minskas. Vissa av förslagen innefattar:</p>
+                    <ul>
+                        <li>
+                            Trots samma utbildningar väljer män och
+                            kvinnor olika branscher. Män letar sig hellre mot den privata sektorn där lönen är högre i
+                            den
+                            offentliga sektorn där fler kvinnor jobbar. Därför är ett förslag att höja lönen inom
+                            kvinnodominerande välfärdsyrken.
+                        </li>
+                        <li>
+                            Män är överrepresenterade på högre befattningar (se delmål 5.5) och innehar oftast
+                            cheftjänsterna vilket bidrar till högra löner. Vid tillsättning av en ny chefstjänst är det
+                            därför viktigt att göra könsneutrala bedömningar och att synliggöra de normer som finns
+                            kring
+                            chefskap där männen alltid har varit dominerande.
+                        </li>
+                        <li>Föräldraledigheten är snedvriden då kvinnor tar mer ansvar för hemmet (se delmål 5.4) och
+                            och
+                            arbetar deltid samt "vabbar" mer än vad män gör vilket påverkar lönen negativt. En lösning
+                            menar
+                            Saco är att införa en mer jämställd föräldraförsäkring.</li>
+                        <li>
+                            Det finns även andra oförklariga orsaker till varför kvinnor tjänar mindre än män vilket
+                            skulle
+                            kunna göra att det går att dra slutssatsen att det hålt och hållet beror på könet. I detta
+                            fall
+                            krävs en förändring på företaget så gamla normer försvinner och kvinnors kompetens
+                            synliggörs.
+                            Med hjälp av regelbundna lönesamtal är det enkelt att se lönekriterierna vilket kan minska
+                            klyftan för lönen bland kvinnor och män.
+                        </li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <div class="container-small">
+                        <h1 class="red">81%</h1>
+                        <p class="container-small-text">
+                            är medianvärdet år 2020 för kvinnors nettoinkomst som andel av mäns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h4>Kvinnors nettoinkomst, 20 år och äldre</h4>
+            <div id="chartContainer" style="height: 370px; width: 50%;"></div>
         </div>
         <div class="report5">
-            <h3>Könsfördelning (%) bland chefer</h3>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>År</th>
-                        <th>Kvinnor</th>
-                        <th>Män</th>
-                    </tr>
-                    <tr>
-                        {% for item in report5 %}
-                        <td>{{item.Year}}
-                        </td>
-                        <td>{{item.Women}}
-                        </td>
-                        <td>{{item.Men}}
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-            <p>Källa: Yrkesregistret</p>
+            <h2>Delmål 5.5.2</h2>
+            <div class="grid-container2 grid-extra2">
+                <div>
+                    <h4>Könsfördelning (%) bland chefer</h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>År</th>
+                                <th>Kvinnor</th>
+                                <th>Män</th>
+                            </tr>
+                            <tr>
+                                {% for item in report5 %}
+                                <td>{{item.year}}
+                                </td>
+                                <td>{{item.women}}
+                                </td>
+                                <td>{{item.men}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    <p class="source">Källa: Yrkesregistret</p>
+                </div>
+                <div>
+                    <p>
+                        Statisitken visar att ungefär 40% av alla chefer är kvinnor medan 60% är män. <a
+                            href="https://chef.se/83-procent-av-sveriges-vdar-man-bara-17-procent-kvinnor/">Chef</a>
+                        menar
+                        dock att av alla vd:ar som finns är 83% män och 17% kvinnor (statistik tagen från SCB) vilket
+                        visar
+                        på en ännu större klyfta.
+                        Detta resultat går hand i hand med varför kvinnor inte tjänar lika mycket som män då det går att
+                        se
+                        tydligt att män har de bäst betalda jobben.
+                    </p>
+                </div>
+                <div id="piechart"></div>
+            </div>
         </div>
-        <div>{{ render_chart(chart, {'class': 'my-chart'}) }} </div>
+        <h2>Sammanfattning</h2>
     </div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Chef', 'procent'],
+                ['Män', 61.4],
+                ['Kvinnor', 38.6]
+            ]);
+
+            var options = { 'title': 'Könsfördelning bland chefer, 2017', 'width': 440, 'height': 400 };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer2", {
+                theme: "light1",
+                animationEnabled: true,
+                data: [
+                    {
+                        type: "column",
+                        dataPoints: [
+                            { label: "Kvinnor 2016", y: 8 },
+                            { label: "Män 2016", y: 1 },
+                            { label: "Kvinnor 2017", y: 10.7 },
+                            { label: "Män 2017", y: 1.6 }
+                        ]
+                    }
+                ]
+            });
+
+            var chart2 = new CanvasJS.Chart("chartContainer", {
+                theme: "light2",
+                animationEnabled: true,
+                data: [
+                    {
+                        type: "area",
+                        dataPoints: [
+                            { label: "2011", y: 77 },
+                            { label: "2012", y: 78 },
+                            { label: "2013", y: 79 },
+                            { label: "2014", y: 79 },
+                            { label: "2015", y: 80 },
+                            { label: "2016", y: 80 },
+                            { label: "2017", y: 81 },
+                        ]
+                    }
+                ]
+            });
+            chart.render();
+            chart2.render();
+        }
+    </script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+
     {% include 'footer-proj.html.twig' %}
 </body>

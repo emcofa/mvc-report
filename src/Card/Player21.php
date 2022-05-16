@@ -14,12 +14,12 @@ class Player21
      */
     protected $player;
     /**
-     * @var array An array of card objects ($players hand)
+     * @var array<string> An array of card objects ($players hand)
      */
     protected $currentHand;
 
     /**
-     * @var array An array of cards (string) ($players hand)
+     * @var array<string> An array of cards (string) ($players hand)
      */
     protected $currentHandString;
 
@@ -42,8 +42,9 @@ class Player21
 
     /**
      * Adds pulled card to the current hand
-     * @param $pulledCard
+     * @param $pulledCard pulled card
      * @access public
+     * @phpstan-ignore-next-line
      * @return void
      */
     public function addToCurrentHand($pulledCard): void
@@ -55,7 +56,7 @@ class Player21
     /**
      * Returns current hand
      * @access public
-     * @return array the current hand
+     * @return array<string> the current hand
      */
     public function returnCurrentHand(): array
     {
@@ -65,7 +66,7 @@ class Player21
     /**
      * Returns current hand in a string
      * @access public
-     * @return array the current hand
+     * @return array<string> the current hand
      */
     public function returnCurrentHandString(): array
     {

@@ -17,13 +17,13 @@ class Report2
     private $area;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Type;
+    private $type;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Year1;
+    private $year1;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Year2;
+    private $year2;
 
     public function getId(): ?int
     {
@@ -44,36 +44,36 @@ class Report2
 
     public function getType(): ?string
     {
-        return $this->Type;
+        return $this->type;
     }
 
-    public function setType(string $Type): self
+    public function setType(string $type): self
     {
-        $this->Type = $Type;
+        $this->Type = $type;
 
         return $this;
     }
 
     public function getYear1(): ?string
     {
-        return $this->Year1;
+        return $this->year1;
     }
 
-    public function setYear1(string $Year1): self
+    public function setYear1(string $year1): self
     {
-        $this->Year1 = $Year1;
+        $this->year1 = $year1;
 
         return $this;
     }
 
     public function getYear2(): ?string
     {
-        return $this->Year2;
+        return $this->year2;
     }
 
-    public function setYear2(string $Year2): self
+    public function setYear2(string $year2): self
     {
-        $this->Year2 = $Year2;
+        $this->year2 = $year2;
 
         return $this;
     }

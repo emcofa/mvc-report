@@ -14,11 +14,12 @@ class BasicCardGame
      */
     public $numCards = 52;
     /**
-     * @var array an array containing deck
+     * @var array<string>
+     *
      */
     private $allCards;
     /**
-     * @var array an array containing the drawn cards and should be divided to the players
+     * @var array<string> an array containing the drawn cards and should be divided to the players
      */
     private $gameArray = [];
 
@@ -38,10 +39,11 @@ class BasicCardGame
     /**
      * Deal x amount of cards to x amount of players
      * @access public
-     * @param array $allCards all cards in the array
+     * @param array<string> $allCards all cards in the array
      * @param int $players how many players who is playing the game
      * @param int $numCards how many cards which should be drawn
      * @return array
+     * @phpstan-ignore-next-line
      */
     public function deal(&$allCards, $players, $numCards): array
     {
@@ -59,6 +61,7 @@ class BasicCardGame
      * @access public
      * @param int $players how many players who is playing the game
      * @param int $cardsAmount how many cards which should be drawn
+     * @phpstan-ignore-next-line
      * @return array
      */
     public function startGame($players, $cardsAmount): array

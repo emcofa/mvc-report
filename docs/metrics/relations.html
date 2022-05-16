@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2022-05-04 09:36:41        , with PHPMetrics v2.8.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2022-05-11 14:24:41        , with PHPMetrics v2.8.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -283,6 +283,76 @@
         "relations": []
     },
     {
+        "name": "\\App\\Repository\\Report5Repository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Report5"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Report5",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\Report2Repository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Report2"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Report2",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\Report3Repository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Report3"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Report3",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\Report4Repository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Report4"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Report4",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\ProjectRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Project"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Project",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\App\\Card\\Card",
         "size": 3000,
         "relations": []
@@ -357,6 +427,21 @@
     },
     {
         "name": "\\Symfony\\Component\\Routing\\Annotation\\Route",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Controller\\ProjectController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\Symfony\\Component\\Routing\\Annotation\\Route",
+            "\\Doctrine\\ORM\\EntityManagerInterface"
+        ]
+    },
+    {
+        "name": "\\Doctrine\\ORM\\EntityManagerInterface",
         "size": 3000,
         "relations": []
     },
@@ -441,11 +526,6 @@
         ]
     },
     {
-        "name": "\\Doctrine\\ORM\\EntityManagerInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
         "name": "\\App\\Controller\\Metrics",
         "size": 3000,
         "relations": [
@@ -490,6 +570,48 @@
             "\\Symfony\\Component\\HttpFoundation\\Response",
             "\\Symfony\\Component\\Routing\\Annotation\\Route"
         ]
+    },
+    {
+        "name": "\\App\\Command\\CsvImportCommand",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Console\\Command\\Command",
+            "\\Doctrine\\ORM\\EntityManagerInterface",
+            "\\Symfony\\Component\\Console\\Input\\InputInterface",
+            "\\Symfony\\Component\\Console\\Output\\OutputInterface",
+            "\\Symfony\\Component\\Console\\Style\\SymfonyStyle",
+            "\\League\\Csv\\Reader",
+            "\\App\\Entity\\Report2",
+            "\\App\\Entity\\Report3",
+            "\\App\\Entity\\Report4",
+            "\\App\\Entity\\Report5",
+            "\\App\\Entity\\Project"
+        ]
+    },
+    {
+        "name": "\\Symfony\\Component\\Console\\Command\\Command",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Console\\Input\\InputInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Console\\Output\\OutputInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Console\\Style\\SymfonyStyle",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\League\\Csv\\Reader",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "\\App\\Kernel",

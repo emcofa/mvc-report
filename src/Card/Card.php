@@ -11,11 +11,11 @@ class Card
 {
     public const
         /**
-         * @var array Suits for Hearts, Diamonds, Clovers and Spades
+         * @var array<string> Suits for Hearts, Diamonds, Clovers and Spades
          */
         SUITS = ['H', 'D', 'C', 'S'],
         /**
-         * @var array The values of the cards
+         * @var array<string> The values of the cards
          */
         VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
     /**
@@ -42,9 +42,9 @@ class Card
     /**
      * Returns the value of the card
      * @access public
-     * @return int|string
+     * @return int
      */
-    public function getValueOfCard(): int|string
+    public function getValueOfCard(): int
     {
         $value = is_numeric($this->value) ? $this->value : 10;
         if (strtolower($this->value) === 'ace') {

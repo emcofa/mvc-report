@@ -10,17 +10,17 @@ namespace App\Card;
 class Game21 implements InterfaceGame21
 {
     /**
-     * @var object variabel for setting player
+     * @object variabel for setting player
      */
     private Player21 $player;
 
     /**
-     * @var object variabel for setting dealer
+     * @object variabel for setting dealer
      */
     private Player21 $dealer;
 
     /**
-     * @var object variabel for deck
+     * @object variabel for deck
      */
     private Deck $deck;
 

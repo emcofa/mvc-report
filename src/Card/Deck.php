@@ -15,12 +15,13 @@ class Deck
     public $numCards = 52;
 
     /**
-     * @var array an array containing deck
+     * @var array<string> an array containing deck
      */
     private $allCards = [];
 
     /**
-     * @var array an array containing cards which has been drawn
+     * @var array<string> an array containing cards which has been drawn
+     * @phpstan-ignore-next-line
      */
     private $deleteCards = [];
 
@@ -48,7 +49,7 @@ class Deck
     /**
      * returns sorted deck
      * @access public
-     * @return array
+     * @return array<string>
      */
     public function deck(): array
     {
@@ -57,7 +58,7 @@ class Deck
     /**
      * Shuffles the deck
      * @access public
-     * @return array
+     * @return array<string>
      */
     public function shuffleDeck(): array
     {
@@ -85,7 +86,7 @@ class Deck
      * Returns the drawn cards
      * @access public
      * @param int $number amount of card which should be drawn
-     * @return array
+     * @return array<string>
      */
     public function drawNumber(int $number): array
     {

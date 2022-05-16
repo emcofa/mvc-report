@@ -14,13 +14,13 @@ class Report5
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Year;
+    private $year;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Women;
+    private $women;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Men;
+    private $men;
 
     public function getId(): ?int
     {
@@ -29,36 +29,36 @@ class Report5
 
     public function getYear(): ?string
     {
-        return $this->Year;
+        return $this->year;
     }
 
-    public function setYear(string $Year): self
+    public function setYear(string $year): self
     {
-        $this->Year = $Year;
+        $this->year = $year;
 
         return $this;
     }
 
     public function getWomen(): ?string
     {
-        return $this->Women;
+        return $this->women;
     }
 
-    public function setWomen(string $Women): self
+    public function setWomen(string $women): self
     {
-        $this->Women = $Women;
+        $this->women = $women;
 
         return $this;
     }
 
     public function getMen(): ?string
     {
-        return $this->Men;
+        return $this->men;
     }
 
-    public function setMen(string $Men): self
+    public function setMen(string $men): self
     {
-        $this->Men = $Men;
+        $this->men = $men;
 
         return $this;
     }

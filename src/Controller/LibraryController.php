@@ -31,19 +31,19 @@ class LibraryController extends AbstractController
 
         $book1 = new Library();
         $book1->setTitle('Svensk fältflora');
-        $book1->setISBN("9789178871759");
+        $book1->setIsbn("9789178871759");
         $book1->setAuthor("Bo Mossberg");
         $book1->setImage("svensk-faltflora.jpg");
 
         $book2 = new Library();
         $book2->setTitle('Självhushållning i praktiken');
-        $book2->setISBN("9789113116853");
+        $book2->setIsbn("9789113116853");
         $book2->setAuthor("Maria Österåker");
         $book2->setImage("sjalvhushallning-i-praktiken.jpg");
 
         $book3 = new Library();
         $book3->setTitle('Vildvuxet: mat och huskurer från naturen');
-        $book3->setISBN("9789174246612");
+        $book3->setIsbn("9789174246612");
         $book3->setAuthor("Lisen Sundgren");
         $book3->setImage("vildvuxet.jpg");
 
@@ -139,7 +139,7 @@ class LibraryController extends AbstractController
         ManagerRegistry $doctrine
     ): Response {
         $title = $request->request->get('title');
-        $ISBN  = $request->request->get('ISBN');
+        $isbn  = $request->request->get('ISBN');
         $author  = $request->request->get('author');
         $image  = $request->request->get('image');
 
@@ -147,7 +147,7 @@ class LibraryController extends AbstractController
 
         $book = new Library();
         $book->setTitle($title);
-        $book->setISBN($ISBN);
+        $book->setIsbn($isbn);
         $book->setAuthor($author);
         $book->setImage($image);
 
@@ -199,12 +199,12 @@ class LibraryController extends AbstractController
         }
 
         $title = $request->request->get('title');
-        $ISBN  = $request->request->get('ISBN');
+        $isbn  = $request->request->get('ISBN');
         $author  = $request->request->get('author');
         $image  = $request->request->get('image');
 
         $library->setTitle($title);
-        $library->setISBN($ISBN);
+        $library->setIsbn($isbn);
         $library->setAuthor($author);
         $library->setImage($image);
         $entityManager->flush();

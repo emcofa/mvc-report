@@ -14,7 +14,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
 use League\Csv\Reader;
 use Doctrine\ORM\EntityManagerInterface;
-use SebastianBergmann\Environment\Console;
 
 // the "name" and "description" arguments of AsCommand replace the
 // static $defaultName and $defaultDescription properties
@@ -34,26 +33,26 @@ class CsvImportCommand extends Command
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $emi;
 
     /**
      * CsvImportCommand constructor.
      *
-     * @param EntityManagerInterface $em
+     * @param EntityManagerInterface $emi
      *
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $emi)
     {
         parent::__construct();
 
-        $this->em = $em;
+        $this->emi = $emi;
     }
     /**
      * Configure
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('csv:import')
@@ -68,14 +67,14 @@ class CsvImportCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->title('Attempting import of Feed...');
+        $inputOutput = new SymfonyStyle($input, $output);
+        $inputOutput->title('Attempting import of Feed...');
         $reader = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report1.csv');
         $reader->setHeaderOffset(0);
-    
+
         $reader2 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report2-5.2.1.csv');
         $reader2->setHeaderOffset(0);
-    
+
         $reader3 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report3-5.a.3(n).csv');
         $reader3->setHeaderOffset(0);
 
@@ -92,7 +91,7 @@ class CsvImportCommand extends Command
                 ->setYear1($row['2018'])
                 ->setYear2($row['2019']);
 
-            $this->em->persist($result);
+            $this->emi->persist($result);
         }
 
         foreach ($reader3->setHeaderOffset(0) as $row) {
@@ -104,7 +103,7 @@ class CsvImportCommand extends Command
                 ->setBorn1($row['Inrikesfödda'])
                 ->setBorn2($row['Utrikesfödda']);
 
-            $this->em->persist($result);
+            $this->emi->persist($result);
         }
 
         foreach ($reader4->setHeaderOffset(0) as $row) {
@@ -118,7 +117,7 @@ class CsvImportCommand extends Command
                 ->setAge5($row['55-64 år'])
                 ->setAge6($row['65+ år']);
 
-            $this->em->persist($result);
+            $this->emi->persist($result);
         }
 
         foreach ($reader5->setHeaderOffset(0) as $row) {
@@ -127,7 +126,7 @@ class CsvImportCommand extends Command
                 ->setWomen($row['Kvinnor'])
                 ->setMen($row['Män']);
 
-            $this->em->persist($result);
+            $this->emi->persist($result);
         }
 
         foreach ($reader->setHeaderOffset(0) as $row) {
@@ -136,11 +135,11 @@ class CsvImportCommand extends Command
                 ->setWomen($row['Women'])
                 ->setMen($row['Men']);
 
-            $this->em->persist($result);
+            $this->emi->persist($result);
         }
 
-        $this->em->flush();
+        $this->emi->flush();
 
-        $io->success('Command exited cleanly!');
+        $inputOutput->success('Command exited cleanly!');
     }
 }

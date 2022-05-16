@@ -14,22 +14,22 @@ class Report3
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Year;
+    private $year;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age1;
+    private $age1;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age2;
+    private $age2;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Age3;
+    private $age3;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Born1;
+    private $born1;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Born2;
+    private $born2;
 
     public function getId(): ?int
     {
@@ -38,72 +38,72 @@ class Report3
 
     public function getYear(): ?string
     {
-        return $this->Year;
+        return $this->year;
     }
 
-    public function setYear(string $Year): self
+    public function setYear(string $year): self
     {
-        $this->Year = $Year;
+        $this->year = $year;
 
         return $this;
     }
 
     public function getAge1(): ?string
     {
-        return $this->Age1;
+        return $this->age1;
     }
 
-    public function setAge1(string $Age1): self
+    public function setAge1(string $age1): self
     {
-        $this->Age1 = $Age1;
+        $this->age1 = $age1;
 
         return $this;
     }
 
     public function getAge2(): ?string
     {
-        return $this->Age2;
+        return $this->age2;
     }
 
-    public function setAge2(string $Age2): self
+    public function setAge2(string $age2): self
     {
-        $this->Age2 = $Age2;
+        $this->age2 = $age2;
 
         return $this;
     }
 
     public function getAge3(): ?string
     {
-        return $this->Age3;
+        return $this->age3;
     }
 
-    public function setAge3(string $Age3): self
+    public function setAge3(string $age3): self
     {
-        $this->Age3 = $Age3;
+        $this->age3 = $age3;
 
         return $this;
     }
 
     public function getBorn1(): ?string
     {
-        return $this->Born1;
+        return $this->born1;
     }
 
-    public function setBorn1(string $Born1): self
+    public function setBorn1(string $born1): self
     {
-        $this->Born1 = $Born1;
+        $this->born1 = $born1;
 
         return $this;
     }
 
     public function getBorn2(): ?string
     {
-        return $this->Born2;
+        return $this->born2;
     }
 
-    public function setBorn2(string $Born2): self
+    public function setBorn2(string $born2): self
     {
-        $this->Born2 = $Born2;
+        $this->born2 = $born2;
 
         return $this;
     }
