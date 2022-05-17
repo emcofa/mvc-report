@@ -1,5 +1,4 @@
 .nav-container {
-    background-color: #fff;
     margin-bottom: 0px;
     top: 0;
     left: 0;
@@ -22,10 +21,17 @@
 
 
 .nav-container li {
-    margin: 1em;
+    margin: 1em;    
 }
 
 .nav-container li a {
-    color: black;
+    color: #3A2C50;
     text-decoration: none;
+    padding: 1em;
+}
+
+.nav-items li a:hover {
+    transition: 0.3s ease;
+    background-color: #D56650;
+    color: #fff;
 }

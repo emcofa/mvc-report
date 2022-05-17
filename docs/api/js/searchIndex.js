@@ -361,81 +361,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-Report.html#method_report"
         },                {
-            "fqsen": "\\App\\Dice\\Dice",
-            "name": "Dice",
-            "summary": "",
-            "url": "classes/App-Dice-Dice.html"
-        },                {
-            "fqsen": "\\App\\Dice\\Dice\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Dice-Dice.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Dice\\Dice\u003A\u003Aroll\u0028\u0029",
-            "name": "roll",
-            "summary": "",
-            "url": "classes/App-Dice-Dice.html#method_roll"
-        },                {
-            "fqsen": "\\App\\Dice\\Dice\u003A\u003AgetAsString\u0028\u0029",
-            "name": "getAsString",
-            "summary": "",
-            "url": "classes/App-Dice-Dice.html#method_getAsString"
-        },                {
-            "fqsen": "\\App\\Dice\\Dice\u003A\u003A\u0024value",
-            "name": "value",
-            "summary": "",
-            "url": "classes/App-Dice-Dice.html#property_value"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceGraphic",
-            "name": "DiceGraphic",
-            "summary": "",
-            "url": "classes/App-Dice-DiceGraphic.html"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceGraphic\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Dice-DiceGraphic.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceGraphic\u003A\u003AgetAsString\u0028\u0029",
-            "name": "getAsString",
-            "summary": "",
-            "url": "classes/App-Dice-DiceGraphic.html#method_getAsString"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceGraphic\u003A\u003A\u0024representation",
-            "name": "representation",
-            "summary": "",
-            "url": "classes/App-Dice-DiceGraphic.html#property_representation"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand",
-            "name": "DiceHand",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand\u003A\u003Aadd\u0028\u0029",
-            "name": "add",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html#method_add"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand\u003A\u003Aroll\u0028\u0029",
-            "name": "roll",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html#method_roll"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand\u003A\u003AgetNumberDices\u0028\u0029",
-            "name": "getNumberDices",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html#method_getNumberDices"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand\u003A\u003AgetAsString\u0028\u0029",
-            "name": "getAsString",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html#method_getAsString"
-        },                {
-            "fqsen": "\\App\\Dice\\DiceHand\u003A\u003A\u0024hand",
-            "name": "hand",
-            "summary": "",
-            "url": "classes/App-Dice-DiceHand.html#property_hand"
-        },                {
             "fqsen": "\\App\\Kernel",
             "name": "Kernel",
             "summary": "",
@@ -1133,7 +1058,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Entity\\Report5\u003A\u003AgetId\u0028\u0029",
             "name": "getId",
-            "summary": "",
+            "summary": "Get\u0020Id\u0020of\u0020table",
             "url": "classes/App-Entity-Report5.html#method_getId"
         },                {
             "fqsen": "\\App\\Entity\\Report5\u003A\u003AgetYear\u0028\u0029",
@@ -1345,11 +1270,6 @@ Search.appendIndex(
             "name": "Controller",
             "summary": "",
             "url": "namespaces/app-controller.html"
-        },                {
-            "fqsen": "\\App\\Dice",
-            "name": "Dice",
-            "summary": "",
-            "url": "namespaces/app-dice.html"
         },                {
             "fqsen": "\\App\\Entity",
             "name": "Entity",

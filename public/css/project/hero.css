@@ -1,8 +1,12 @@
 .hero-image {
-    background-color: #E8412E;
+    background-color: #F5D1D1;
     height: 50%;
     background-position: center;
     position: relative;
+}
+
+.text-hero {
+    font-size: 140%;
 }
 
 .hero-text {
@@ -11,13 +15,24 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: #3A2C50;
+    font-size: 24px;
+}
+
+.uppercase-hero {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #D56650;
+}
+
+.small {
+    font-size: 20px;
 }
 
 .header-hero {
-    font-size: 80px
+    font-size: 80px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #3A2C50;
 }
 
-.text-hero {
-    font-size: 140%;
-}
