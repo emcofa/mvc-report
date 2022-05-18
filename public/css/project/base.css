@@ -24,6 +24,15 @@ h5 {
     background-color: white;
 }
 
+.container-code {
+    padding: 3em;
+    max-width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    background-color: white;
+}
+
 #chartContainer2,
 #chartContainer {
     margin: 0 auto;

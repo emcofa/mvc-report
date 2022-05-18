@@ -47,15 +47,13 @@ class LibraryController extends AbstractController
         $book3->setAuthor("Lisen Sundgren");
         $book3->setImage("vildvuxet.jpg");
 
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($book1);
         $entityManager->persist($book2);
         $entityManager->persist($book3);
 
-        // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
 
-        return new Response('Created new library');
+        return $this->redirect($this->generateUrl('index'));
     }
 
     /**

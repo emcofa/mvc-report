@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\LibraryController;
 use App\Entity\Project;
 use App\Entity\Report2;
 use App\Entity\Report3;
@@ -15,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 class ProjectController extends AbstractController
 {
@@ -96,6 +96,16 @@ class ProjectController extends AbstractController
         ]);
         $application->run($input);
 
+
         return $this->redirect($this->generateUrl('proj-about'));
     }
+
+    /**
+     * @Route("/proj/cleancode", name="proj-code")
+     */
+    public function projectCode(): Response
+    {
+        return $this->render('proj/code.html.twig');
+    }
+
 }
