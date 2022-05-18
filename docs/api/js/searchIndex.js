@@ -556,6 +556,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-ProjectController.html#method_project"
         },                {
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003AprojectReset\u0028\u0029",
+            "name": "projectReset",
+            "summary": "",
+            "url": "classes/App-Controller-ProjectController.html#method_projectReset"
+        },                {
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003AprojectCode\u0028\u0029",
+            "name": "projectCode",
+            "summary": "",
+            "url": "classes/App-Controller-ProjectController.html#method_projectCode"
+        },                {
             "fqsen": "\\App\\Entity\\Library",
             "name": "Library",
             "summary": "",
