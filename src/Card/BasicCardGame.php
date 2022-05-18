@@ -41,7 +41,7 @@ class BasicCardGame
      * @access public
      * @param array<string> $allCards all cards in the array
      * @param int $players how many players who is playing the game
-     * @param int $numCards how many cards which should be drawn
+     * @param int<1, max> $numCards how many cards which should be drawn
      * @return array
      * @phpstan-ignore-next-line
      */
@@ -60,7 +60,7 @@ class BasicCardGame
      * Start the game
      * @access public
      * @param int $players how many players who is playing the game
-     * @param int $cardsAmount how many cards which should be drawn
+     * @param int<1, max> $cardsAmount how many cards which should be drawn
      * @phpstan-ignore-next-line
      * @return array
      */

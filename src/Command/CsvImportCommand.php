@@ -63,25 +63,26 @@ class CsvImportCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // add %kernel.root_dir% in front of "../src/Csv/" if you want to execute csv:import command through terminal/
         $inputOutput = new SymfonyStyle($input, $output);
         $inputOutput->title('Attempting import of Feed...');
-        $reader = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report1.csv');
+        $reader = Reader::createFromPath('../src/Csv/report1.csv');
         $reader->setHeaderOffset(0);
 
-        $reader2 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report2-5.2.1.csv');
+        $reader2 = Reader::createFromPath('../src/Csv/report2-5.2.1.csv');
         $reader2->setHeaderOffset(0);
 
-        $reader3 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report3-5.a.3(n).csv');
+        $reader3 = Reader::createFromPath('../src/Csv/report3-5.a.3(n).csv');
         $reader3->setHeaderOffset(0);
 
-        $reader4 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report4-5.4.1.csv');
+        $reader4 = Reader::createFromPath('../src/Csv/report4-5.4.1.csv');
         $reader4->setHeaderOffset(0);
 
-        $reader5 = Reader::createFromPath('%kernel.root_dir%/../src/Csv/report5-5.2.2.csv');
+        $reader5 = Reader::createFromPath('../src/Csv/report5-5.2.2.csv');
         $reader5->setHeaderOffset(0);
 
         foreach ($reader2->setHeaderOffset(0) as $row) {
@@ -141,5 +142,6 @@ class CsvImportCommand extends Command
         $this->emi->flush();
 
         $inputOutput->success('Command exited cleanly!');
+        return 0;
     }
 }

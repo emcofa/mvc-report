@@ -90,6 +90,7 @@ class Deck
      */
     public function drawNumber(int $number): array
     {
+        $deleteCards = [];
         if (count($this->allCards) == 0) {
             return [];
         }

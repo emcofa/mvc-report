@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: Report4Repository::class)]
 class Report4
-{   
+{
     /**
      * @ORM\Column(type="integer")
      * @var integer

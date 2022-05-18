@@ -7,10 +7,15 @@ use App\Entity\Report2;
 use App\Entity\Report3;
 use App\Entity\Report4;
 use App\Entity\Report5;
+use App\Command\CsvImportCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class ProjectController extends AbstractController
 {
@@ -19,11 +24,7 @@ class ProjectController extends AbstractController
      */
     public function projectAbout(): Response
     {
-        return $this->render('proj/about-proj.html.twig', [
-            'index_url' => "/",
-            'about_url' => "/about",
-            'report_url' => "/report",
-        ]);
+        return $this->render('proj/about-proj.html.twig');
     }
 
     /**
@@ -32,7 +33,6 @@ class ProjectController extends AbstractController
     public function project(
         EntityManagerInterface $entityManager,
     ): Response {
-
         $report1 = $entityManager
             ->getRepository(Project::class)
             ->findAll();
@@ -60,5 +60,42 @@ class ProjectController extends AbstractController
             'report4' => $report4,
             'report5' => $report5,
         ]);
+    }
+
+    /**
+     * @Route("/proj/reset", name="proj-reset")
+     */
+    public function projectReset(KernelInterface $kernel): Response
+    {
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:database:drop', '--force' => true,
+        ]);
+        $application->run($input);
+
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:database:create',
+        ]);
+        $application->run($input);
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:schema:update','--force' => true,
+        ]);
+        $application->run($input);
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:fixtures:load','--append' => true,
+        ]);
+        $application->run($input);
+
+        $input = new ArrayInput([
+            'command' => 'csv:import',
+        ]);
+        $application->run($input);
+
+        return $this->redirect($this->generateUrl('proj-about'));
     }
 }

@@ -50,7 +50,7 @@ class Card
         if (strtolower($this->value) === 'ace') {
             $value = 11;
         }
-        return $value;
+        return intval($value);
     }
     /**
     * returns string card
