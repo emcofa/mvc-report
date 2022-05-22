@@ -1,3 +1,10 @@
-body {
-    background-color: lightgray;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300;700&display=swap');
+@import url("project/base.css");
+@import url("project/hero.css");
+@import url("responsive.css");
+@import url("project/nav.css");
+@import url("project/footer.css");
+@import url("project/proj.css");
+@import url("project/table.css");
+@import url("project/button.css");
+@import url("project/image.css");

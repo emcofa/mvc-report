@@ -1,0 +1,49 @@
+body {
+    box-sizing: border-box;
+    height: 125vh;
+    background-color: #F5D1D1;
+    font-family: 'Lora', serif;
+    font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Poppins', sans-serif;
+    color: #3A2C50;
+}
+
+.container {
+    padding: 3em;
+    max-width: 75%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    background-color: white;
+}
+
+.container-code {
+    padding: 3em;
+    max-width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    background-color: white;
+}
+
+#chartContainer2,
+#chartContainer {
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+a {
+    color:black;
+}
+
+ul {
+    list-style-type: none;
+}

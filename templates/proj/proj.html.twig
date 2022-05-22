@@ -62,13 +62,14 @@
                     <div>
                         <p>Som det går att utläsa i tabellens resultat skedde det en ganska markant förändring inom
                             område 2
-                            (Våld
+                            (våld
                             mot kvinnor) mellan 2018 och 2019. Resterande områden stod relativt stilla i statistiken. En
                             bidragande faktor till varför just område 2 förändrades så drastiskt var #MeToo-uppropen som
                             satte
                             fart hösten 2017 och hade stor påverkan världen över. <a
                                 href="https://jamstalldhetsmyndigheten.se/mans-vald-mot-kvinnor/sexuella-trakasserier/berattelser-fran-metoo-uppropen/">
-                                Jämställdsmyndigheten</a> beskriver uppropen som en unik historisk händelse där framför
+                                Jämställdsmyndigheten</a> beskriver dessa upprop som en unik historisk händelse där
+                            framför
                             allt
                             kvinnor och andra minoriteter gick tillsammans och berättade om sina erfarenheter av
                             sexuella
@@ -93,14 +94,15 @@
         </div>
         <h2>Delmål 5.2</h2>
         <div class="report1">
-            <p>Delmål 5.2 berör ämnet "Utrota våld och utnyttjande av kvinnor och flickor". Statistiken nedan visar att
-                det är nästan 10 gånger fler kvinnor som blivit utsatt för någon typ av bland annat sexualbrott i
-                jämförelse med
-                män.</p>
-            <h4>Personer som blivit utsatta för sexualbrott 2016-2017</h4>
-            <div class="grid-container">
+            <div class="grid-container grid-extra">
                 <div>
-                    <p>Som det går att läsa i Nationella trygghetsundersökningen <a
+                    <p>Delmål 5.2 berör ämnet "Utrota våld och utnyttjande av kvinnor och flickor". Statistiken nedan
+                        visar att
+                        det är nästan 10 gånger fler kvinnor som blivit utsatt för någon typ av bland annat sexualbrott
+                        i
+                        jämförelse med
+                        män.</p>
+                    <p>Det går att läsa att i Nationella trygghetsundersökningen <a
                             href="https://bra.se/statistik/statistiska-undersokningar/nationella-trygghetsundersokningen.html">(Brottsförebyggande
                             rådet, BRÅ)</a> toppar även kvinnor statistiken i kategorin utsatthet för trakasserier.
                         Annars
@@ -111,39 +113,24 @@
                         rapport om Kriminalstatisitk 2020 att antalet lagförda brott avsågs 83% tillhöra män och 17%
                         kvinnor
                         vilket därför går att göra ett antagande att det inte är kvinnor som gör att männen är mer
-                        representerade i utsatthet för brott. <a
+                        representerade i utsatthet för brott <a
                             href="https://bra.se/download/18.1f8c9903175f8b2aa7011063/1633589880963/Sammanfattning_lagforda_2020.pdf">(Kriminalstatistik
-                            2020, BRÅ)</a></p>
+                            2020, BRÅ).</a> Det går dock att diskutera om ökningen från 2016 till 2017 beror på att fler
+                        personer faktiskt har blivit utsatta för sexualbrott eller om det är fler som har varit benägna
+                        att anmäla brottet "tack vare" #MeToo som nämndes ovan. Mörkertalet inom sexaulbrott är stort vilket leder till att statistiken som visas kanske inte stämmer överens med hur den faktiskt ser ut. (KÄLLA)</p>
                 </div>
                 <div>
-                    <p class="source">Andel (%) av befolkningen 16-84 år för kvinnor respektive män</p>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>År</th>
-                                <th>Kvinnor</th>
-                                <th>Män</th>
-                            </tr>
-                            <tr>
-                                {% for item in report1 %}
-                                <td>{{item.Year}}
-                                </td>
-                                <td>{{item.Women}}
-                                </td>
-                                <td>{{item.Men}}
-                                </td>
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                    </table>
+                    <div>
+                        <h4>Personer som blivit utsatta för sexualbrott 2016-2017</h4>
+                        <p class="source">{{title1}} (%)</p>
+                        {{ render_chart(chart1) }}
+                    </div>
                     <p class="source">Källa: <a
                             href="https://bra.se/statistik/statistiska-undersokningar/nationella-trygghetsundersokningen.html">Brå,
                             Nationella trygghetsundersökningen (NTU)</a>
                     </p>
                 </div>
             </div>
-            <h4>Antal sexualbrott (%)</h4>
-            <div id="chartContainer2" style="height: 250px; width: 75%;"></div>
         </div>
         <div class="report3">
             <h2>Delmål 5.a.3(N)</h2>
@@ -236,8 +223,9 @@
                     </div>
                 </div>
             </div>
-            <h4>Kvinnors nettoinkomst, 20 år och äldre</h4>
-            <div id="chartContainer" style="height: 370px; width: 50%;"></div>
+            <div>
+                {{ render_chart(chart3) }}
+            </div>
         </div>
         <div class="report5">
             <h2>Delmål 5.5.2</h2>
@@ -278,7 +266,10 @@
                         tydligt att män har de bäst betalda jobben.
                     </p>
                 </div>
-                <div id="piechart"></div>
+                <div>
+                    {{title5}} (%)
+                    {{ render_chart(chart5) }}
+                </div>
             </div>
         </div>
         <h2>Sammanfattning</h2>

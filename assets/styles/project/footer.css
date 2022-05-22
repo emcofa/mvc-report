@@ -1,0 +1,18 @@
+footer {
+    text-align: center;
+    color: #fff;
+    padding: 1rem;
+    height: 80px;
+    background-color: #3A2C50;
+}
+
+.footer-column {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    grid-gap: 380px;
+}
+
+a .social {
+    color: #fff;
+}

@@ -2,26 +2,28 @@
 
 <body>
     {% include 'nav-proj.html.twig' %}
-    <div class="container">
-        <h2>Hållbar utveckling (jämställdhet)</h2>
-        <p>Mitt projekt handlar om mål 5 bland de globala målen vilket innefattar jämställdhet. Själva syftet med målet
+    <div class="container-code">
+        <h2>Globala målen</h2>
+        <p>Som slutprojekt i kursen MVC valde jag att studera ett av <a
+                href="https://www.globalamalen.se/om-globala-malen/">de 17 globala målen</a> som finns och därefter
+            presentera dess mätvärden i en databas via ORM för att sedan diskutera resultaten. Det delmålet jag valde att studera vidare var "Mål 5" vilket innefattar jämställdhet. Själva syftet med målet
             är att "Uppnå jämställdhet och alla kvinnors och flickors egenmakt" <a
                 href="https://www.globalamalen.se/om-globala-malen/mal-5-jamstalldhet/">(globalamalen.se)</a>. För att
             visa områdets nuvarande status
-            har mätvärden samlats in i en databas vilket presenteras i tabeller och diagram på <a href="{{ path("proj")
-                }}">projekt-sidan</a>.</p>
-        <div class="card-info-wrapper">
-            <div class="column-links">
+            har mätvärden samlats in i en databas vilket presenteras i tabeller och diagram.</p>
+        <div>
+            <div>
                 <img src="{{ asset("img/project/05-jamstalldhet.png" ) }}" width="350" height="350" alt="equal-logo">
             </div>
-            <div class="column-links">
+            <div>
                 <h2>Länkar</h2>
                 <ul class="ul-card">
                     <li>
                         <a href="http://www.student.bth.se/~emfh21/dbwebb-kurser/mvc/me/report/docs/api/">PhpDoc</a>
                     </li>
                     <li>
-                        <a href="http://www.student.bth.se/~emfh21/dbwebb-kurser/mvc/me/report/docs/metrics/">PhpMetrics</a>
+                        <a
+                            href="http://www.student.bth.se/~emfh21/dbwebb-kurser/mvc/me/report/docs/metrics/">PhpMetrics</a>
                     </li>
                     <li>
                         <a href="https://github.com/emcofa/mvc-report.git">GitHub</a>
@@ -43,7 +45,7 @@
             eventuella åtgärder du gjort för att kvalitetssäkra projektet och hur du jobbat med kodkvaliteten och vilka
             verktyg du använt. Har du fokuserat på några speciella saker, verktyg eller metrics, så kan du berätta om
             dem.</p>
-            <a href="reset" class="btn">Återställ databas</a>
+        <a href="reset" class="btn">Återställ databas</a>
     </div>
 
 
