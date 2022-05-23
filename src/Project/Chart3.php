@@ -15,14 +15,9 @@ class Chart3
     private $year = [];
 
     /**
-     * @var array Data of men 2016
+     * @var array Data of Age 1 in table
      */
     private $age1 = [];
-
-    /**
-     * @var array Data of age1 2017
-     */
-    private $men = [];
 
     /**
      * @param array $sort all the data into array
@@ -36,9 +31,8 @@ class Chart3
     }
 
     /**
-     * @param object $chart The chart that the data will be connected with
+     * @param object $chart The data of the chart which will displayed in template
      *
-     * This function set the data to the chart created in the controller
      */
     public function setChart($chart)
     {
@@ -55,5 +49,21 @@ class Chart3
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Get the data of year
+     */
+    public function getYear(): array
+    {
+        return $this->year;
+    }
+
+    /**
+     * Get the data of Age 1
+     */
+    public function getAge1(): array
+    {
+        return $this->age1;
     }
 }

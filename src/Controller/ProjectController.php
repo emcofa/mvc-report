@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Controller\LibraryController;
 use App\Entity\Project;
 use App\Entity\Report2;
 use App\Entity\Report3;
@@ -44,7 +43,7 @@ class ProjectController extends AbstractController
             $chart1 = $chartBuilder->createChart(Chart::TYPE_BAR);
             $tempChart1 = new Chart1($report1);
             $tempChart1->setChart($chart1);
-            $title1 = $tempChart1->setHeadlines();
+            $tempChart1->setHeadlines("Andel (%) av befolkningen 16-84 år för kvinnor respektive män");
             $title1 = $tempChart1->getHeadlines();
 
         $report2 = $entityManager
@@ -69,7 +68,7 @@ class ProjectController extends AbstractController
             $chart5 = $chartBuilder->createChart(Chart::TYPE_PIE);
             $tempChart5 = new Chart5($report5);
             $tempChart5->setChart($chart5);
-            $title5 = $tempChart5->setHeadlines();
+            $title5 = $tempChart5->setHeadlines("2017");
             $title5 = $tempChart5->getHeadlines();
 
         return $this->render('proj/proj.html.twig', [

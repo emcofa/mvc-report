@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src/Command</title>
+  <title>Dashboard for /Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src/Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/Users/emmiefahlstrom/dbwebb-kurser/mvc/me/report/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Command</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Project</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,7 +58,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="CsvImportCommand.php.html#20">App\Command\CsvImportCommand</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Chart3.php.html#10">App\Project\Chart3</a></td><td class="text-right">62%</td></tr>
+       <tr><td><a href="Chart1.php.html#10">App\Project\Chart1</a></td><td class="text-right">66%</td></tr>
 
        </tbody>
       </table>
@@ -75,7 +76,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="CsvImportCommand.php.html#20">App\Command\CsvImportCommand</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="Chart1.php.html#10">App\Project\Chart1</a></td><td class="text-right">10</td></tr>
+       <tr><td><a href="Chart3.php.html#10">App\Project\Chart3</a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -113,9 +115,9 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="CsvImportCommand.php.html#45"><abbr title="App\Command\CsvImportCommand::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="CsvImportCommand.php.html#55"><abbr title="App\Command\CsvImportCommand::configure">configure</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="CsvImportCommand.php.html#68"><abbr title="App\Command\CsvImportCommand::execute">execute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Chart1.php.html#49"><abbr title="App\Project\Chart1::setChart">setChart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Chart3.php.html#37"><abbr title="App\Project\Chart3::setChart">setChart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Chart5.php.html#49"><abbr title="App\Project\Chart5::setChart">setChart</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -132,7 +134,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="CsvImportCommand.php.html#68"><abbr title="App\Command\CsvImportCommand::execute">execute</abbr></a></td><td class="text-right">42</td></tr>
 
        </tbody>
       </table>
@@ -161,7 +162,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,2,1,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -179,7 +180,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([3,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .datum(getCoverageDistributionData([3,0,0,0,0,0,0,0,0,0,0,15], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -229,7 +230,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[0,8,"<a href=\"CsvImportCommand.php.html#20\">App\\Command\\CsvImportCommand<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[66.66666666666666,8,"<a href=\"Chart1.php.html#10\">App\\Project\\Chart1<\/a>"],[62.5,5,"<a href=\"Chart3.php.html#10\">App\\Project\\Chart3<\/a>"],[75,8,"<a href=\"Chart5.php.html#11\">App\\Project\\Chart5<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -253,7 +254,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[0,1,"<a href=\"CsvImportCommand.php.html#45\">App\\Command\\CsvImportCommand::__construct<\/a>"],[0,1,"<a href=\"CsvImportCommand.php.html#55\">App\\Command\\CsvImportCommand::configure<\/a>"],[0,6,"<a href=\"CsvImportCommand.php.html#68\">App\\Command\\CsvImportCommand::execute<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[100,2,"<a href=\"Chart1.php.html#35\">App\\Project\\Chart1::__construct<\/a>"],[0,1,"<a href=\"Chart1.php.html#49\">App\\Project\\Chart1::setChart<\/a>"],[100,1,"<a href=\"Chart1.php.html#87\">App\\Project\\Chart1::setHeadlines<\/a>"],[100,1,"<a href=\"Chart1.php.html#96\">App\\Project\\Chart1::getHeadlines<\/a>"],[100,1,"<a href=\"Chart1.php.html#104\">App\\Project\\Chart1::getYear<\/a>"],[100,1,"<a href=\"Chart1.php.html#112\">App\\Project\\Chart1::getWomen<\/a>"],[100,1,"<a href=\"Chart1.php.html#120\">App\\Project\\Chart1::getMen<\/a>"],[100,2,"<a href=\"Chart3.php.html#25\">App\\Project\\Chart3::__construct<\/a>"],[0,1,"<a href=\"Chart3.php.html#37\">App\\Project\\Chart3::setChart<\/a>"],[100,1,"<a href=\"Chart3.php.html#57\">App\\Project\\Chart3::getYear<\/a>"],[100,1,"<a href=\"Chart3.php.html#65\">App\\Project\\Chart3::getAge1<\/a>"],[100,2,"<a href=\"Chart5.php.html#36\">App\\Project\\Chart5::__construct<\/a>"],[0,1,"<a href=\"Chart5.php.html#49\">App\\Project\\Chart5::setChart<\/a>"],[100,1,"<a href=\"Chart5.php.html#72\">App\\Project\\Chart5::setHeadlines<\/a>"],[100,1,"<a href=\"Chart5.php.html#81\">App\\Project\\Chart5::getHeadlines<\/a>"],[100,1,"<a href=\"Chart5.php.html#89\">App\\Project\\Chart5::getYear<\/a>"],[100,1,"<a href=\"Chart5.php.html#97\">App\\Project\\Chart5::getWomen<\/a>"],[100,1,"<a href=\"Chart5.php.html#105\">App\\Project\\Chart5::getMen<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);

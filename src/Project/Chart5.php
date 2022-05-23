@@ -43,9 +43,8 @@ class Chart5
     }
 
     /**
-     * @param object $chart The chart that the data will be connected with
+     * @param object $chart The data of the chart which will displayed in template
      *
-     * This function set the data to the chart created in the controller
      */
     public function setChart($chart)
     {
@@ -70,10 +69,11 @@ class Chart5
     /**
      * Set the title from the data
      */
-    public function setHeadlines(): void
+    public function setHeadlines(string $headline): void
     {
-        $this->headline = $this->year[1];
+        $this->headline = $headline;
     }
+
 
     /**
      * Get the title from the data
@@ -81,5 +81,29 @@ class Chart5
     public function getHeadlines(): string
     {
         return $this->headline;
+    }
+
+    /**
+     * Get the data of year
+     */
+    public function getYear(): array
+    {
+        return $this->year;
+    }
+
+    /**
+     * Get the data of women
+     */
+    public function getWomen(): array
+    {
+        return $this->women;
+    }
+
+    /**
+     * Get the data of men
+     */
+    public function getMen(): array
+    {
+        return $this->men;
     }
 }

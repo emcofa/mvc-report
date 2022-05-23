@@ -20,31 +20,31 @@ class Chart1
     private $year = [];
 
     /**
-     * @var array Data of men 2016
+     * @var array data of women
      */
     private $women = [];
 
     /**
-     * @var array Data of women 2017
+     * @var array data of men
      */
     private $men = [];
 
     /**
-     * @param array $sort all the data into array
+     * @param array $data sort all the data into array
      */
     public function __construct(array $data)
     {
+        var_dump($data);
         foreach ($data as $line) {
-            $this->year[] = (float) $line->getYear();
+            $this->year[] = (string) $line->getYear();
             $this->women[] = (float) $line->getWomen();
             $this->men[] = (float) $line->getMen();
         }
     }
 
     /**
-     * @param object $chart The chart that the data will be connected with
+     * @param object $chart The data of the chart which will displayed in template
      *
-     * This function set the data to the chart created in the controller
      */
     public function setChart($chart)
     {
@@ -84,10 +84,11 @@ class Chart1
     /**
      * Set the title from the data
      */
-    public function setHeadlines(): void
+    public function setHeadlines(string $headline): void
     {
-        $this->headline = "Andel (%) av befolkningen 16-84 år för kvinnor respektive män";
+        $this->headline = $headline;
     }
+
 
     /**
      * Get the title from the data
@@ -95,5 +96,29 @@ class Chart1
     public function getHeadlines(): string
     {
         return $this->headline;
+    }
+
+    /**
+     * Get the data of year
+     */
+    public function getYear(): array
+    {
+        return $this->year;
+    }
+
+    /**
+     * Get the data of women
+     */
+    public function getWomen(): array
+    {
+        return $this->women;
+    }
+
+    /**
+     * Get the data of men
+     */
+    public function getMen(): array
+    {
+        return $this->men;
     }
 }
