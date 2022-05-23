@@ -43,7 +43,6 @@ class BasicCardGame
      * @param int $players how many players who is playing the game
      * @param int<1, max> $numCards how many cards which should be drawn
      * @return array
-     * @phpstan-ignore-next-line
      */
     public function deal(&$allCards, $players, $numCards): array
     {
@@ -61,7 +60,6 @@ class BasicCardGame
      * @access public
      * @param int $players how many players who is playing the game
      * @param int<1, max> $cardsAmount how many cards which should be drawn
-     * @phpstan-ignore-next-line
      * @return array
      */
     public function startGame($players, $cardsAmount): array

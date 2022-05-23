@@ -17,11 +17,10 @@ class Deck
     /**
      * @var array<string> an array containing deck
      */
-    private $allCards = [];
+    public $allCards = [];
 
     /**
      * @var array<string> an array containing cards which has been drawn
-     * @phpstan-ignore-next-line
      */
     private $deleteCards = [];
 

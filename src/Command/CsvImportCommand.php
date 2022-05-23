@@ -26,7 +26,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class CsvImportCommand
- * @package App\ConsoleCommand
+ * @package App\Command
  */
 class CsvImportCommand extends Command
 {

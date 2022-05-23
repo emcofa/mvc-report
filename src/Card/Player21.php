@@ -44,7 +44,6 @@ class Player21
      * Adds pulled card to the current hand
      * @param $pulledCard pulled card
      * @access public
-     * @phpstan-ignore-next-line
      * @return void
      */
     public function addToCurrentHand($pulledCard): void

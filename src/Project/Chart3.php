@@ -20,13 +20,13 @@ class Chart3
     private $age1 = [];
 
     /**
-     * @param array<string> $data all the data into array
+     * @param array<object> $data all the data into array
      */
     public function __construct(array $data)
     {
         foreach ($data as $line) {
-            $this->year[] = (string) $line->getYear();
-            $this->age1[] = (string) $line->getAge1();
+            $this->year[] = $line->getYear();
+            $this->age1[] = $line->getAge1();
         }
     }
 

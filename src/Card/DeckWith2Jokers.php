@@ -15,7 +15,6 @@ class DeckWith2Jokers extends Deck
     public function __construct()
     {
         parent::__construct();
-        $this->allCards = [];
         $card1 = new Card("11", "J");
         $card2 = new Card("12", "J");
         array_push($this->allCards, $card1);

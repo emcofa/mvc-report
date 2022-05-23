@@ -26,14 +26,14 @@ class Chart5
     private $men = [];
 
     /**
-     * @param array<string> $data sort all the data into array
+     * @param array<object> $data sort all the data into array
      */
     public function __construct(array $data)
     {
         foreach ($data as $line) {
-            $this->year[] = (string) $line->getYear();
-            $this->women[] = (string) $line->getWomen();
-            $this->men[] = (string) $line->getMen();
+            $this->year[] = $line->getYear();
+            $this->women[] = $line->getWomen();
+            $this->men[] = $line->getMen();
         }
     }
 
