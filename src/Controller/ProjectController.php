@@ -37,51 +37,83 @@ class ProjectController extends AbstractController
         EntityManagerInterface $entityManager,
         ChartBuilderInterface $chartBuilder
     ): Response {
+        $chart1 = $this->report1($entityManager, $chartBuilder);
+
+        $report2 = $this->report2($entityManager);
+
+        $getReport3 = $this->report3($entityManager, $chartBuilder);
+        $report3 = $getReport3[0];
+        $chart3 = $getReport3[1];
+
+        $getReport5 = $this->report5($entityManager, $chartBuilder);
+        $report5 = $getReport5[0];
+        $chart5 = $getReport5[1];
+
+        return $this->render('proj/proj.html.twig', [
+            'chart1' => $chart1,
+            'report2' => $report2,
+            'report3' => $report3,
+            'report5' => $report5,
+            'chart5' => $chart5,
+            'chart3' => $chart3,
+        ]);
+    }
+
+    /**
+     * Get the data of report 1
+     * @return mixed
+     */
+    public function report1($entityManager, $chartBuilder): mixed
+    {
         $report1 = $entityManager
             ->getRepository(Project::class)
             ->findAll();
-            $chart1 = $chartBuilder->createChart(Chart::TYPE_BAR);
-            $tempChart1 = new Chart1($report1);
-            $tempChart1->setChart($chart1);
-            $tempChart1->setHeadlines("Andel (%) av befolkningen 16-84 år för kvinnor respektive män");
-            $title1 = $tempChart1->getHeadlines();
+        $chart1 = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $tempChart1 = new Chart1($report1);
+        $tempChart1->setChart($chart1);
+        return $chart1;
+    }
 
+    /**
+     * Get the data of report 2
+     * @return mixed
+     */
+    public function report2($entityManager): mixed
+    {
         $report2 = $entityManager
             ->getRepository(Report2::class)
             ->findAll();
+        return $report2;
+    }
 
+    /**
+     * Get the data of report 3
+     * @return array<mixed>
+     */
+    public function report3($entityManager, $chartBuilder): array
+    {
         $report3 = $entityManager
             ->getRepository(Report3::class)
             ->findAll();
-            $chart3 = $chartBuilder->createChart(Chart::TYPE_LINE);
-            $tempChart3 = new Chart3($report3);
-            $tempChart3->setChart($chart3);
+        $chart3 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $tempChart3 = new Chart3($report3);
+        $tempChart3->setChart($chart3);
+        return [$report3, $chart3];
+    }
 
-        $report4 = $entityManager
-            ->getRepository(Report4::class)
-            ->findAll();
-
+    /**
+     * Get the data of report 5
+     * @return array<mixed>
+     */
+    public function report5($entityManager, $chartBuilder): array
+    {
         $report5 = $entityManager
             ->getRepository(Report5::class)
             ->findAll();
-
-            $chart5 = $chartBuilder->createChart(Chart::TYPE_PIE);
-            $tempChart5 = new Chart5($report5);
-            $tempChart5->setChart($chart5);
-            $title5 = $tempChart5->setHeadlines("2017");
-            $title5 = $tempChart5->getHeadlines();
-
-        return $this->render('proj/proj.html.twig', [
-            'report2' => $report2,
-            'report3' => $report3,
-            'report4' => $report4,
-            'report5' => $report5,
-            'chart5' => $chart5,
-            'title5' => $title5,
-            'chart1' => $chart1,
-            'title1' => $title1,
-            'chart3' => $chart3,
-        ]);
+        $chart5 = $chartBuilder->createChart(Chart::TYPE_PIE);
+        $tempChart5 = new Chart5($report5);
+        $tempChart5->setChart($chart5);
+        return [$report5, $chart5];
     }
 
     /**

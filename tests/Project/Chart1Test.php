@@ -32,12 +32,8 @@ class Chart1Test extends TestCase
             ->method('find')
             ->willReturn($proj);
         $chart1 = new Chart1($toArray);
-        $setTitle = "Andel (%) av befolkningen 16-84 år för kvinnor respektive män";
-        $chart1->setHeadlines($setTitle);
-        $title1 = $chart1->getHeadlines();
 
         $this->assertInstanceOf(Chart1::class, $chart1);
-        $this->assertEquals($setTitle, $title1);
         $this->assertIsArray($chart1->getYear());
         $this->assertIsArray($chart1->getWomen());
         $this->assertIsArray($chart1->getMen());

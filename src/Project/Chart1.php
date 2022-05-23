@@ -10,32 +10,26 @@ namespace App\Project;
 class Chart1
 {
     /**
-     * @var string The headline
-     */
-    private $headline = "";
-
-    /**
-     * @var array get the year of data
+     * @var array<string> get the year of data
      */
     private $year = [];
 
     /**
-     * @var array data of women
+     * @var array<float> data of women
      */
     private $women = [];
 
     /**
-     * @var array data of men
+     * @var array<float> data of men
      */
     private $men = [];
 
     /**
-     * @param array $data sort all the data into array
+     * @param array<mixed> $data sort all the data into array
      */
     public function __construct(array $data)
     {
-        var_dump($data);
-        foreach ($data as $line) {
+        foreach ((array) $data as $line) {
             $this->year[] = (string) $line->getYear();
             $this->women[] = (float) $line->getWomen();
             $this->men[] = (float) $line->getMen();
@@ -44,9 +38,10 @@ class Chart1
 
     /**
      * @param object $chart The data of the chart which will displayed in template
+     * @return void
      *
      */
-    public function setChart($chart)
+    public function setChart($chart): void
     {
         $chart->setData([
             'labels' => [
@@ -82,24 +77,8 @@ class Chart1
     }
 
     /**
-     * Set the title from the data
-     */
-    public function setHeadlines(string $headline): void
-    {
-        $this->headline = $headline;
-    }
-
-
-    /**
-     * Get the title from the data
-     */
-    public function getHeadlines(): string
-    {
-        return $this->headline;
-    }
-
-    /**
      * Get the data of year
+     * @return array<string>
      */
     public function getYear(): array
     {
@@ -108,6 +87,7 @@ class Chart1
 
     /**
      * Get the data of women
+     * @return array<float>
      */
     public function getWomen(): array
     {
@@ -116,6 +96,7 @@ class Chart1
 
     /**
      * Get the data of men
+     * @return array<float>
      */
     public function getMen(): array
     {

@@ -10,17 +10,17 @@ namespace App\Project;
 class Chart3
 {
     /**
-     * @var array get the year of data
+     * @var array<string> get the year of data
      */
     private $year = [];
 
     /**
-     * @var array Data of Age 1 in table
+     * @var array<string> Data of Age 1 in table
      */
     private $age1 = [];
 
     /**
-     * @param array $sort all the data into array
+     * @param array<string> $data all the data into array
      */
     public function __construct(array $data)
     {
@@ -32,9 +32,9 @@ class Chart3
 
     /**
      * @param object $chart The data of the chart which will displayed in template
-     *
+     * @return void
      */
-    public function setChart($chart)
+    public function setChart($chart):void
     {
         $chart->setData([
             'labels' => $this->year,
@@ -53,6 +53,7 @@ class Chart3
 
     /**
      * Get the data of year
+     * @return array<string>
      */
     public function getYear(): array
     {
@@ -61,6 +62,7 @@ class Chart3
 
     /**
      * Get the data of Age 1
+     * @return array<string>
      */
     public function getAge1(): array
     {

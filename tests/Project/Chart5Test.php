@@ -32,12 +32,8 @@ class Chart5Test extends TestCase
             ->method('find')
             ->willReturn($proj);
         $chart1 = new Chart5($toArray);
-        $setTitle = "2017";
-        $chart1->setHeadlines($setTitle);
-        $title1 = $chart1->getHeadlines();
 
         $this->assertInstanceOf(Chart5::class, $chart1);
-        $this->assertEquals($setTitle, $title1);
         $this->assertIsArray($chart1->getYear());
         $this->assertIsArray($chart1->getWomen());
         $this->assertIsArray($chart1->getMen());

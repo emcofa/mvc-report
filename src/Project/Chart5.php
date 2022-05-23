@@ -11,27 +11,22 @@ namespace App\Project;
 class Chart5
 {
     /**
-     * @var string The headline
-     */
-    private $headline = "";
-
-    /**
-     * @var array get the year of data
+     * @var array<string> get the year of data
      */
     private $year = [];
 
     /**
-     * @var array Data of men 2016
+     * @var array<string> Data of men 2016
      */
     private $women = [];
 
     /**
-     * @var array Data of women 2017
+     * @var array<string> Data of women 2017
      */
     private $men = [];
 
     /**
-     * @param array $sort all the data into array
+     * @param array<string> $data sort all the data into array
      */
     public function __construct(array $data)
     {
@@ -44,9 +39,9 @@ class Chart5
 
     /**
      * @param object $chart The data of the chart which will displayed in template
-     *
+     * @return void
      */
-    public function setChart($chart)
+    public function setChart($chart): void
     {
         $chart->setData([
             'labels' => [
@@ -67,24 +62,8 @@ class Chart5
     }
 
     /**
-     * Set the title from the data
-     */
-    public function setHeadlines(string $headline): void
-    {
-        $this->headline = $headline;
-    }
-
-
-    /**
-     * Get the title from the data
-     */
-    public function getHeadlines(): string
-    {
-        return $this->headline;
-    }
-
-    /**
      * Get the data of year
+     * @return array<string>
      */
     public function getYear(): array
     {
@@ -93,6 +72,7 @@ class Chart5
 
     /**
      * Get the data of women
+     * @return array<string>
      */
     public function getWomen(): array
     {
@@ -101,6 +81,7 @@ class Chart5
 
     /**
      * Get the data of men
+     * @return array<string>
      */
     public function getMen(): array
     {
