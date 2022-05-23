@@ -6,7 +6,8 @@
         <h2>Globala målen</h2>
         <p>Som slutprojekt i kursen MVC valde jag att studera ett av <a
                 href="https://www.globalamalen.se/om-globala-malen/">de 17 globala målen</a> som finns och därefter
-            presentera dess mätvärden i en databas via ORM för att sedan diskutera resultaten. Det delmålet jag valde att studera vidare var "Mål 5" vilket innefattar jämställdhet. Själva syftet med målet
+            presentera dess mätvärden i en databas via ORM för att sedan diskutera resultaten. Det delmålet jag valde
+            att studera vidare var "Mål 5" vilket innefattar jämställdhet. Själva syftet med målet
             är att "Uppnå jämställdhet och alla kvinnors och flickors egenmakt" <a
                 href="https://www.globalamalen.se/om-globala-malen/mal-5-jamstalldhet/">(globalamalen.se)</a>. För att
             visa områdets nuvarande status
@@ -41,10 +42,14 @@
             </div>
         </div>
         <h2>Summering</h2>
-        <p>Din about-sida skall innehålla en summering där du berättar om projektets kodkvalitet. Berätta vilka
-            eventuella åtgärder du gjort för att kvalitetssäkra projektet och hur du jobbat med kodkvaliteten och vilka
-            verktyg du använt. Har du fokuserat på några speciella saker, verktyg eller metrics, så kan du berätta om
-            dem.</p>
+        <p>För att kvalitetssäkra projektets kodkvalitét har jag framför allt använt mig av verktygen Phpmd, Phpstan, Phpcs
+            Phpunit, Metrics och Scrutinizer. Jag har använt dessa verktyg som mallar för att kunna få en bra grund i
+            hur projektet ska utformas. För att veta att koden fungerar som den ska och returnerar rätt värden har jag
+            implementerat tester för mina klasser. På så sätt går det att garantera att koden inte prodicerar fel
+            resultat. Jag har jobbat kontinuerligt med Phpstan. När jag har gjort en ändring i min kod, har jag
+            dubbelkollat med hjälp av Phpstan så inga varningar har dykt upp. Med hjälp av Scrutinizer och Metrivs har
+            jag fått en bra överblick på många områden i min kod. Till exempel dess komplexitet och "coupling" som jag
+            har behövt att arbeta lite med för att få ihop en "snygg kod". </p>
         <a href="reset" class="btn">Återställ databas</a>
     </div>
 
