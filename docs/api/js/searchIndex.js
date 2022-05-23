@@ -556,10 +556,25 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-ProjectController.html#method_project"
         },                {
-            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003AprojectReset\u0028\u0029",
-            "name": "projectReset",
-            "summary": "",
-            "url": "classes/App-Controller-ProjectController.html#method_projectReset"
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003Areport1\u0028\u0029",
+            "name": "report1",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020report\u00201",
+            "url": "classes/App-Controller-ProjectController.html#method_report1"
+        },                {
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003Areport2\u0028\u0029",
+            "name": "report2",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020report\u00202",
+            "url": "classes/App-Controller-ProjectController.html#method_report2"
+        },                {
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003Areport3\u0028\u0029",
+            "name": "report3",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020report\u00203",
+            "url": "classes/App-Controller-ProjectController.html#method_report3"
+        },                {
+            "fqsen": "\\App\\Controller\\ProjectController\u003A\u003Areport5\u0028\u0029",
+            "name": "report5",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020report\u00205",
+            "url": "classes/App-Controller-ProjectController.html#method_report5"
         },                {
             "fqsen": "\\App\\Controller\\ProjectController\u003A\u003AprojectCode\u0028\u0029",
             "name": "projectCode",
@@ -1261,6 +1276,141 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Repository-Report5Repository.html#method_remove"
         },                {
+            "fqsen": "\\App\\Controller\\ResetDatabase",
+            "name": "ResetDatabase",
+            "summary": "",
+            "url": "classes/App-Controller-ResetDatabase.html"
+        },                {
+            "fqsen": "\\App\\Controller\\ResetDatabase\u003A\u003AprojectReset\u0028\u0029",
+            "name": "projectReset",
+            "summary": "",
+            "url": "classes/App-Controller-ResetDatabase.html#method_projectReset"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1",
+            "name": "Chart1",
+            "summary": "Class\u0020Chart1",
+            "url": "classes/App-Project-Chart1.html"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Project-Chart1.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003AsetChart\u0028\u0029",
+            "name": "setChart",
+            "summary": "",
+            "url": "classes/App-Project-Chart1.html#method_setChart"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003AgetYear\u0028\u0029",
+            "name": "getYear",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020year",
+            "url": "classes/App-Project-Chart1.html#method_getYear"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003AgetWomen\u0028\u0029",
+            "name": "getWomen",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020women",
+            "url": "classes/App-Project-Chart1.html#method_getWomen"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003AgetMen\u0028\u0029",
+            "name": "getMen",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020men",
+            "url": "classes/App-Project-Chart1.html#method_getMen"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003A\u0024year",
+            "name": "year",
+            "summary": "",
+            "url": "classes/App-Project-Chart1.html#property_year"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003A\u0024women",
+            "name": "women",
+            "summary": "",
+            "url": "classes/App-Project-Chart1.html#property_women"
+        },                {
+            "fqsen": "\\App\\Project\\Chart1\u003A\u003A\u0024men",
+            "name": "men",
+            "summary": "",
+            "url": "classes/App-Project-Chart1.html#property_men"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3",
+            "name": "Chart3",
+            "summary": "Class\u0020Chart3",
+            "url": "classes/App-Project-Chart3.html"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Project-Chart3.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003AsetChart\u0028\u0029",
+            "name": "setChart",
+            "summary": "",
+            "url": "classes/App-Project-Chart3.html#method_setChart"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003AgetYear\u0028\u0029",
+            "name": "getYear",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020year",
+            "url": "classes/App-Project-Chart3.html#method_getYear"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003AgetAge1\u0028\u0029",
+            "name": "getAge1",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020Age\u00201",
+            "url": "classes/App-Project-Chart3.html#method_getAge1"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003A\u0024year",
+            "name": "year",
+            "summary": "",
+            "url": "classes/App-Project-Chart3.html#property_year"
+        },                {
+            "fqsen": "\\App\\Project\\Chart3\u003A\u003A\u0024age1",
+            "name": "age1",
+            "summary": "",
+            "url": "classes/App-Project-Chart3.html#property_age1"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5",
+            "name": "Chart5",
+            "summary": "Class\u0020Chart5",
+            "url": "classes/App-Project-Chart5.html"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Project-Chart5.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003AsetChart\u0028\u0029",
+            "name": "setChart",
+            "summary": "",
+            "url": "classes/App-Project-Chart5.html#method_setChart"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003AgetYear\u0028\u0029",
+            "name": "getYear",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020year",
+            "url": "classes/App-Project-Chart5.html#method_getYear"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003AgetWomen\u0028\u0029",
+            "name": "getWomen",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020women",
+            "url": "classes/App-Project-Chart5.html#method_getWomen"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003AgetMen\u0028\u0029",
+            "name": "getMen",
+            "summary": "Get\u0020the\u0020data\u0020of\u0020men",
+            "url": "classes/App-Project-Chart5.html#method_getMen"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003A\u0024year",
+            "name": "year",
+            "summary": "",
+            "url": "classes/App-Project-Chart5.html#property_year"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003A\u0024women",
+            "name": "women",
+            "summary": "",
+            "url": "classes/App-Project-Chart5.html#property_women"
+        },                {
+            "fqsen": "\\App\\Project\\Chart5\u003A\u003A\u0024men",
+            "name": "men",
+            "summary": "",
+            "url": "classes/App-Project-Chart5.html#property_men"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -1290,6 +1440,11 @@ Search.appendIndex(
             "name": "App",
             "summary": "",
             "url": "namespaces/app.html"
+        },                {
+            "fqsen": "\\App\\Project",
+            "name": "Project",
+            "summary": "",
+            "url": "namespaces/app-project.html"
         },                {
             "fqsen": "\\App\\Repository",
             "name": "Repository",

@@ -34,7 +34,7 @@ class Chart3
      * @param object $chart The data of the chart which will displayed in template
      * @return void
      */
-    public function setChart($chart):void
+    public function setChart($chart): void
     {
         $chart->setData([
             'labels' => $this->year,

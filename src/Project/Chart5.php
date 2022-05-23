@@ -2,7 +2,6 @@
 
 namespace App\Project;
 
-
 /**
  * Class Chart5
  * @package App\Project;

@@ -48,5 +48,4 @@ class ResetDatabase extends AbstractController
 
         return $this->redirect($this->generateUrl('proj-about'));
     }
-
 }
