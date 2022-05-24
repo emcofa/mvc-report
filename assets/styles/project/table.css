@@ -24,7 +24,7 @@ td {
 
 .source {
     font-size: 80%;
-    /* text-align: left; */
+    text-align: center;
     opacity: 0.7;
 }
 
@@ -86,4 +86,9 @@ td {
 
 .pie {
     width: 75%;
+    margin: 0 auto;
+}
+
+.middle {
+    text-align: center;
 }
