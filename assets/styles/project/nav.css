@@ -6,7 +6,7 @@
     height: 80px;
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
 }
@@ -27,7 +27,7 @@
 .nav-container li a {
     color: #3A2C50;
     text-decoration: none;
-    padding: 1em;
+    padding: 0.8em;
 }
 
 .nav-items li a:hover {

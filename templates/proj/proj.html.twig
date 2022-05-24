@@ -31,38 +31,40 @@
                 <h4>Huruvida ett rättsligt ramverk finns på plats för att främja, skydda och övervaka jämställdhet och
                     icke-diskriminering på grund av kön.</h4>
                 <div class="grid-container">
-                    <div>
+                    <div class="content-box">
                         <p class="source">Tabellen utläses från 0 till 100% där 100 innebär total övervakning och 0
                             ingen
                             övervakning alls.
                         </p>
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th>Område</th>
-                                    <th>Typ</th>
-                                    <th>2018</th>
-                                    <th>2019</th>
-                                </tr>
-                                <tr>
-                                    {% for item in report2 %}
-                                    <td>{{item.area}}
-                                    </td>
-                                    <td>{{item.type}}
-                                    </td>
-                                    <td>{{item.year1}}
-                                    </td>
-                                    <td>{{item.year2}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                            {% endfor %}
-                        </table>
+                        <div style="overflow-x:auto;">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Område</th>
+                                        <th>Typ</th>
+                                        <th>2018</th>
+                                        <th>2019</th>
+                                    </tr>
+                                    <tr>
+                                        {% for item in report2 %}
+                                        <td>{{item.area}}
+                                        </td>
+                                        <td>{{item.type}}
+                                        </td>
+                                        <td>{{item.year1}}
+                                        </td>
+                                        <td>{{item.year2}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
                         <p class="source">Källa: 2018 UNSD, 2019 SCBs beräkningar utifrån validerade uppgifter från
                             Arbetsmarknadsdepartementet
                         </p>
                     </div>
-                    <div>
+                    <div class="content-box">
                         <p>Som det går att utläsa i tabellens resultat skedde det en ganska markant förändring inom
                             område 2
                             (våld
@@ -98,7 +100,7 @@
         <h2>Delmål 5.2</h2>
         <div class="report1">
             <div class="grid-container grid-extra">
-                <div>
+                <div class="content-box">
                     <p>Delmål 5.2 berör ämnet "Utrota våld och utnyttjande av kvinnor och flickor". Statistiken nedan
                         visar att
                         det är nästan 10 gånger fler kvinnor som blivit utsatt för någon typ av bland annat sexualbrott
@@ -128,7 +130,7 @@
                         vilket leder till att statistiken som visas kanske inte stämmer överens med hur den faktiskt ser
                         ut.</p>
                 </div>
-                <div>
+                <div class="content-box">
                     <div>
                         <h4>Personer som blivit utsatta för sexualbrott 2016-2017</h4>
                         <p class="source">Andel (%) av befolkningen 16-84 år för kvinnor respektive män (%)</p>
@@ -150,37 +152,39 @@
             </div>
             <h4>Kvinnors nettoinkomst som andel av mäns nettoinkomst 2011–2017 (Sverige)</h4>
             <p class="source">Procent(%)</p>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>År</th>
-                        <th>20 år och äldre</th>
-                        <th>20–64 år</th>
-                        <th>65 år och äldre</th>
-                        <th>Inrikesfödda</th>
-                        <th>Utrikesfödda</th>
-                    </tr>
-                    <tr>
-                        {% for item in report3 %}
-                        <td>{{item.year}}
-                        </td>
-                        <td>{{item.age1}}
-                        </td>
-                        <td>{{item.age2}}
-                        </td>
-                        <td>{{item.age3}}
-                        </td>
-                        <td>{{item.born1}}
-                        </td>
-                        <td>{{item.born2}}
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
+            <div style="overflow-x:auto;">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>År</th>
+                            <th>20 år och äldre</th>
+                            <th>20–64 år</th>
+                            <th>65 år och äldre</th>
+                            <th>Inrikesfödda</th>
+                            <th>Utrikesfödda</th>
+                        </tr>
+                        <tr>
+                            {% for item in report3 %}
+                            <td>{{item.year}}
+                            </td>
+                            <td>{{item.age1}}
+                            </td>
+                            <td>{{item.age2}}
+                            </td>
+                            <td>{{item.age3}}
+                            </td>
+                            <td>{{item.born1}}
+                            </td>
+                            <td>{{item.born2}}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
             <p class="source">Källa: SCB, Inkomst- och taxeringsregistret (IoT)</p>
             <div class="grid-container grid-extra">
-                <div class="item">
+                <div class="content-box">
                     <p>
                         Statistik visar att kvinnor tjänar ungefär 80% av vad en man tjänar. <a
                             href="https://www.scb.se/hitta-statistik/artiklar/2020/kvinnors-inkomst-narmar-sig-mans--men-langsamt/">SCB</a>
@@ -224,7 +228,7 @@
                         </li>
                         </ul>
                 </div>
-                <div class="item">
+                <div class="content-box">
                     <div class="container-small">
                         <h1 class="red">81%</h1>
                         <p class="container-small-text">
@@ -241,30 +245,32 @@
         <div class="report5">
             <h2>Delmål 5.5.2</h2>
             <div class="grid-container2 grid-extra2">
-                <div>
+                <div class="content-box2">
                     <h4>Könsfördelning (%) bland chefer</h4>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>År</th>
-                                <th>Kvinnor</th>
-                                <th>Män</th>
-                            </tr>
-                            <tr>
-                                {% for item in report5 %}
-                                <td>{{item.year}}
-                                </td>
-                                <td>{{item.women}}
-                                </td>
-                                <td>{{item.men}}
-                                </td>
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                    </table>
+                    <div style="overflow-x:auto;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>År</th>
+                                    <th>Kvinnor</th>
+                                    <th>Män</th>
+                                </tr>
+                                <tr>
+                                    {% for item in report5 %}
+                                    <td>{{item.year}}
+                                    </td>
+                                    <td>{{item.women}}
+                                    </td>
+                                    <td>{{item.men}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
                     <p class="source">Källa: Yrkesregistret</p>
                 </div>
-                <div>
+                <div class="content-box2">
                     <p> Delmål 5.5 handlar om "tillförsäkra kvinnor fullt och faktiskt deltagande och lika möjligheter
                         till ledarskap på alla beslutsnivåer i det politiska, ekonomiska och offentliga livet."
                         Statisitken inom indikator 5.5.2 visar att ungefär 40% av alla chefer är kvinnor medan 60% är
@@ -278,9 +284,11 @@
                         tydligt att män har de bäst betalda jobben.
                     </p>
                 </div>
-                <div>
-                    2017 (%)
-                    {{ render_chart(chart5) }}
+                <div class="content-box2">
+                    <div class="pie">
+                        2017 (%)
+                        {{ render_chart(chart5) }}
+                    </div>
                 </div>
             </div>
         </div>
