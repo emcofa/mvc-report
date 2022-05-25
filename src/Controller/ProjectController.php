@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Entity\Report2;
 use App\Entity\Report3;
-use App\Entity\Report4;
 use App\Entity\Report5;
 use App\Project\Chart5;
 use App\Project\Chart3;
@@ -14,9 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
