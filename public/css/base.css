@@ -135,6 +135,10 @@ a {
     font-family: 'Roboto', sans-serif;
 }
 
+.report {
+    text-align: left;
+}
+
 .container2 {
     padding: 3em;
     max-width: 100%;
