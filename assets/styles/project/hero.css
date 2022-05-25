@@ -1,5 +1,5 @@
 .hero-image {
-    background-color: #F5D1D1;
+    background-color: #3A2C50;
     height: 50%;
     background-position: center;
     position: relative;
@@ -7,6 +7,7 @@
 
 .text-hero {
     font-size: 140%;
+    color: #F5D1D1;
 }
 
 .hero-text {
@@ -15,7 +16,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #3A2C50;
+    color: #F5D1D1;
     font-size: 24px;
 }
 
@@ -27,12 +28,13 @@
 
 .small {
     font-size: 20px;
+    color: #F5D1D1;
 }
 
 .header-hero {
     font-size: 80px;
     margin-top: 0px;
     margin-bottom: 0px;
-    color: #3A2C50;
+    color: #F5D1D1;
 }
 
