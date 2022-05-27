@@ -8,8 +8,21 @@
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="stylesheet" href="{{ asset("css/app2.css") }}">
 
+    {% block stylesheets %}
+    {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+    {{ encore_entry_link_tags('app') }}
+
+    <!-- Renders a link tag (if your module requires any CSS)
+    <link rel="stylesheet" href="{{ asset(" css/app2.css") }}">
+ -->
+    {% endblock %}
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+
+    <!-- Renders app.js & a webpack runtime.js file
+            <script src="/builds/runtime.js" defer></script>
+            <script src="/builds/app.js" defer></script>
+            See note below about the "defer" attribute -->
     {% endblock %}
 </head>
 

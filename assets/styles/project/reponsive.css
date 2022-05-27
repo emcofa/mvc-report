@@ -1,0 +1,89 @@
+@media screen and (max-width: 800px) {
+    .grid-container,
+    .grid-container2 {
+        padding: 1em;
+        justify-items: center;
+        margin: 10px auto;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .content-box {
+        grid-column: span 2;
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .content-box2 {
+        grid-column: span 3;
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .footer-column {
+       grid-gap: 0px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .grid2 {
+        grid-column: span 2;
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .grid1 {
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .container-small {
+        font-size: 50%;
+        margin: 0 auto
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .red {
+        font-size: 48px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .nav-container {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .nav-container li {
+        margin: 0.8em;    
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .header-hero {
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .text-hero {
+        font-size: 120%;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .small {
+        font-size: 16px;
+    }
+}

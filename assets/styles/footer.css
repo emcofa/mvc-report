@@ -1,0 +1,13 @@
+footer {
+    border-top: 1px solid black;
+    text-align: center;
+    padding: 1rem;
+    height: 72px;
+}
+
+.footer-column {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    grid-gap: 380px;
+}

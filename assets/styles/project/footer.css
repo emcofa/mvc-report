@@ -1,0 +1,17 @@
+footer {
+    text-align: center;
+    color: #F5D1D1;
+    padding: 1rem;
+    background-color: #3A2C50;
+}
+
+.footer-column {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    grid-gap: 380px;
+}
+
+a .social {
+    color: #F5D1D1;
+}
